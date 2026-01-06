@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rose Lavelle — Empire FGA Scouting Profile</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg: #0b0e14;
+            --card: #151921;
+            --white: #f0f6fc;
+            --muted: #8b949e;
+            --accent1: #EE3124;
+            --accent2: #00B140;
+            --gold: #DBA111;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            height: 100%;
+            background: radial-gradient(900px 500px at 8% 12%, rgba(238, 49, 36, 0.15), transparent 15%), radial-gradient(800px 400px at 92% 88%, rgba(0, 177, 64, 0.15), transparent 10%), var(--bg);
+            color: var(--white);
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+        }
+
+        header {
+            max-width: 1300px;
+            margin: 20px auto;
+            padding: 0 22px;
+            display: flex;
+            align-items: center;
+        }
+
+        header img {
+            height: 52px;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .header-title {
+            font-size: 22px;
+            font-weight: 900;
+            color: var(--gold);
+        }
+
+        .container {
+            max-width: 1300px;
+            margin: 20px auto;
+            padding: 22px;
+            display: grid;
+            grid-template-columns: 380px 1fr;
+            gap: 28px;
+        }
+
+        .card {
+            background: var(--card);
+            padding: 24px;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            position: relative;
+            margin-bottom: 24px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .photo {
+            width: 100%;
+            height: 540px;
+            object-fit: cover;
+            border-radius: 12px;
+            border: 3px solid var(--accent1);
+            margin-bottom: 20px;
+        }
+
+        .title {
+            font-size: 38px;
+            font-weight: 950;
+            margin-bottom: 6px;
+            letter-spacing: -1px;
+        }
+
+        .sub {
+            color: var(--gold);
+            margin-bottom: 12px;
+            font-size: 16px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .pill {
+            display: inline-block;
+            background: rgba(238, 49, 36, 0.2);
+            padding: 8px 16px;
+            border-radius: 999px;
+            font-weight: 700;
+            font-size: 13px;
+            margin: 6px 8px 6px 0;
+            border: 1px solid rgba(219, 161, 17, 0.2);
+        }
+
+        .rating-badge {
+            position: absolute;
+            right: 24px;
+            top: 24px;
+            background: linear-gradient(135deg, #EE3124 0%, #DBA111 100%);
+            color: #fff;
+            font-weight: 950;
+            padding: 15px 22px;
+            border-radius: 18px;
+            font-size: 32px;
+            box-shadow: 0 15px 45px rgba(238, 49, 36, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            padding-bottom: 12px;
+        }
+
+        .section-header h2 {
+            font-size: 26px;
+            font-weight: 900;
+        }
+
+        .metric-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .metric-item {
+            margin-bottom: 10px;
+        }
+
+        .metric-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+
+        .metric-name {
+            font-weight: 700;
+            font-size: 14px;
+        }
+
+        .metric-score {
+            color: var(--gold);
+            font-weight: 900;
+            font-size: 16px;
+        }
+
+        .metric-bar {
+            height: 8px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .metric-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent1) 0%, var(--gold) 100%);
+            border-radius: 4px;
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px dotted rgba(255, 255, 255, 0.08);
+        }
+
+        .info-row:last-child {
+            border-bottom: none;
+        }
+
+        .info-label {
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+        .info-value {
+            font-weight: 700;
+            font-size: 14px;
+        }
+
+        .lead-text {
+            font-size: 17px;
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+
+        .muted-box {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 18px;
+            border-radius: 12px;
+            color: var(--muted);
+            font-size: 15px;
+        }
+
+        .highlight-text {
+            color: var(--gold);
+            font-weight: 800;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        th,
+        td {
+            padding: 14px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            font-size: 14px;
+        }
+
+        th {
+            background: rgba(238, 49, 36, 0.1);
+            color: var(--gold);
+            font-weight: 900;
+            text-transform: uppercase;
+            font-size: 12px;
+        }
+
+        .stat-badge {
+            background: var(--accent1);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-weight: 800;
+            font-size: 12px;
+        }
+
+        .timeline-item {
+            padding: 18px;
+            border-left: 4px solid var(--gold);
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+
+        .timeline-date {
+            font-weight: 900;
+            color: var(--gold);
+            font-size: 14px;
+            margin-bottom: 6px;
+        }
+
+        .video-container {
+            width: 100%;
+            border-radius: 12px;
+            overflow: hidden;
+            aspect-ratio: 16/9;
+            background: #000;
+            border: 1px solid rgba(255, 210, 77, 0.2);
+            margin-top: 15px;
+        }
+
+        .video-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .chemistry-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+
+        .chemistry-item {
+            text-align: center;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .chemistry-name {
+            font-weight: 800;
+            font-size: 13px;
+        }
+
+        .chemistry-level {
+            font-size: 11px;
+            color: var(--gold);
+            text-transform: uppercase;
+            font-weight: 900;
+            background: rgba(219, 161, 17, 0.1);
+            padding: 2px 6px;
+            border-radius: 4px;
+            margin-top: 5px;
+            display: inline-block;
+        }
+
+        .visual-canvas {
+            height: 480px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        footer {
+            max-width: 1300px;
+            margin: 40px auto 20px;
+            padding: 40px 22px;
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        .two-col {
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            gap: 20px;
+        }
+
+        .small {
+            font-size: 14px;
+            color: var(--muted);
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="header-left">
+            <img src="https://media.licdn.com/dms/image/v2/D4E12AQEjuDAF0uOTrw/article-cover_image-shrink_720_1280/B4EZiOwG01GwAI-/0/1754741632806?e=2147483647&v=beta&t=L9ct0jEaWdSp7vfTI0urIqPPig0MspEd-6RtzxaQzzQ"
+                alt="Empire Scouting Network">
+            <div class="header-title">EMPIRE FGA SCOUTING NETWORK</div>
+        </div>
+    </header>
+    <div class="container">
+        <aside>
+            <div class="card">
+                <div class="rating-badge">93.2</div>
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4jM9WwKlJV7dYIrl0ilMZeUCZfF5wTlMUCw&s"
+                    alt="Rose Lavelle" class="photo">
+                <div class="title">Rose Lavelle</div>
+                <div class="sub">The Magician / Lavelle</div>
+                <div class="section-header" style="margin-top: 20px;">
+                    <h2>Biographic Stats</h2>
+                </div>
+                <div class="info-row"><span class="info-label">Full Name</span><span class="info-value">Rosemary
+                        Kathleen Lavelle</span></div>
+                <div class="info-row"><span class="info-label">Birth Date</span><span class="info-value">May 14,
+                        1995</span></div>
+                <div class="info-row"><span class="info-label">Birthplace</span><span class="info-value">Cincinnati,
+                        Ohio, USA</span></div>
+                <div class="info-row"><span class="info-label">Height</span><span class="info-value">1.57m</span></div>
+                <div class="info-row"><span class="info-label">Position</span><span class="info-value">Attacking
+                        Midfielder</span></div>
+                <div class="info-row"><span class="info-label">Foot</span><span class="info-value">Right (Silky)</span>
+                </div>
+                <div class="info-row"><span class="info-label">Current Club</span><span class="info-value">NJ/NY Gotham
+                        FC</span></div>
+                <div class="info-row"><span class="info-label">National Caps</span><span class="info-value">100+
+                        (USWNT)</span></div>
+            </div>
+            <div class="card">
+                <div class="section-header">
+                    <h2>Legacy Record</h2>
+                </div>
+                <div class="info-row"><span class="info-label">NWSL Championship</span><span class="stat-badge">2025
+                        MVP</span></div>
+                <div class="info-row"><span class="info-label">Olympic Gold</span><span class="info-value">Paris
+                        2024</span></div>
+                <div class="info-row"><span class="info-label">World Cup</span><span class="info-value">2019
+                        Champion</span></div>
+                <div class="info-row"><span class="info-label">FGA Tier</span><span class="info-value">World Class /
+                        Maestro</span></div>
+            </div>
+        </aside>
+        <main>
+            <div class="card">
+                <div class="section-header"><span class="icon">🌍</span>
+                    <h2>Global Impact Analysis</h2>
+                </div>
+                <p class="lead-text">Rose Lavelle is the <span class="highlight-text">most creative midfielder</span> in
+                    American women's soccer. Her ability to dribble through traffic, create chances, and score clutch
+                    goals makes her a <span class="highlight-text">complete attacking playmaker</span>. As the 2025 NWSL
+                    Championship MVP and Olympic gold medalist, Lavelle defines modern creative excellence.</p>
+                <div class="muted-box"><span class="highlight-text">Scout Verdict:</span> "The Artist." Lavelle's close
+                    control, vision, and ability to play the final ball in tight spaces is elite. Her combination of
+                    technical ability and tactical intelligence makes her a generational talent for the USWNT.</div>
+            </div>
+            <div class="card">
+                <div class="section-header"><span class="icon">📊</span>
+                    <h2>Core FGA Intelligence Metrics</h2>
+                </div>
+                <h3>Tier 1: Creative Genius (60% Weight)</h3>
+                <div class="metric-grid" style="margin-top: 15px;">
+                    <div class="metric-item">
+                        <div class="metric-header"><span class="metric-name">DRI (Close Control)</span><span
+                                class="metric-score">9.8</span></div>
+                        <div class="metric-bar">
+                            <div class="metric-fill" style="width: 98%"></div>
+                        </div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="metric-header"><span class="metric-name">VIS (Vision & Awareness)</span><span
+                                class="metric-score">9.6</span></div>
+                        <div class="metric-bar">
+                            <div class="metric-fill" style="width: 96%"></div>
+                        </div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="metric-header"><span class="metric-name">PAS (Final Ball)</span><span
+                                class="metric-score">9.5</span></div>
+                        <div class="metric-bar">
+                            <div class="metric-fill" style="width: 95%"></div>
+                        </div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="metric-header"><span class="metric-name">FIN (Goal Finishing)</span><span
+                                class="metric-score">9.3</span></div>
+                        <div class="metric-bar">
+                            <div class="metric-fill" style="width: 93%"></div>
+                        </div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="metric-header"><span class="metric-name">AGI (Change of Direction)</span><span
+                                class="metric-score">9.7</span></div>
+                        <div class="metric-bar">
+                            <div class="metric-fill" style="width: 97%"></div>
+                        </div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="metric-header"><span class="metric-name">IQ (Tactical Scanning)</span><span
+                                class="metric-score">9.6</span></div>
+                        <div class="metric-bar">
+                            <div class="metric-fill" style="width: 96%"></div>
+                        </div>
+                    </div>
+                </div>
+                <h3 style="margin-top: 25px;">Tier 2: Big Game Performance (30% Weight)</h3>
+                <div class="metric-grid" style="margin-top: 15px;">
+                    <div class="metric-item">
+                        <div class="metric-header"><span class="metric-name">CLU (Clutch Moments)</span><span
+                                class="metric-score">9.8</span></div>
+                        <div class="metric-bar">
+                            <div class="metric-fill" style="width: 98%"></div>
+                        </div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="metric-header"><span class="metric-name">RES (Injury Resilience)</span><span
+                                class="metric-score">9.4</span></div>
+                        <div class="metric-bar">
+                            <div class="metric-fill" style="width: 94%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="section-header"><span class="icon">🧠</span>
+                    <h2>60-Philosophy Framework Analysis</h2>
+                </div>
+                <div style="margin-bottom: 20px;"><span class="pill">Hayes Score: 9.7/10</span><span
+                        class="pill">Andonovski Score: 9.5/10</span><span class="pill">Kilgore Score: 9.8/10</span>
+                </div>
+                <div class="muted-box">Lavelle is the "Pure #10." She thrives in systems that give her freedom to roam
+                    and create. Her fit with "Juan Carlos Amorós (Gotham)" is perfect—a structured defensive block
+                    allowing her to express creativity in the final third. She is the ideal modern playmaker.</div>
+            </div>
+            <div class="card">
+                <div class="section-header"><span class="icon">🧪</span>
+                    <h2>Psychological Profile & Personality</h2>
+                </div>
+                <div class="two-col">
+                    <div>
+                        <div class="info-row"><span class="info-label">Tournament Mentality</span><span
+                                class="info-value">Elite</span></div>
+                        <div class="info-row"><span class="info-label">Recovery Mindset</span><span
+                                class="info-value">Exceptional</span></div>
+                        <div class="metric-item" style="margin-top: 15px;">
+                            <div class="metric-header"><span class="metric-name">Pressure Performance</span><span
+                                    class="metric-score">9.8</span></div>
+                            <div class="metric-bar">
+                                <div class="metric-fill" style="width: 98%"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="small" style="padding-left: 20px;">Rose possesses "Championship DNA." Her psychological
+                        profile is defined by an ability to deliver in the biggest moments—scoring the winning goal in
+                        the 2025 NWSL Championship final epitomizes this trait. She recovered from a 6-month injury to
+                        return stronger.</p>
+                </div>
+            </div>
+            <div class="card">
+                <div class="section-header"><span class="icon">🤝</span>
+                    <h2>Key Relationships & Dynamics</h2>
+                </div>
+                <div class="chemistry-grid">
+                    <div class="chemistry-item">
+                        <div class="chemistry-name">Esther González</div>
+                        <div class="chemistry-level">Gotham Strike</div>
+                    </div>
+                    <div class="chemistry-item">
+                        <div class="chemistry-name">Sophia Smith</div>
+                        <div class="chemistry-level">USWNT Axis</div>
+                    </div>
+                    <div class="chemistry-item">
+                        <div class="chemistry-name">Sam Coffey</div>
+                        <div class="chemistry-level">Midfield Sync</div>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="section-header"><span class="icon">📈</span>
+                    <h2>Detailed Career History</h2>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Period</th>
+                            <th>Club</th>
+                            <th>Apps</th>
+                            <th>G/A</th>
+                            <th>Honors</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>2023-Pres</td>
+                            <td>Gotham FC</td>
+                            <td>40+</td>
+                            <td>15/10</td>
+                            <td>NWSL Champ '25</td>
+                        </tr>
+                        <tr>
+                            <td>2021-22</td>
+                            <td>OL Reign</td>
+                            <td>~35</td>
+                            <td>10+</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td>2017-21</td>
+                            <td>Washington Spirit</td>
+                            <td>60+</td>
+                            <td>20+</td>
+                            <td>Development</td>
+                        </tr>
+                        <tr>
+                            <td>2017-Pres</td>
+                            <td>USWNT</td>
+                            <td>100+</td>
+                            <td>25+/25+</td>
+                            <td>WC '19, Gold '24</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="card">
+                <div class="section-header"><span class="icon">⚡</span>
+                    <h2>Key Matches & Milestones</h2>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">Nov 2025 | NWSL Championship MVP</div>
+                    <p class="small">Scored the game-winning goal in the 80th minute vs Washington Spirit to secure the
+                        title.</p>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">Aug 2024 | Olympic Gold Medal</div>
+                    <p class="small">Key member of USWNT's gold medal-winning squad in Paris.</p>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">June 2024 | 100th Cap</div>
+                    <p class="small">Reached 100 international caps for the United States, scoring vs Ireland in
+                        celebration.</p>
+                </div>
+            </div>
+            <div class="card">
+                <div class="section-header"><span class="icon">📹</span>
+                    <h2>Video Intelligence</h2>
+                </div>
+                <p class="small">Compilation of Lavelle's dribbling and creative passing.</p>
+                <div class="video-container"><iframe src="https://www.youtube.com/embed/8v_sh_OIs00"
+                        allowfullscreen></iframe></div>
+            </div>
+            <div class="card">
+                <div class="section-header"><span class="icon">📊</span>
+                    <h2>Elite Playmaker Comparison</h2>
+                </div>
+                <div class="visual-canvas"><canvas id="radarChart"></canvas></div>
+                <p class="small" style="text-align: center; margin-top: 15px;">Comparing Rose Lavelle vs <span
+                        class="highlight-text">Aitana Bonmatí</span>.</p>
+            </div>
+            <div class="card">
+                <div class="section-header"><span class="icon">🚀</span>
+                    <h2>Legacy Projection</h2>
+                </div>
+                <div class="two-col">
+                    <div>
+                        <div class="info-row"><span class="info-label">Heritage Index</span><span
+                                class="stat-badge">95.8</span></div>
+                        <div class="info-row"><span class="info-label">Future Role</span><span class="info-value">USWNT
+                                Legend</span></div>
+                    </div>
+                    <p class="small" style="padding-left: 20px;">Rose Lavelle's legacy as one of America's greatest
+                        creativeplaymakers is secure. Her World Cup and Olympic success, combined with her NWSL
+                        Championship MVP, cement her status. She will be remembered as the artist who brought magic to
+                        every match.</p>
+                </div>
+            </div>
+        </main>
+    </div>
+    <footer>
+        <p>&copy; 2026 Empire FGA Scouting Network. World Class Pillar Archive.</p>
+        <p style="margin-top: 8px; opacity: 0.6;">Cerebral Innovation • Global Icon • Rose Lavelle</p>
+    </footer>
+    <script>
+        const ctx = document.getElementById('radarChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'radar',
+            data: {
+                labels: ['Dribbling', 'Vision', 'Passing', 'Finishing', 'Agility', 'IQ', 'Clutch', 'Resilience'],
+                datasets: [{
+                    label: 'Rose Lavelle',
+                    data: [9.8, 9.6, 9.5, 9.3, 9.7, 9.6, 9.8, 9.4],
+                    borderColor: '#EE3124',
+                    backgroundColor: 'rgba(238, 49, 36, 0.15)',
+                    borderWidth: 4,
+                    pointBackgroundColor: '#EE3124'
+                }, {
+                    label: 'Aitana Bonmatí',
+                    data: [9.5, 9.8, 9.9, 9.2, 9.4, 9.9, 9.6, 9.5],
+                    borderColor: '#ffffff',
+                    backgroundColor: 'transparent',
+                    borderWidth: 2,
+                    borderDash: [5, 5]
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    r: {
+                        beginAtZero: true,
+                        max: 10,
+                        ticks: { stepSize: 2, display: false },
+                        grid: { color: 'rgba(255, 255, 255, 0.1)' },
+                        angleLines: { color: 'rgba(255, 255, 255, 0.1)' },
+                        pointLabels: { color: '#f0f6fc', font: { size: 12, weight: '700' } }
+                    }
+                },
+                plugins: { legend: { labels: { color: '#f0f6fc', font: { weight: '800' } } } }
+            }
+        });
+    </script>
+</body>
+
+</html>
