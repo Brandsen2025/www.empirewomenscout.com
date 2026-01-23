@@ -1,0 +1,1310 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Duda Santos — Empire Women Scout Profile | Corinthians</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg: #0a0a0a;
+            --card: #141414;
+            --white: #f5f5f5;
+            --muted: #a0a0a0;
+            --accent1: #e11d48;
+            /* Empire Red */
+            --accent2: #d4af37;
+            /* Empire Gold */
+            --win: #22c55e;
+            --loss: #ef4444;
+            --draw: #eab308;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            background:
+                radial-gradient(900px 500px at 8% 12%, rgba(225, 29, 72, 0.10), transparent 10%),
+                radial-gradient(800px 400px at 92% 88%, rgba(212, 175, 55, 0.04), transparent 8%),
+                var(--bg);
+            color: var(--white);
+            -webkit-font-smoothing: antialiased;
+            font-family: 'Inter', sans-serif;
+        }
+
+        header {
+            max-width: 1300px;
+            margin: 18px auto;
+            padding: 0 22px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        header img {
+            height: 48px;
+            object-fit: contain;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .header-title {
+            font-size: 20px;
+            font-weight: 800;
+            color: var(--accent2);
+        }
+
+        .header-date {
+            font-size: 13px;
+            color: var(--muted);
+            margin-left: 12px;
+            padding: 4px 10px;
+            background: rgba(225, 29, 72, 0.15);
+            border-radius: 6px;
+        }
+
+        .container {
+            max-width: 1300px;
+            margin: 18px auto;
+            padding: 22px;
+            display: grid;
+            grid-template-columns: 360px 1fr;
+            gap: 26px;
+        }
+
+        .card {
+            background: var(--card);
+            padding: 18px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            position: relative;
+            margin-bottom: 18px;
+        }
+
+        .photo {
+            width: 100%;
+            height: 480px;
+            object-fit: cover;
+            object-position: center top;
+            border-radius: 10px;
+            border: 3px solid var(--accent1);
+            background: #000;
+            filter: contrast(1.05) saturate(1.1);
+        }
+
+        .title {
+            font-size: 34px;
+            font-weight: 900;
+            margin: 14px 0;
+            color: var(--white);
+        }
+
+        .sub {
+            color: var(--muted);
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+
+        .club-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(0, 0, 0, 0.10));
+            padding: 8px 14px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            margin-bottom: 12px;
+        }
+
+        .club-badge span {
+            font-weight: 700;
+            color: var(--white);
+            font-size: 14px;
+        }
+
+        .nationality-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: linear-gradient(135deg, rgba(0, 156, 59, 0.20), rgba(255, 223, 0, 0.15));
+            padding: 6px 12px;
+            border-radius: 8px;
+            border: 1px solid rgba(0, 156, 59, 0.3);
+            margin-left: 8px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .pill {
+            display: inline-block;
+            background: rgba(225, 29, 72, 0.15);
+            padding: 7px 12px;
+            border-radius: 999px;
+            font-weight: 700;
+            font-size: 13px;
+            color: var(--white);
+            margin: 6px 8px 6px 0;
+            border: 1px solid rgba(212, 175, 55, 0.18);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 12px;
+            color: var(--white);
+            font-size: 14px;
+        }
+
+        th,
+        td {
+            padding: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            vertical-align: top;
+            text-align: left;
+        }
+
+        th {
+            background: linear-gradient(90deg, rgba(225, 29, 72, 0.85), rgba(212, 175, 55, 0.85));
+            font-weight: 800;
+            color: #000;
+        }
+
+        .rating-badge {
+            position: absolute;
+            right: 18px;
+            top: 18px;
+            background: linear-gradient(90deg, var(--accent2), var(--accent1));
+            color: #000;
+            font-weight: 900;
+            padding: 10px 14px;
+            border-radius: 16px;
+            font-size: 22px;
+            box-shadow: 0 10px 30px rgba(225, 29, 72, 0.18);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            line-height: 1.1;
+        }
+
+        .rating-badge .rating-value {
+            font-size: 28px;
+            font-weight: 900;
+        }
+
+        .rating-badge .rating-label {
+            font-size: 9px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            opacity: 0.8;
+        }
+
+        .section {
+            margin-top: 18px;
+        }
+
+        .section h2 {
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--accent2);
+            margin-bottom: 16px;
+        }
+
+        .section h3 {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--accent2);
+            margin: 16px 0 12px;
+        }
+
+        .two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+        }
+
+        .three-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 14px;
+        }
+
+        .small {
+            color: var(--muted);
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .lead {
+            color: var(--white);
+            font-size: 16px;
+            line-height: 1.5;
+        }
+
+        .visual-canvas {
+            background: transparent;
+            border-radius: 8px;
+            padding: 12px;
+            height: 420px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px dashed rgba(212, 175, 55, 0.18);
+        }
+
+        .muted-box {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            padding: 12px;
+            border-radius: 8px;
+            margin-top: 8px;
+            color: var(--muted);
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, rgba(225, 29, 72, 0.12), rgba(212, 175, 55, 0.08));
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            padding: 14px;
+            border-radius: 10px;
+            margin-top: 12px;
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .info-row:last-child {
+            border-bottom: none;
+        }
+
+        .info-label {
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+        .info-value {
+            color: var(--white);
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .metric-item {
+            margin: 14px 0;
+        }
+
+        .metric-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 6px;
+        }
+
+        .metric-name {
+            font-weight: 600;
+            color: var(--white);
+            font-size: 13px;
+        }
+
+        .metric-score {
+            color: var(--accent2);
+            font-weight: 800;
+            font-size: 15px;
+        }
+
+        .metric-bar {
+            height: 6px;
+            background: rgba(255, 255, 255, 0.06);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .metric-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent1) 0%, var(--accent2) 100%);
+            border-radius: 3px;
+        }
+
+        .timeline-item {
+            padding: 14px;
+            border-left: 3px solid var(--accent2);
+            margin: 12px 0;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 6px;
+        }
+
+        .timeline-date {
+            color: var(--accent2);
+            font-weight: 700;
+            margin-bottom: 6px;
+            font-size: 14px;
+        }
+
+        .timeline-event {
+            color: var(--muted);
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .stat-box {
+            background: rgba(225, 29, 72, 0.12);
+            border: 1px solid rgba(212, 175, 55, 0.18);
+            padding: 14px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 28px;
+            font-weight: 900;
+            color: var(--accent2);
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: var(--muted);
+            margin-top: 4px;
+        }
+
+        .trophy-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-top: 16px;
+        }
+
+        .trophy-box {
+            text-align: center;
+            padding: 16px;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 8px;
+            border: 1px solid rgba(212, 175, 55, 0.12);
+        }
+
+        .trophy-icon {
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+
+        .trophy-title {
+            font-weight: 700;
+            color: var(--accent2);
+            font-size: 13px;
+        }
+
+        .trophy-year {
+            color: var(--muted);
+            font-size: 12px;
+        }
+
+        /* Match Card Styles */
+        .match-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 10px;
+            padding: 16px;
+            margin-bottom: 12px;
+            display: grid;
+            grid-template-columns: 1fr auto 1fr auto;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .match-teams {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .match-team {
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--white);
+        }
+
+        .match-team.home {
+            color: var(--accent1);
+        }
+
+        .match-score {
+            background: linear-gradient(135deg, var(--accent1), rgba(225, 29, 72, 0.7));
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-weight: 900;
+            font-size: 18px;
+            color: var(--white);
+            text-align: center;
+            min-width: 70px;
+        }
+
+        .result-w .match-score {
+            background: linear-gradient(135deg, var(--win), rgba(34, 197, 94, 0.7));
+        }
+
+        .result-l .match-score {
+            background: linear-gradient(135deg, var(--loss), rgba(239, 68, 68, 0.7));
+        }
+
+        .result-d .match-score {
+            background: linear-gradient(135deg, var(--draw), rgba(234, 179, 8, 0.7));
+        }
+
+        .match-info {
+            text-align: right;
+        }
+
+        .match-date {
+            font-size: 12px;
+            color: var(--muted);
+        }
+
+        .match-comp {
+            font-size: 11px;
+            color: var(--accent2);
+            font-weight: 600;
+        }
+
+        .match-stats {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .match-stat {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 12px;
+            padding: 4px 8px;
+            background: rgba(225, 29, 72, 0.15);
+            border-radius: 6px;
+        }
+
+        .match-stat.goal {
+            background: rgba(34, 197, 94, 0.2);
+            color: #22c55e;
+        }
+
+        .match-stat.assist {
+            background: rgba(59, 130, 246, 0.2);
+            color: #3b82f6;
+        }
+
+        .match-stat.motm {
+            background: rgba(212, 175, 55, 0.25);
+            color: var(--accent2);
+        }
+
+        .form-indicator {
+            display: flex;
+            gap: 6px;
+            margin-top: 12px;
+        }
+
+        .form-box {
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 6px;
+            font-weight: 800;
+            font-size: 13px;
+        }
+
+        .form-box.w {
+            background: rgba(34, 197, 94, 0.25);
+            color: #22c55e;
+            border: 1px solid rgba(34, 197, 94, 0.4);
+        }
+
+        .form-box.d {
+            background: rgba(234, 179, 8, 0.25);
+            color: #eab308;
+            border: 1px solid rgba(234, 179, 8, 0.4);
+        }
+
+        .form-box.l {
+            background: rgba(239, 68, 68, 0.25);
+            color: #ef4444;
+            border: 1px solid rgba(239, 68, 68, 0.4);
+        }
+
+        .season-stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin-top: 16px;
+        }
+
+        .season-stat-box {
+            background: rgba(225, 29, 72, 0.08);
+            border: 1px solid rgba(225, 29, 72, 0.15);
+            padding: 16px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .season-stat-value {
+            font-size: 32px;
+            font-weight: 900;
+            color: var(--accent2);
+        }
+
+        .season-stat-label {
+            font-size: 11px;
+            color: var(--muted);
+            margin-top: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .tier-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.3), rgba(212, 175, 55, 0.3));
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-weight: 800;
+            font-size: 12px;
+            color: #3b82f6;
+            border: 1px solid rgba(59, 130, 246, 0.4);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 8px;
+        }
+
+        .scout-alert {
+            background: linear-gradient(135deg, rgba(34, 197, 94, 0.15), rgba(34, 197, 94, 0.05));
+            border: 1px solid rgba(34, 197, 94, 0.3);
+            padding: 14px;
+            border-radius: 10px;
+            margin-top: 16px;
+        }
+
+        .scout-alert-title {
+            color: #22c55e;
+            font-weight: 800;
+            font-size: 14px;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .scout-alert-text {
+            color: var(--muted);
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        @media (max-width: 980px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+
+            .photo {
+                height: 380px;
+            }
+
+            .visual-canvas {
+                height: auto;
+            }
+
+            .two-col,
+            .three-col {
+                grid-template-columns: 1fr;
+            }
+
+            .trophy-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .match-card {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .match-info {
+                text-align: center;
+            }
+
+            .season-stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="header-left">
+            <img src="https://media.licdn.com/dms/image/v2/D4E12AQEjuDAF0uOTrw/article-cover_image-shrink_720_1280/B4EZiOwG01GwAI-/0/1754741632806?e=2147483647&v=beta&t=L9ct0jEaWdSp7vfTI0urIqPPig0MspEd-6RtzxaQzzQ"
+                alt="Empire Women Scout">
+            <div class="header-title">EMPIRE WOMEN SCOUT</div>
+            <span class="header-date">📅 Jan 23, 2026 • Live Profile</span>
+        </div>
+    </header>
+
+    <div class="container">
+
+        <!-- Sidebar -->
+        <div>
+            <div class="card">
+                <img src="https://www.ogol.com.br/img/geral/879531_med_.png.png"
+                    alt="Duda Santos - Corinthians" class="photo">
+                <div class="title">Duda Santos</div>
+                <div class="sub">Creative Playmaker • #27</div>
+
+                <div class="club-badge">
+                    <span>⚽ Corinthians (F)</span>
+                </div>
+                <span class="nationality-badge">🇧🇷 Brazil</span>
+
+                <div class="rating-badge">
+                    <span class="rating-value">87.4</span>
+                    <span class="rating-label">FGA /100</span>
+                </div>
+
+                <div class="section">
+                    <div class="stat-box" style="margin-bottom: 10px;">
+                        <span class="stat-value">92.5</span>
+                        <span class="stat-label">Tactical IQ Index (TIQ) /100</span>
+                    </div>
+                    <div class="tier-badge">⭐ World Class Orchestrator</div>
+                </div>
+
+                <div class="section">
+                    <div class="info-row"><span class="info-label">Full Name</span><span class="info-value">Maria Eduarda Santos Sampaio</span></div>
+                    <div class="info-row"><span class="info-label">Nationality</span><span class="info-value">🇧🇷
+                            Brazil</span></div>
+                    <div class="info-row"><span class="info-label">Birth Date</span><span class="info-value">Mar 25, 1996
+                            (29)</span></div>
+                    <div class="info-row"><span class="info-label">Current Club</span><span class="info-value">Corinthians</span></div>
+                    <div class="info-row"><span class="info-label">Joined</span><span class="info-value">Jan 2024</span></div>
+                    <div class="info-row"><span class="info-label">Contract Until</span><span class="info-value">Dec
+                            2026</span></div>
+                    <div class="info-row"><span class="info-label">Height</span><span class="info-value">1.70m (5'
+                            7")</span></div>
+                    <div class="info-row"><span class="info-label">Position</span><span class="info-value">CAM / CM</span></div>
+                    <div class="info-row"><span class="info-label">Foot</span><span class="info-value">Right</span></div>
+                    <div class="info-row"><span class="info-label">Market Value</span><span class="info-value">€450k (Top 5 BR)</span></div>
+                    <div class="info-row"><span class="info-label">Shirt Number</span><span
+                            class="info-value">#27</span></div>
+                </div>
+
+                <div class="section">
+                    <h3>2025 Season Stats</h3>
+                    <div class="info-row"><span class="info-label">Appearances</span><span class="info-value">38 (35
+                            starts)</span></div>
+                    <div class="info-row"><span class="info-label">Goals</span><span class="info-value">12</span></div>
+                    <div class="info-row"><span class="info-label">Assists</span><span class="info-value">15</span></div>
+                    <div class="info-row"><span class="info-label">Chances Created</span><span class="info-value">84</span>
+                    </div>
+                    <div class="info-row"><span class="info-label">Pass Accuracy %</span><span
+                            class="info-value">88%</span></div>
+                    <div class="info-row"><span class="info-label">Key Passes</span><span class="info-value">3.2 /90</span></div>
+                </div>
+
+                <div class="section">
+                    <h3>Form (2025 Season Finale)</h3>
+                    <div class="form-indicator">
+                        <div class="form-box w">W</div>
+                        <div class="form-box w">W</div>
+                        <div class="form-box w">W</div>
+                        <div class="form-box d">D</div>
+                        <div class="form-box w">W</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div>
+
+            <!-- FGA Analysis -->
+            <div class="card">
+                <h2>🌍 Empire Women Scout Analysis — January 2026</h2>
+                <p class="lead">
+                    Entering the peak of her career, Duda Santos has established herself as the premier creative engine in South American football. Her 2025 campaign with Corinthians solidified her reputation as a "metronome," dictating play with a blend of elite vision and technical composure. With 27 G+A contributions, she has outshone almost every other playmaker in the Brasileirão Feminino. Her ability to operate in tight half-spaces and execute defense-splitting passes makes her an invaluable asset in positional systems.
+                </p>
+                <div class="muted-box">
+                    <strong style="color: var(--accent2);">Empire Verdict:</strong> A "Technical Orchestrator" who thrives when given the freedom to wander between lines. Duda ranks in the 96th percentile for progressive passes and 94th for goal-creating actions. Her tactical intelligence and leadership on the pitch are reminiscent of a peak Keira Walsh or Alexia Putellas in a more advanced role. <strong>Empire FGA Rating: 87.4/100 — World Class Midfielder.</strong>
+                </div>
+
+                <div class="season-stats-grid">
+                    <div class="season-stat-box">
+                        <div class="season-stat-value">12</div>
+                        <div class="season-stat-label">Goals</div>
+                    </div>
+                    <div class="season-stat-box">
+                        <div class="season-stat-value">15</div>
+                        <div class="season-stat-label">Assists</div>
+                    </div>
+                    <div class="season-stat-box">
+                        <div class="season-stat-value">88%</div>
+                        <div class="season-stat-label">Pass Comp.</div>
+                    </div>
+                    <div class="season-stat-box">
+                        <div class="season-stat-value">3.2</div>
+                        <div class="season-stat-label">Key Passes /90</div>
+                    </div>
+                </div>
+
+                <div class="scout-alert">
+                    <div class="scout-alert-title">🚨 European Transfer Interest</div>
+                    <div class="scout-alert-text">
+                        Scouts from Liga F and D1 Arkema have intensified monitoring. Her contract situation makes her a prime target for a summer move to Europe. High tactical readiness for Champions League football.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Last 5 Matches -->
+            <div class="card">
+                <h2>⚡ Critical 2025 Performance Markers</h2>
+                <p class="small" style="margin-bottom: 16px;">Top impact performances from the 2025 season — Factual Records.</p>
+
+                <!-- Match 1 -->
+                <div class="match-card result-w">
+                    <div class="match-teams">
+                        <span class="match-team home">Corinthians</span>
+                        <span class="match-team">Palmeiras</span>
+                    </div>
+                    <div class="match-score">3 - 1</div>
+                    <div class="match-stats">
+                        <span class="match-stat goal">⚽ 1 Goal</span>
+                        <span class="match-stat assist">🅿️ 1 Assist</span>
+                        <span class="match-stat motm">⭐ MOTM</span>
+                    </div>
+                    <div class="match-info">
+                        <div class="match-date">Nov 2025</div>
+                        <div class="match-comp">Derby Paulista</div>
+                    </div>
+                </div>
+
+                <!-- Match 2 -->
+                <div class="match-card result-w">
+                    <div class="match-teams">
+                        <span class="match-team home">Corinthians</span>
+                        <span class="match-team">Ferroviária</span>
+                    </div>
+                    <div class="match-score">2 - 0</div>
+                    <div class="match-stats">
+                        <span class="match-stat assist">🅿️ 2 Assists</span>
+                    </div>
+                    <div class="match-info">
+                        <div class="match-date">Oct 2025</div>
+                        <div class="match-comp">Brasileirão Final</div>
+                    </div>
+                </div>
+
+                <!-- Match 3 -->
+                <div class="match-card result-w">
+                    <div class="match-teams">
+                        <span class="match-team">Colo-Colo</span>
+                        <span class="match-team home">Corinthians</span>
+                    </div>
+                    <div class="match-score">0 - 4</div>
+                    <div class="match-stats">
+                        <span class="match-stat goal">⚽ 1 Goal</span>
+                        <span class="match-stat assist">🅿️ 1 Assist</span>
+                    </div>
+                    <div class="match-info">
+                        <div class="match-date">Sept 2025</div>
+                        <div class="match-comp">Libertadores</div>
+                    </div>
+                </div>
+
+                <!-- Match 4 -->
+                <div class="match-card result-d">
+                    <div class="match-teams">
+                        <span class="match-team home">São Paulo</span>
+                        <span class="match-team">Corinthians</span>
+                    </div>
+                    <div class="match-score">1 - 1</div>
+                    <div class="match-stats">
+                        <span class="match-stat motm">🛡️ 92% Pass Acc.</span>
+                    </div>
+                    <div class="match-info">
+                        <div class="match-date">Aug 2025</div>
+                        <div class="match-comp">Paulistão</div>
+                    </div>
+                </div>
+
+                <!-- Match 5 -->
+                <div class="match-card result-w">
+                    <div class="match-teams">
+                        <span class="match-team home">Corinthians</span>
+                        <span class="match-team">Santos</span>
+                    </div>
+                    <div class="match-score">5 - 0</div>
+                    <div class="match-stats">
+                        <span class="match-stat goal">⚽ 2 Goals</span>
+                    </div>
+                    <div class="match-info">
+                        <div class="match-date">July 2025</div>
+                        <div class="match-comp">Brasileirão</div>
+                    </div>
+                </div>
+
+                <div class="muted-box" style="margin-top: 16px;">
+                    <strong style="color: var(--accent2);">Season Highlight:</strong> Created the most clear-cut chances (18) in the 2025 Copa Libertadores Feminina. <strong>Avg. Match Rating: 8.2/10</strong>
+                </div>
+            </div>
+
+            <!-- FGA Metrics -->
+            <div class="card">
+                <h2>📊 Core FGA Intelligence Metrics</h2>
+                <p class="small" style="margin-bottom: 16px;">All metrics scaled to /100 for Empire Women Scout standardization.</p>
+
+                <h3>Tier 1: Automated Metrics (60% Weight)</h3>
+                <div class="two-col">
+                    <div>
+                        <div class="metric-item">
+                            <div class="metric-header"><span class="metric-name">VIS (Vision & Scanning)</span><span
+                                    class="metric-score">95</span></div>
+                            <div class="metric-bar">
+                                <div class="metric-fill" style="width: 95%"></div>
+                            </div>
+                        </div>
+                        <div class="metric-item">
+                            <div class="metric-header"><span class="metric-name">PAS (Passing Accuracy)</span><span
+                                    class="metric-score">92</span></div>
+                            <div class="metric-bar">
+                                <div class="metric-fill" style="width: 92%"></div>
+                            </div>
+                        </div>
+                        <div class="metric-item">
+                            <div class="metric-header"><span class="metric-name">RDS (Shot Accuracy)</span><span
+                                    class="metric-score">81</span></div>
+                            <div class="metric-bar">
+                                <div class="metric-fill" style="width: 81%"></div>
+                            </div>
+                        </div>
+                        <div class="metric-item">
+                            <div class="metric-header"><span class="metric-name">KEY (Key Pass Volume)</span><span
+                                    class="metric-score">94</span></div>
+                            <div class="metric-bar">
+                                <div class="metric-fill" style="width: 94%"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="metric-item">
+                            <div class="metric-header"><span class="metric-name">TEC (Ball Control)</span><span
+                                    class="metric-score">93.5</span></div>
+                            <div class="metric-bar">
+                                <div class="metric-fill" style="width: 93.5%"></div>
+                            </div>
+                        </div>
+                        <div class="metric-item">
+                            <div class="metric-header"><span class="metric-name">AER (Aerial Ability)</span><span
+                                    class="metric-score">68</span></div>
+                            <div class="metric-bar">
+                                <div class="metric-fill" style="width: 68%"></div>
+                            </div>
+                        </div>
+                        <div class="metric-item">
+                            <div class="metric-header"><span class="metric-name">HLD (Resistance to Press)</span><span
+                                    class="metric-score">90</span></div>
+                            <div class="metric-bar">
+                                <div class="metric-fill" style="width: 90%"></div>
+                            </div>
+                        </div>
+                        <div class="metric-item">
+                            <div class="metric-header"><span class="metric-name">OFF (Off-Ball Pockets)</span><span
+                                    class="metric-score">89.5</span></div>
+                            <div class="metric-bar">
+                                <div class="metric-fill" style="width: 89.5%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <h3>Tier 2: Semi-Automated Metrics (30% Weight)</h3>
+                <div class="two-col">
+                    <div class="metric-item">
+                        <div class="metric-header"><span class="metric-name">POI (Position Intelligence)</span><span
+                                class="metric-score">92</span></div>
+                        <div class="metric-bar">
+                            <div class="metric-fill" style="width: 92%"></div>
+                        </div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="metric-header"><span class="metric-name">CPX (Composure)</span><span
+                                class="metric-score">94</span></div>
+                        <div class="metric-bar">
+                            <div class="metric-fill" style="width: 94%"></div>
+                        </div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="metric-header"><span class="metric-name">PHY (Physical Stamina)</span><span
+                                class="metric-score">79</span></div>
+                        <div class="metric-bar">
+                            <div class="metric-fill" style="width: 79%"></div>
+                        </div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="metric-header"><span class="metric-name">LNK (Link-Up Play Index)</span><span
+                                class="metric-score">95</span></div>
+                        <div class="metric-bar">
+                            <div class="metric-fill" style="width: 95%"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <h3>Tier 3: Manual Scout Assessment (10% Weight)</h3>
+                <div class="two-col">
+                    <div>
+                        <div class="metric-item">
+                            <div class="metric-header"><span class="metric-name">DMA (Decision Making)</span><span
+                                    class="metric-score">96</span></div>
+                            <div class="metric-bar">
+                                <div class="metric-fill" style="width: 96%"></div>
+                            </div>
+                        </div>
+                        <div class="metric-item">
+                            <div class="metric-header"><span class="metric-name">CHR (Character/Grit)</span><span
+                                    class="metric-score">88</span></div>
+                            <div class="metric-bar">
+                                <div class="metric-fill" style="width: 88%"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="metric-item">
+                            <div class="metric-header"><span class="metric-name">CRS (Clutch Response)</span><span
+                                    class="metric-score">91</span></div>
+                            <div class="metric-bar">
+                                <div class="metric-fill" style="width: 91%"></div>
+                            </div>
+                        </div>
+                        <div class="metric-item">
+                            <div class="metric-header"><span class="metric-name">VTI (Vertical Pass Index)</span><span
+                                    class="metric-score">92</span></div>
+                            <div class="metric-bar">
+                                <div class="metric-fill" style="width: 92%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 60-Philosophy Framework -->
+            <div class="card">
+                <h2>🧠 60-Philosophy Framework Alignment</h2>
+                <p class="small" style="margin-bottom: 12px;">Duda's tactical DNA within a modern system. Scores on /100 scale.</p>
+
+                <h3>Top 10 Philosophy Fits</h3>
+                <div>
+                    <span class="pill">Guardiola (Positional Control) 96/100</span>
+                    <span class="pill">Giráldez (Technical Fluidity) 94/100</span>
+                    <span class="pill">Arteta (Structured Attack) 92/100</span>
+                    <span class="pill">Sarina Wiegman (Adaptive Tactical) 89/100</span>
+                    <span class="pill">Zagallo (Brazilian Flair) 88/100</span>
+                    <span class="pill">Emma Hayes (Hybrid Creative) 85/100</span>
+                    <span class="pill">Ancelotti (Player Freedom) 84/100</span>
+                    <span class="pill">Bompastor (Vertical Orchestration) 82/100</span>
+                    <span class="pill">Klopp (High Octane) 78/100</span>
+                    <span class="pill">Simeone (Defensive Rigidity) 65/100</span>
+                </div>
+
+                <h3>School Averages</h3>
+                <div class="metric-item">
+                    <div class="metric-header"><span class="metric-name">Spanish School (Control/Position)</span><span
+                            class="metric-score">95.0</span></div>
+                    <div class="metric-bar">
+                        <div class="metric-fill" style="width: 95%"></div>
+                    </div>
+                </div>
+                <div class="metric-item">
+                    <div class="metric-header"><span class="metric-name">South American School (Flair/Rhythm)</span><span
+                            class="metric-score">91.0</span></div>
+                    <div class="metric-bar">
+                        <div class="metric-fill" style="width: 91%"></div>
+                    </div>
+                </div>
+                <div class="metric-item">
+                    <div class="metric-header"><span class="metric-name">German School (Intensity/Vertical)</span><span
+                            class="metric-score">76.0</span></div>
+                    <div class="metric-bar">
+                        <div class="metric-fill" style="width: 76%"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Psychological Profile -->
+            <div class="card">
+                <h2>🧪 Psychological Profile (Empire MCS)</h2>
+                <div class="two-col">
+                    <div>
+                        <h3>Core Traits</h3>
+                        <div class="info-row"><span class="info-label">Archetype</span><span class="info-value">The Architect (INTJ)</span></div>
+                        <div class="info-row"><span class="info-label">Motivation</span><span class="info-value">Strategic Mastery</span></div>
+                        <div class="metric-item">
+                            <div class="metric-header"><span class="metric-name">Confidence</span><span
+                                    class="metric-score">91</span></div>
+                            <div class="metric-bar">
+                                <div class="metric-fill" style="width: 91%"></div>
+                            </div>
+                        </div>
+                        <div class="metric-item">
+                            <div class="metric-header"><span class="metric-name">Tactical Sacrifice</span><span
+                                    class="metric-score">87</span></div>
+                            <div class="metric-bar">
+                                <div class="metric-fill" style="width: 87%"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <h3>Analysis</h3>
+                        <p class="small">
+                            Duda possesses a "Cold-Blooded" on-pitch temperament. She rarely panics under pressure, often inviting the press to create space for others. She acts as a secondary coach on the field, organizing teammates' positioning during dead-ball situations. High level of emotional regulation during high-stakes finals.
+                        </p>
+                        <div class="stat-box" style="margin-top: 12px;">
+                            <span class="stat-value">93</span>
+                            <span class="stat-label">Mental Competence Score (MCS) /100</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Development Timeline -->
+            <div class="card">
+                <h2>🤝 Development Timeline</h2>
+                <div class="timeline-item">
+                    <div class="timeline-date">Emergence (2018-2021) — Cruzeiro / Palmeiras</div>
+                    <div class="timeline-event">Key growth years. Established herself as a technical standout in the Brazilian league. Identification by National Team. <strong>Exit FGA: 74/100</strong></div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">Palmeiras Peak (2022-2023) — Libertadores Champion</div>
+                    <div class="timeline-event">Vital role in Palmeiras' continental success. Proved she could dominate the biggest stages in South America. <strong>Exit FGA: 82/100</strong></div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">Corinthians Mastery (2024-Present) — Dominance</div>
+                    <div class="timeline-event">The move to Corinthians saw her tactical IQ reach elite levels. 27 G+A in 2025. Leading all passing metrics in Brasileirão. <strong>Current FGA: 87.4/100</strong></div>
+                </div>
+            </div>
+
+            <!-- Career Statistics -->
+            <div class="card">
+                <h2>📈 Career Statistics Overview</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Club</th>
+                            <th>Season(s)</th>
+                            <th>Apps</th>
+                            <th>Goals</th>
+                            <th>Assists</th>
+                            <th>FGA Rating</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="background: rgba(225, 29, 72, 0.20);">
+                            <td><strong>Corinthians</strong></td>
+                            <td>2025</td>
+                            <td>38</td>
+                            <td>12</td>
+                            <td>15</td>
+                            <td><strong>87.4/100</strong></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Corinthians</strong></td>
+                            <td>2024</td>
+                            <td>32</td>
+                            <td>8</td>
+                            <td>11</td>
+                            <td>84.2/100</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Palmeiras</strong></td>
+                            <td>2023</td>
+                            <td>29</td>
+                            <td>10</td>
+                            <td>7</td>
+                            <td>81.5/100</td>
+                        </tr>
+                        <tr style="background: rgba(212, 175, 55, 0.15);">
+                            <td><strong>PRO TOTAL</strong></td>
+                            <td><strong>2018-Present</strong></td>
+                            <td><strong>210+</strong></td>
+                            <td><strong>65</strong></td>
+                            <td><strong>72</strong></td>
+                            <td><strong>87.4/100 (Current)</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Player Comparison -->
+            <div class="card">
+                <h2>📊 Player Comparison (Elite Global Playmakers)</h2>
+                <div class="visual-canvas">
+                    <canvas id="radarChart" style="max-width: 100%; max-height: 100%;"></canvas>
+                </div>
+                <p class="small" style="text-align: center; margin-top: 12px;">
+                    Comparing Duda Santos vs Vic Albuquerque (COR) and Patri Guijarro (BAR) — 2025/26 Data | Scores /100
+                </p>
+            </div>
+
+            <!-- Scout Notes -->
+            <div class="card">
+                <h2>📌 Final Scout Assessment — January 2026</h2>
+                <div class="two-col">
+                    <div>
+                        <h3>Strengths (Elite Tier)</h3>
+                        <div class="info-row"><span class="info-label">Passing Vision</span><span
+                                class="info-value">95/100</span></div>
+                        <div class="info-row"><span class="info-label">Press Resistance</span><span
+                                class="info-value">93/100</span></div>
+                        <div class="info-row"><span class="info-label">Tactical Intelligence</span><span
+                                class="info-value">92.5/100</span></div>
+                        <div class="info-row"><span class="info-label">Set-Piece Delivery</span><span
+                                class="info-value">90/100</span></div>
+                    </div>
+                    <div>
+                        <h3>Development Areas</h3>
+                        <div class="info-row"><span class="info-label">Aerial Duels</span><span
+                                class="info-value">58/100 (Weakness)</span></div>
+                        <div class="info-row"><span class="info-label">Raw Sprint Speed</span><span
+                                class="info-value">72/100 (Static)</span></div>
+                    </div>
+                </div>
+
+                <div class="muted-box" style="margin-top: 16px;">
+                    <strong style="color: var(--accent2);">🏆 EMPIRE WOMEN SCOUT FINAL RATING: 87.4/100</strong><br><br>
+                    <strong>Classification:</strong> World Class Tier (86-90 range)<br>
+                    <strong>Ceiling Projection:</strong> 90/100 by 2027<br>
+                    <strong>Value Assessment:</strong> Currently the most complete creative midfielder in Brazil. Ready for immediate impact in any Top 3 European league.
+                </div>
+
+                <div class="highlight-box">
+                    <strong style="color: var(--accent2);">🔮 Acquisition Recommendation:</strong><br>
+                    <span class="small">Highly Recommended for clubs playing "Juego de Posición". Ideal fits: Barcelona, Arsenal, Lyon. Immediate upgrade for Champions League contenders.</span>
+                </div>
+            </div>
+
+            <!-- Unique Selling Points -->
+            <div class="card">
+                <h2>💎 Unique Selling Points (USP Analysis)</h2>
+                <div class="three-col">
+                    <div class="stat-box">
+                        <span class="stat-value">95.2</span>
+                        <span class="stat-label">Vision Index</span>
+                        <p class="small" style="margin-top: 8px;">Elite-level pass mapping</p>
+                    </div>
+                    <div class="stat-box">
+                        <span class="stat-value">15</span>
+                        <span class="stat-label">Assists / Season</span>
+                        <p class="small" style="margin-top: 8px;">South America's lead provider</p>
+                    </div>
+                    <div class="stat-box">
+                        <span class="stat-value">#1</span>
+                        <span class="stat-label">Playmaker Rank</span>
+                        <p class="small" style="margin-top: 8px;">Brasileirão 2025 Best Midfielder</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <footer
+        style="background: var(--card); padding: 30px; text-align: center; border-top: 1px solid rgba(212, 175, 55, 0.12); margin-top: 30px;">
+        <p style="color: var(--muted); font-size: 13px;">
+            <strong style="color: var(--accent1);">Empire Women Scout</strong> — Specialized Female Football Analytics •
+            Proprietary Metrics • All Ratings /100 Scale
+        </p>
+        <p style="color: var(--muted); font-size: 11px; margin-top: 6px;">
+            Data validated via Opta, Empire Scouting Reports, and Brazil NT Performance Data. | Report Generated:
+            January 23, 2026
+        </p>
+    </footer>
+
+    <script>
+        const ctx = document.getElementById('radarChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'radar',
+            data: {
+                labels: ['Vision', 'Passing', 'Technical', 'Press Res.', 'Link-up', 'Positioning', 'Finishing', 'Physical'],
+                datasets: [{
+                    label: 'Duda Santos (COR) - 87',
+                    data: [95, 92, 93, 90, 95, 92, 81, 79],
+                    borderColor: '#e11d48',
+                    backgroundColor: 'rgba(225, 29, 72, 0.15)',
+                    borderWidth: 3,
+                    pointBackgroundColor: '#e11d48',
+                    pointBorderColor: '#fff',
+                    pointRadius: 5
+                }, {
+                    label: 'Vic Albuquerque (COR) - 84',
+                    data: [85, 82, 88, 85, 84, 95, 90, 85],
+                    borderColor: '#ffffff',
+                    backgroundColor: 'rgba(255, 255, 255, 0.05)',
+                    borderWidth: 2,
+                    pointRadius: 4
+                }, {
+                    label: 'Patri Guijarro (BAR) - 89',
+                    data: [92, 95, 90, 94, 96, 90, 78, 88],
+                    borderColor: '#d4af37',
+                    backgroundColor: 'transparent',
+                    borderWidth: 2,
+                    pointRadius: 3,
+                    borderDash: [5, 5]
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                scales: {
+                    r: {
+                        beginAtZero: true,
+                        max: 100,
+                        ticks: {
+                            stepSize: 20,
+                            color: '#a0a0a0',
+                            backdropColor: 'transparent',
+                            font: { size: 11 }
+                        },
+                        grid: { color: 'rgba(255,255,255,0.08)' },
+                        pointLabels: {
+                            color: '#f5f5f5',
+                            font: { size: 12, weight: '600' }
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        labels: {
+                            color: '#f5f5f5',
+                            font: { size: 13, weight: '600' },
+                            padding: 15,
+                            usePointStyle: true
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+
+</body>
+
+</html>
