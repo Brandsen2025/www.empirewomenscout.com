@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Madison Bowers — Empire Women Scout Profile | The American Prospect</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg: #0a0a0a;
+            --card: #141414;
+            --white: #f5f5f5;
+            --muted: #a0a0a0;
+            --accent1: #FFD700;
+            --accent2: #DC143C;
+            --club: #1E3A8A;
+            --prospect: #EC4899;
+            --win: #22c55e;
+            --loss: #ef4444;
+            --draw: #eab308;
+            --usa: #3C3B6E;
+            --gintra: #1E3A8A;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            background:
+                radial-gradient(900px 500px at 8% 12%, rgba(30, 58, 138, 0.12), transparent 10%),
+                radial-gradient(800px 400px at 92% 88%, rgba(60, 59, 110, 0.08), transparent 8%),
+                var(--bg);
+            color: var(--white);
+            font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        header {
+            max-width: 1300px;
+            margin: 18px auto;
+            padding: 0 22px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        header img { height: 32px; object-fit: contain; }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .header-title {
+            font-size: 20px;
+            font-weight: 800;
+            color: var(--accent1);
+        }
+
+        .header-date {
+            font-size: 13px;
+            color: var(--muted);
+            margin-left: 12px;
+            padding: 4px 10px;
+            background: rgba(30, 58, 138, 0.15);
+            border-radius: 6px;
+            border: 1px solid rgba(30, 58, 138, 0.3);
+        }
+
+        .container {
+            max-width: 1300px;
+            margin: 18px auto;
+            padding: 22px;
+            display: grid;
+            grid-template-columns: 360px 1fr;
+            gap: 26px;
+        }
+
+        .card {
+            background: var(--card);
+            padding: 18px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            position: relative;
+            margin-bottom: 18px;
+        }
+
+        .photo {
+            width: 100%;
+            height: 480px;
+            object-fit: cover;
+            object-position: center top;
+            border-radius: 10px;
+            border: 3px solid var(--gintra);
+            background: #000;
+            filter: contrast(1.05) saturate(1.1);
+        }
+
+        .title {
+            font-size: 32px;
+            font-weight: 900;
+            margin: 14px 0;
+            color: var(--white);
+            line-height: 1.2;
+        }
+
+        .sub {
+            color: var(--muted);
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+
+        .club-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: linear-gradient(135deg, rgba(30, 58, 138, 0.2), rgba(0, 0, 0, 0.3));
+            padding: 8px 14px;
+            border-radius: 8px;
+            border: 1px solid rgba(30, 58, 138, 0.4);
+            margin-bottom: 12px;
+        }
+
+        .club-badge span {
+            font-weight: 700;
+            color: var(--white);
+            font-size: 14px;
+        }
+
+        .nationality-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: linear-gradient(135deg, rgba(60, 59, 110, 0.20), rgba(0, 0, 0, 0.3));
+            padding: 6px 12px;
+            border-radius: 8px;
+            border: 1px solid rgba(60, 59, 110, 0.3);
+            margin-left: 8px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--white);
+        }
+
+        .rating-badge {
+            position: absolute;
+            right: 18px;
+            top: 18px;
+            background: linear-gradient(90deg, var(--accent1), #FF6B35);
+            color: #000;
+            font-weight: 900;
+            padding: 10px 14px;
+            border-radius: 16px;
+            font-size: 22px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            line-height: 1.1;
+        }
+
+        .rating-badge .rating-value { font-size: 28px; font-weight: 900; }
+        .rating-badge .rating-label { font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; opacity: 0.8; }
+
+        .section { margin-top: 18px; }
+
+        .section h2 {
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--accent1);
+            margin-bottom: 16px;
+        }
+
+        .section h3 {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--accent1);
+            margin: 16px 0 12px;
+        }
+
+        .two-col, .three-col { display: grid; gap: 14px; }
+        .two-col { grid-template-columns: 1fr 1fr; }
+        .three-col { grid-template-columns: 1fr 1fr 1fr; }
+
+        .small { color: var(--muted); font-size: 14px; line-height: 1.6; }
+        .lead { color: var(--white); font-size: 16px; line-height: 1.5; }
+
+        .visual-canvas {
+            background: transparent;
+            border-radius: 8px;
+            padding: 12px;
+            height: 420px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px dashed rgba(255, 215, 0, 0.18);
+        }
+
+        .muted-box, .highlight-box, .development-box, .warning-box {
+            padding: 14px;
+            border-radius: 10px;
+            margin-top: 12px;
+        }
+
+        .muted-box { background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.03); color: var(--muted); }
+        .highlight-box { background: linear-gradient(135deg, rgba(236, 72, 153, 0.12), rgba(30, 58, 138, 0.08)); border: 1px solid rgba(236, 72, 153, 0.2); }
+        .development-box { background: linear-gradient(135deg, rgba(30, 58, 138, 0.12), rgba(0, 0, 0, 0.3)); border: 1px solid rgba(30, 58, 138, 0.2); }
+        .warning-box { background: linear-gradient(135deg, rgba(220, 20, 60, 0.12), rgba(0, 0, 0, 0.3)); border: 1px solid rgba(220, 20, 60, 0.3); }
+
+        .info-row { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.06); }
+        .info-row:last-child { border-bottom: none; }
+        .info-label { color: var(--muted); font-size: 14px; }
+        .info-value { color: var(--white); font-weight: 600; font-size: 14px; }
+        .info-value.prospect { color: var(--club); }
+        .info-value.highlight { color: var(--accent1); }
+
+        .metric-item { margin: 14px 0; }
+        .metric-header { display: flex; justify-content: space-between; margin-bottom: 6px; }
+        .metric-name { font-weight: 600; color: var(--white); font-size: 13px; }
+        .metric-score { color: var(--accent1); font-weight: 800; font-size: 15px; }
+        .metric-bar { height: 6px; background: rgba(255, 255, 255, 0.06); border-radius: 3px; overflow: hidden; }
+        .metric-fill { height: 100%; background: linear-gradient(90deg, var(--accent1) 0%, #FF6B35 100%); border-radius: 3px; }
+
+        .timeline-item {
+            padding: 14px;
+            border-left: 3px solid var(--gintra);
+            margin: 12px 0;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 6px;
+        }
+        .timeline-date { color: var(--gintra); font-weight: 700; margin-bottom: 6px; font-size: 14px; }
+        .timeline-date.usa { color: #3C3B6E; }
+        .timeline-date.college { color: #DC143C; }
+        .timeline-event { color: var(--muted); font-size: 14px; line-height: 1.5; }
+
+        .stat-box, .season-stat-box { text-align: center; border-radius: 8px; }
+        .stat-box { background: rgba(30, 58, 138, 0.1); border: 1px solid rgba(30, 58, 138, 0.2); padding: 14px; }
+        .stat-value { font-size: 28px; font-weight: 900; color: var(--accent1); display: block; }
+        .stat-value.prospect { color: var(--club); }
+        .stat-label { font-size: 12px; color: var(--muted); margin-top: 4px; }
+
+        .season-stats-grid { display: grid; gap: 12px; margin-top: 16px; grid-template-columns: repeat(4, 1fr); }
+        .season-stat-box { background: rgba(30, 58, 138, 0.05); border: 1px solid rgba(30, 58, 138, 0.15); padding: 16px; transition: transform 0.2s; }
+        .season-stat-box:hover { transform: translateY(-2px); border-color: rgba(30, 58, 138, 0.4); }
+        .season-stat-value { font-size: 32px; font-weight: 900; color: var(--accent1); }
+        .season-stat-value.prospect { color: var(--club); }
+        .season-stat-label { font-size: 11px; color: var(--muted); margin-top: 4px; text-transform: uppercase; letter-spacing: 0.5px; }
+
+        .tier-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, rgba(236, 72, 153, 0.3), rgba(236, 72, 153, 0.1));
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-weight: 800;
+            font-size: 12px;
+            color: var(--prospect);
+            border: 1px solid rgba(236, 72, 153, 0.4);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 8px;
+        }
+
+        .scout-alert {
+            background: linear-gradient(135deg, rgba(30, 58, 138, 0.15), rgba(0, 0, 0, 0.2));
+            border: 1px solid rgba(30, 58, 138, 0.3);
+            padding: 14px;
+            border-radius: 10px;
+            margin-top: 16px;
+        }
+        .scout-alert-title { color: var(--gintra); font-weight: 800; font-size: 14px; margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
+        .scout-alert-text { color: var(--muted); font-size: 13px; line-height: 1.5; }
+
+        .match-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 10px;
+            padding: 16px;
+            margin-bottom: 12px;
+            display: grid;
+            grid-template-columns: 1fr auto 1fr auto;
+            align-items: center;
+            gap: 16px;
+        }
+        .match-teams { display: flex; flex-direction: column; gap: 4px; }
+        .match-team { font-weight: 600; font-size: 14px; color: var(--white); }
+        .match-team.home { color: var(--club); }
+        .match-score {
+            background: linear-gradient(135deg, var(--accent1), rgba(255, 107, 0, 0.7));
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-weight: 900;
+            font-size: 18px;
+            color: #000;
+            text-align: center;
+            min-width: 70px;
+        }
+        .result-w .match-score { background: linear-gradient(135deg, var(--win), rgba(34, 197, 94, 0.7)); }
+        .result-l .match-score { background: linear-gradient(135deg, var(--loss), rgba(239, 68, 68, 0.7)); }
+        .match-info { text-align: right; }
+        .match-date { font-size: 12px; color: var(--muted); }
+        .match-comp { font-size: 11px; color: var(--accent1); font-weight: 600; }
+
+        .personality-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 16px; }
+        .personality-card { background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.06); border-radius: 10px; padding: 16px; text-align: center; }
+        .personality-icon { font-size: 28px; margin-bottom: 8px; }
+        .personality-title { font-weight: 700; color: var(--white); font-size: 13px; margin-bottom: 4px; }
+        .personality-score { font-size: 24px; font-weight: 900; color: var(--accent1); }
+        .personality-desc { font-size: 11px; color: var(--muted); margin-top: 6px; line-height: 1.4; }
+
+        .relationship-item { display: flex; align-items: flex-start; gap: 14px; padding: 14px; background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.06); border-radius: 10px; margin-bottom: 12px; }
+        .relationship-avatar { width: 48px; height: 48px; border-radius: 50%; background: linear-gradient(135deg, var(--accent1), #FF6B35); display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 18px; color: #000; flex-shrink: 0; }
+        .relationship-content { flex: 1; }
+        .relationship-name { font-weight: 700; color: var(--white); font-size: 15px; margin-bottom: 2px; }
+        .relationship-role { font-size: 12px; color: var(--accent1); font-weight: 600; margin-bottom: 6px; }
+        .relationship-desc { font-size: 13px; color: var(--muted); line-height: 1.5; }
+        .relationship-dynamic { display: inline-block; background: rgba(255, 215, 0, 0.15); padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: 700; color: var(--accent1); margin-top: 8px; border: 1px solid rgba(255, 215, 0, 0.2); }
+
+        .trait-pill { display: inline-flex; align-items: center; gap: 6px; background: rgba(30, 58, 138, 0.15); padding: 6px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; color: var(--white); margin: 4px; border: 1px solid rgba(30, 58, 138, 0.25); }
+
+        .career-path { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin: 16px 0; padding: 16px; background: rgba(255, 255, 255, 0.02); border-radius: 10px; }
+        .career-club { background: rgba(60, 59, 110, 0.2); padding: 8px 12px; border-radius: 6px; font-size: 12px; font-weight: 600; border: 1px solid rgba(60, 59, 110, 0.3); color: #FFD700; }
+        .career-club.current { background: rgba(30, 58, 138, 0.3); border-color: rgba(30, 58, 138, 0.6); color: #60A5FA; }
+        .career-club.college { background: rgba(220, 20, 60, 0.2); border-color: rgba(220, 20, 60, 0.4); color: #DC143C; }
+        .career-arrow { color: var(--accent1); font-weight: 700; }
+
+        table { width: 100%; border-collapse: collapse; margin-top: 12px; }
+        th, td { padding: 12px; text-align: left; border-bottom: 1px solid rgba(255, 255, 255, 0.06); font-size: 14px; }
+        th { color: var(--accent1); font-weight: 700; text-transform: uppercase; font-size: 12px; letter-spacing: 0.5px; }
+        td { color: var(--white); }
+        tr:hover { background: rgba(255, 255, 255, 0.02); }
+
+        .pill { display: inline-block; background: rgba(0, 0, 0, 0.4); padding: 7px 12px; border-radius: 999px; font-weight: 700; font-size: 13px; color: var(--white); margin: 6px 8px 6px 0; border: 1px solid rgba(30, 58, 138, 0.3); }
+
+        .philosophy-table { width: 100%; margin: 16px 0; border-collapse: collapse; }
+        .philosophy-table th { background: rgba(255, 215, 0, 0.1); color: var(--accent1); padding: 12px; text-align: left; font-size: 12px; text-transform: uppercase; letter-spacing: 1px; border-bottom: 2px solid rgba(255, 215, 0, 0.3); }
+        .philosophy-table td { padding: 14px 12px; border-bottom: 1px solid rgba(255, 255, 255, 0.06); font-size: 14px; }
+        .philosophy-table tr:hover { background: rgba(255, 255, 255, 0.03); }
+        .philosophy-code { font-family: 'Courier New', monospace; font-weight: 700; color: var(--accent1); font-size: 16px; }
+        .philosophy-score { font-weight: 900; color: var(--club); font-size: 18px; }
+        .new-badge { background: rgba(236, 72, 153, 0.2); color: var(--prospect); padding: 2px 8px; border-radius: 12px; font-size: 10px; font-weight: 700; margin-left: 8px; text-transform: uppercase; }
+
+        @media (max-width: 980px) {
+            .container { grid-template-columns: 1fr; }
+            .photo { height: 380px; }
+            .visual-canvas { height: auto; }
+            .two-col, .three-col { grid-template-columns: 1fr; }
+            .season-stats-grid { grid-template-columns: repeat(2, 1fr); }
+            .personality-grid { grid-template-columns: 1fr; }
+            .career-path { flex-direction: column; align-items: flex-start; }
+            .career-arrow { transform: rotate(90deg); }
+        }
+    </style>
+<base target="_blank">
+</head>
+<body>
+    <header>
+        <div class="header-left">
+            <img src="https://media.licdn.com/dms/image/v2/D4E12AQEjuDAF0uOTrw/article-cover_image-shrink_720_1280/B4EZiOwG01GwAI-/0/1754741632806?e=2147483647&v=beta&t=L9ct0jEaWdSp7vfTI0urIqPPig0MspEd-6RtzxaQzzQ" alt="Empire Women Scout">
+            <div class="header-title">EMPIRE WOMEN SCOUT</div>
+            <span class="header-date">📅 09 Feb 2026 • DEVELOPMENTAL PROSPECT</span>
+        </div>
+    </header>
+
+    <div class="container">
+        <div>
+            <div class="card">
+                <img src="https://pbs.twimg.com/media/Gv_SPrpXgAArxps.jpg" alt="Madison Bowers" class="photo">
+                <div class="title">Madison Bowers</div>
+                <div class="sub">The American Prospect • Forward</div>
+
+                <div class="club-badge"><span>🔵 FC Gintra</span></div>
+                <span class="nationality-badge">🇺🇸 USA</span>
+
+                <div class="rating-badge"><span class="rating-value">58</span><span class="rating-label">FGA /100</span></div>
+
+                <div class="section">
+                    <div class="stat-box" style="margin-bottom: 10px;">
+                        <span class="stat-value prospect">5.8</span>
+                        <span class="stat-label">Empire FGA Rating /10</span>
+                    </div>
+                    <div class="tier-badge">Developmental</div>
+                    <div class="pill" style="margin-top: 8px;">🦶 Right Foot</div>
+                    <div class="pill" style="margin-top: 4px;">📏 1.73m</div>
+                    <div class="pill" style="margin-top: 4px;">⚽ Debut Aug 2025</div>
+                </div>
+
+                <div class="section">
+                    <h3>Current Status</h3>
+                    <div class="info-row"><span class="info-label">Full Name</span><span class="info-value">Madison Elizabeth Bowers</span></div>
+                    <div class="info-row"><span class="info-label">Date of Birth</span><span class="info-value">01 Jan 2003 (23 y)</span></div>
+                    <div class="info-row"><span class="info-label">Place of Birth</span><span class="info-value">Lake Jackson, Texas, USA</span></div>
+                    <div class="info-row"><span class="info-label">Nationality</span><span class="info-value highlight">🇺🇸 American</span></div>
+                    <div class="info-row"><span class="info-label">Height / Weight</span><span class="info-value">1.73 m / 54 kg</span></div>
+                    <div class="info-row"><span class="info-label">Primary Position</span><span class="info-value">Forward</span></div>
+                    <div class="info-row"><span class="info-label">Secondary</span><span class="info-value">Right Wing</span></div>
+                    <div class="info-row"><span class="info-label">Strong Foot</span><span class="info-value highlight">Right</span></div>
+                    <div class="info-row"><span class="info-label">Current Club</span><span class="info-value prospect">FC Gintra</span></div>
+                    <div class="info-row"><span class="info-label">League</span><span class="info-value">A Lyga (Lithuania)</span></div>
+                    <div class="info-row"><span class="info-label">Joined</span><span class="info-value">August 2025</span></div>
+                    <div class="info-row"><span class="info-label">Debut</span><span class="info-value highlight">23 Aug 2025</span></div>
+                    <div class="info-row"><span class="info-label">Previous</span><span class="info-value">SFA Ladyjacks</span></div>
+                    <div class="info-row"><span class="info-label">College</span><span class="info-value">Houston (2020-23)</span></div>
+                </div>
+
+                <div class="section">
+                    <h3>Career Honors</h3>
+                    <div class="info-row"><span class="info-label">🏆 Southland Conference</span><span class="info-value">2024 Champion</span></div>
+                    <div class="info-row"><span class="info-label">🏆 NCAA Tournament</span><span class="info-value">2024 Participant</span></div>
+                    <div class="info-row"><span class="info-label">🥇 All-Southland First Team</span><span class="info-value">2024</span></div>
+                    <div class="info-row"><span class="info-label">🎓 AAC Honors</span><span class="info-value">Houston (2020-23)</span></div>
+                    <div class="info-row"><span class="info-label">🏆 U18 National Champion</span><span class="info-value">Eclipse SC</span></div>
+                </div>
+
+                <div class="section">
+                    <h3>Career Statistics</h3>
+                    <div class="info-row"><span class="info-label">College Games (Houston)</span><span class="info-value">54</span></div>
+                    <div class="info-row"><span class="info-label">College Goals (Houston)</span><span class="info-value">6</span></div>
+                    <div class="info-row"><span class="info-label">College Games (SFA)</span><span class="info-value">20</span></div>
+                    <div class="info-row"><span class="info-label">College Goals (SFA)</span><span class="info-value highlight">6</span></div>
+                    <div class="info-row"><span class="info-label">College Assists (SFA)</span><span class="info-value">11 (team lead)</span></div>
+                    <div class="info-row"><span class="info-label">Professional Apps</span><span class="info-value">TBD</span></div>
+                </div>
+            </div>
+        </div>
+
+        <div>
+            <div class="card">
+                <h2>🌍 Empire Women Scout Analysis — The American Prospect</h2>
+                <p class="lead">
+                    Madison Bowers represents a <strong>new generation of American collegiate talent</strong> making the <strong>leap to European professional football</strong>. At just <strong>23 years old</strong>, she has just begun her <strong>professional journey</strong> with FC Gintra in Lithuania — a strategic choice for <strong>first-team minutes</strong> and <strong>European experience</strong> rather than the traditional NWSL path. Her <strong>FGA rating of 58</strong> reflects <strong>developmental potential</strong> rather than finished product — this is a player with <strong>raw tools</strong> who requires <strong>significant tactical and technical refinement</strong> to reach elite levels. Her <strong>breakout 2024 season at SFA</strong> (6 goals, 11 assists) demonstrates <strong>playmaking ability</strong> from forward positions, while her <strong>54 appearances at Houston</strong> show <strong>durability and consistency</strong>. The move to <strong>Gintra</strong> — a dominant Lithuanian club with UWCL participation — offers the <strong>ideal development environment</strong>.
+                </p>
+
+                <div class="career-path">
+                    <span class="career-club.college">🏫 Houston (2020-23)</span>
+                    <span class="career-arrow">→</span>
+                    <span class="career-club.college">🌲 SFA (2024)</span>
+                    <span class="career-arrow">→</span>
+                    <span class="career-club.current">🔵 FC Gintra (2025-)</span>
+                </div>
+
+                <div class="highlight-box">
+                    <strong style="color: var(--accent1);">🎯 The Developmental Archetype:</strong> Bowers fits the <strong>"late bloomer with tools"</strong> profile — a player who <strong>didn't dominate statistically</strong> in college (12 goals in 74 games) but shows <strong>underlying traits</strong> worth developing. Her <strong>11 assists in 20 games at SFA</strong> (2024) reveal <strong>vision and link-up ability</strong> unusual for a forward. At <strong>1.73m</strong>, she has <strong>decent physical presence</strong> for her age. The <strong>Gintra move</strong> is strategically sound — a club that <strong>dominates domestically</strong> (20+ consecutive titles) and offers <strong>UWCL exposure</strong>, allowing her to <strong>develop in competitive European environment</strong> without the pressure of top-5 leagues. <strong>Empire Women Scout assessment:</strong> High-upside developmental project requiring 2-3 years of refinement.
+                </div>
+
+                <div class="season-stats-grid">
+                    <div class="season-stat-box"><div class="season-stat-value prospect">58</div><div class="season-stat-label">FGA Rating</div></div>
+                    <div class="season-stat-box"><div class="season-stat-value">23</div><div class="season-stat-label">Years Old</div></div>
+                    <div class="season-stat-box"><div class="season-stat-value">0.16</div><div class="season-stat-label">College G/Game</div></div>
+                    <div class="season-stat-box"><div class="season-stat-value">11</div><div class="season-stat-label">SFA Assists</div></div>
+                </div>
+
+                <div class="scout-alert">
+                    <div class="scout-alert-title">⚠️ Career Trajectory Analysis</div>
+                    <div class="scout-alert-text">
+                        Bowers' <strong>FGA rating of 58</strong> positions her as a <strong>developmental prospect</strong> with <strong>significant room for growth</strong>. At <strong>23</strong>, she is at the <strong>beginning of her professional career</strong> — this rating should be viewed as a <strong>starting point</strong> rather than ceiling. Her <strong>college statistics</strong> (12 goals in 74 games) are <strong>modest</strong>, suggesting she is <strong>not a natural finisher</strong> but rather a <strong>creator/link-up forward</strong>. <strong>Development priorities:</strong> Finishing technique, tactical positioning, defensive pressing. <strong>Realistic projection:</strong> With proper development at Gintra (2-3 years), could reach <strong>65-70 FGA</strong> — mid-tier European professional level.
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>🌍 Career Journey — Texas to Lithuania</h2>
+                <p class="small" style="margin-bottom: 16px;">Unconventional path: Late bloomer seeking European development.</p>
+
+                <div class="timeline-item">
+                    <div class="timeline-date">2003-2019 — Lake Jackson, Texas</div>
+                    <div class="timeline-event">Born in Texas suburb. Played for Eclipse Soccer Club. U18 National Champion. Developed as technical forward with playmaking tendencies. Not heavily recruited out of high school.</div>
+                </div>
+
+                <div class="timeline-item" style="border-left-color: #DC143C;">
+                    <div class="timeline-date college">2020-2023 — University of Houston</div>
+                    <div class="timeline-event"><strong>Role player years.</strong> 54 appearances, 6 goals, 5 assists. Used primarily as squad rotation/depth. Gained experience in AAC competition. Developed physicality and defensive work rate.</div>
+                </div>
+
+                <div class="timeline-item" style="border-left-color: #DC143C;">
+                    <div class="timeline-date college">2024 — Stephen F. Austin (SFA)</div>
+                    <div class="timeline-event"><strong>Breakthrough season.</strong> Used 5th year of eligibility. 6 goals, 11 assists in 20 games (team lead). First Team All-Southland. Led Ladyjacks to conference title and NCAA Tournament. Proved playmaking value.</div>
+                </div>
+
+                <div class="timeline-item" style="border-left-color: #1E3A8A;">
+                    <div class="timeline-date">Aug 2025 — FC Gintra</div>
+                    <div class="timeline-event"><strong>Professional debut.</strong> Signed with Lithuanian champions. Debut August 23, 2025. First American player in recent Gintra history. Joins teammate Tamara Brown (Canadian) in forward line.</div>
+                </div>
+
+                <div class="muted-box" style="margin-top: 16px;">
+                    <strong style="color: var(--gintra);">The Strategic Choice:</strong> Bowers' decision to join <strong>FC Gintra</strong> over <strong>NWSL</strong> reflects <strong>modern player development thinking</strong> — prioritizing <strong>European experience</strong> and <strong>first-team minutes</strong> over domestic league security. Gintra offers: (1) <strong>Guaranteed playing time</strong> as squad player, (2) <strong>UWCL exposure</strong> impossible in NWSL for a rookie, (3) <strong>Professional environment</strong> with international teammates, (4) <strong>Platform to showcase</strong> for bigger clubs. This mirrors the path taken by <strong>Tamara Brown</strong> (Gintra teammate) and other North Americans seeking European careers.
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>📊 Core FGA Intelligence Metrics</h2>
+                <p class="small" style="margin-bottom: 16px;">Metrics as of Feb 2026 — Developmental forward assessment.</p>
+
+                <h3>Tier 1: Automated Metrics (60% Weight)</h3>
+                <div class="two-col">
+                    <div>
+                        <div class="metric-item"><div class="metric-header"><span class="metric-name">KEY (Key Passes)</span><span class="metric-score">64</span></div><div class="metric-bar"><div class="metric-fill" style="width: 64%"></div></div></div>
+                        <div class="metric-item"><div class="metric-header"><span class="metric-name">PVI (Pass Variety)</span><span class="metric-score">66</span></div><div class="metric-bar"><div class="metric-fill" style="width: 66%"></div></div></div>
+                        <div class="metric-item"><div class="metric-header"><span class="metric-name">CAR (Ball Carries)</span><span class="metric-score">62</span></div><div class="metric-bar"><div class="metric-fill" style="width: 62%"></div></div></div>
+                        <div class="metric-item"><div class="metric-header"><span class="metric-name">TBP (Progression)</span><span class="metric-score">61</span></div><div class="metric-bar"><div class="metric-fill" style="width: 61%"></div></div></div>
+                    </div>
+                    <div>
+                        <div class="metric-item"><div class="metric-header"><span class="metric-name">RDS (Finishing)</span><span class="metric-score">56</span></div><div class="metric-bar"><div class="metric-fill" style="width: 56%"></div></div></div>
+                        <div class="metric-item"><div class="metric-header"><span class="metric-name">CPX (Composure)</span><span class="metric-score">58</span></div><div class="metric-bar"><div class="metric-fill" style="width: 58%"></div></div></div>
+                        <div class="metric-item"><div class="metric-header"><span class="metric-name">POI (Position Intelligence)</span><span class="metric-score">60</span></div><div class="metric-bar"><div class="metric-fill" style="width: 60%"></div></div></div>
+                        <div class="metric-item"><div class="metric-header"><span class="metric-name">DEF (Defensive Work)</span><span class="metric-score">68</span></div><div class="metric-bar"><div class="metric-fill" style="width: 68%"></div></div></div>
+                    </div>
+                </div>
+
+                <h3>Tier 2: Semi-Automated Metrics (30% Weight)</h3>
+                <div class="two-col">
+                    <div class="metric-item"><div class="metric-header"><span class="metric-name">TAC (Tactical IQ)</span><span class="metric-score">59</span></div><div class="metric-bar"><div class="metric-fill" style="width: 59%"></div></div></div>
+                    <div class="metric-item"><div class="metric-header"><span class="metric-name">COM (Communication)</span><span class="metric-score">62</span></div><div class="metric-bar"><div class="metric-fill" style="width: 62%"></div></div></div>
+                    <div class="metric-item"><div class="metric-header"><span class="metric-name">ORG (Organization)</span><span class="metric-score">57</span></div><div class="metric-bar"><div class="metric-fill" style="width: 57%"></div></div></div>
+                    <div class="metric-item"><div class="metric-header"><span class="metric-name">CPI (Creative Index)</span><span class="metric-score">68</span></div><div class="metric-bar"><div class="metric-fill" style="width: 68%"></div></div></div>
+                </div>
+
+                <h3>Tier 3: Manual Scout Assessment (10% Weight)</h3>
+                <div class="two-col">
+                    <div>
+                        <div class="metric-item"><div class="metric-header"><span class="metric-name">CHR (Character)</span><span class="metric-score">72</span></div><div class="metric-bar"><div class="metric-fill" style="width: 72%"></div></div></div>
+                        <div class="metric-item"><div class="metric-header"><span class="metric-name">LEA (Leadership)</span><span class="metric-score">60</span></div><div class="metric-bar"><div class="metric-fill" style="width: 60%"></div></div></div>
+                    </div>
+                    <div>
+                        <div class="metric-item"><div class="metric-header"><span class="metric-name">MCS (Mental)</span><span class="metric-score">65</span></div><div class="metric-bar"><div class="metric-fill" style="width: 65%"></div></div></div>
+                        <div class="metric-item"><div class="metric-header"><span class="metric-name">PRO (Professionalism)</span><span class="metric-score">70</span></div><div class="metric-bar"><div class="metric-fill" style="width: 70%"></div></div></div>
+                    </div>
+                </div>
+
+                <div class="development-box" style="margin-top: 16px;">
+                    <strong style="color: var(--prospect);">📈 Developmental Profile Analysis:</strong>
+                    <p class="small" style="margin-top: 8px; margin-bottom: 0;">
+                        Bowers' metrics reveal a <strong>"playmaker-forward hybrid"</strong> — her <strong>creative index (68)</strong> and <strong>key passes (64)</strong> are <strong>above average for a developmental player</strong>, while her <strong>finishing (56)</strong> and <strong>composure (58)</strong> require <strong>significant development</strong>. Her <strong>defensive work rate (68)</strong> is a <strong>strength</strong> — she presses intelligently and tracks back. The <strong>gap between creation and finishing</strong> suggests she is <strong>more suited to a second striker or wide forward role</strong> than pure number 9. <strong>Development priorities:</strong> (1) Finishing technique/accuracy, (2) Positional awareness in box, (3) Composure under pressure. <strong>Timeline:</strong> 18-24 months to reach 65+ rating if properly developed.
+                    </p>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>🧠 60-Philosophy Framework Alignment</h2>
+                <p class="small" style="margin-bottom: 16px;"><strong>Empire FGA 60-Philosophy System</strong> — The American Prospect.</p>
+
+                <h3>Top 10 Philosophy Fits</h3>
+                <table class="philosophy-table">
+                    <thead><tr><th>Code</th><th>Philosophy Name</th><th>School</th><th>Score</th></tr></thead>
+                    <tbody>
+                        <tr style="background: rgba(30, 58, 138, 0.05);"><td><span class="philosophy-code">CRU</span></td><td>Cruyff Intelligence <span class="new-badge">DUTCH</span></td><td>Dutch School</td><td class="philosophy-score">68</td></tr>
+                        <tr><td><span class="philosophy-code">GUÁ</span></td><td>Guardiola Positional <span class="new-badge">SPANISH</span></td><td>Spanish School</td><td class="philosophy-score">65</td></tr>
+                        <tr><td><span class="philosophy-code">WEN</span></td><td>Wenger Development <span class="new-badge">FRENCH</span></td><td>French School</td><td class="philosophy-score">64</td></tr>
+                        <tr><td><span class="philosophy-code">ANC</span></td><td>Ancelotti Adaptability <span class="new-badge">MODERN</span></td><td>Modern Masters</td><td class="philosophy-score">63</td></tr>
+                        <tr><td><span class="philosophy-code">BEE</span></td><td>Beenhakker Technique <span class="new-badge">DUTCH</span></td><td>Dutch School</td><td class="philosophy-score">62</td></tr>
+                        <tr><td><span class="philosophy-code">DES</span></td><td>Deschamps Pragmatism <span class="new-badge">FRENCH</span></td><td>French School</td><td class="philosophy-score">61</td></tr>
+                        <tr><td><span class="philosophy-code">HEY</span></td><td>Heynckes Complete <span class="new-badge">GERMAN</span></td><td>German School</td><td class="philosophy-score">60</td></tr>
+                        <tr><td><span class="philosophy-code">LIP</span></td><td>Lippi Organization <span class="new-badge">ITALIAN</span></td><td>Italian School</td><td class="philosophy-score">59</td></tr>
+                        <tr><td><span class="philosophy-code">FON</span></td><td>Fontaine Finishing <span class="new-badge">FRENCH</span></td><td>French School</td><td class="philosophy-score">56</td></tr>
+                        <tr><td><span class="philosophy-code">PEL</span></td><td>Pellegrini Elegance <span class="new-badge">SPANISH</span></td><td>Spanish School</td><td class="philosophy-score">55</td></tr>
+                    </tbody>
+                </table>
+
+                <div class="highlight-box" style="margin-top: 20px;">
+                    <strong style="color: var(--accent1);">🎯 Philosophy DNA Profile:</strong>
+                    <p class="small" style="margin-top: 8px; margin-bottom: 0;">
+                        <strong>Primary School:</strong> Dutch/Spanish (66 avg) — <strong>Cruyff Intelligence (68)</strong> and <strong>Guardiola Positional (65)</strong> reflect her <strong>playmaking tendencies</strong> and <strong>ability to find space</strong>. Like Cruyff's ideal players, she is <strong>more creator than finisher</strong> — a "false 9" type who drops deep to link play. This aligns with her <strong>11 assists at SFA</strong>.<br><br>
+                        <strong>Secondary School:</strong> French/Modern (61 avg) — <strong>Wenger Development (64)</strong> and <strong>Ancelotti Adaptability (63)</strong> suggest <strong>potential for growth</strong> in structured systems. She has shown <strong>adaptability</strong> by thriving in her 5th year at SFA after limited role at Houston.<br><br>
+                        <strong>Tactical Archetype:</strong> <span style="color: var(--club); font-weight: 700;">"The Developing Link-Up Forward"</span> — Not a traditional striker, but a <strong>forward who facilitates for others</strong>. Best deployed as <strong>second striker</strong> or <strong>inverted winger</strong> where her <strong>creative abilities</strong> can shine while her <strong>finishing develops</strong>.
+                    </p>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>🎯 Final Assessment & Scouting Verdict</h2>
+                <div class="highlight-box">
+                    <strong style="color: var(--accent1);">📋 Empire Women Scout Summary:</strong>
+                    <p class="lead" style="margin-top: 8px; margin-bottom: 0;">
+                        Madison Bowers is a <strong>developmental prospect</strong> with <strong>intriguing playmaking traits</strong> but <strong>significant technical refinement needed</strong>. Her <strong>FGA rating of 58</strong> reflects <strong>raw potential</strong> rather than current ability — this is a <strong>2-3 year project</strong> for FC Gintra. Her <strong>breakout SFA season</strong> (6 goals, 11 assists) demonstrated she can <strong>thrive when given responsibility</strong>, but her <strong>college goal record</strong> (12 in 74 games) raises questions about <strong>finishing at elite level</strong>. The <strong>move to Gintra</strong> is strategically sound — <strong>UWCL exposure</strong> and <strong>professional environment</strong> will accelerate development. At <strong>23</strong>, she has <strong>time to develop</strong>, but must show <strong>significant improvement</strong> in finishing and composure to reach mid-tier European level (65+ FGA).
+                    </p>
+                </div>
+
+                <div class="two-col" style="margin-top: 16px;">
+                    <div class="development-box">
+                        <strong style="color: var(--prospect);">✅ Strengths</strong>
+                        <ul class="small" style="margin-top: 8px; padding-left: 18px; color: var(--muted);">
+                            <li>Creative playmaking (68 CPI) — 11 SFA assists</li>
+                            <li>Defensive work rate (68) — presses effectively</li>
+                            <li>Physical tools (1.73m) — decent size for position</li>
+                            <li>Adaptability — breakout in 5th year</li>
+                            <li>Durability — 74 college games</li>
+                            <li>Ambition — chose Europe over NWSL</li>
+                            <li>Age (23) — 5+ development years</li>
+                            <li>Link-up play — facilitates others</li>
+                            <li>Character (72) — responds to coaching</li>
+                            <li>Gintra platform — UWCL exposure</li>
+                        </ul>
+                    </div>
+                    <div class="warning-box">
+                        <strong style="color: #ef4444;">⚠️ Limitations</strong>
+                        <ul class="small" style="margin-top: 8px; padding-left: 18px; color: var(--muted);">
+                            <li>Finishing (56) — not natural goalscorer</li>
+                            <li>Composure (58) — needs technical refinement</li>
+                            <li>College goal record — 12 in 74 games</li>
+                            <li>Tactical IQ (59) — positioning needs work</li>
+                            <li>Experience — only 1 pro season</li>
+                            <li>Competition level — A Lyga not top-tier</li>
+                            <li>Late bloomer — limited top-level exposure</li>
+                            <li>Pressure situations — unproven at elite level</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="scout-alert" style="margin-top: 16px;">
+                    <div class="scout-alert-title">🎯 Scouting Recommendation</div>
+                    <div class="scout-alert-text">
+                        <strong>DEVELOPMENTAL PROJECT — Patience Required</strong> — Bowers is a <strong>2-3 year development project</strong> for FC Gintra. She should <strong>not be expected to contribute immediately</strong> at senior level. <strong>Development plan:</strong> (1) <strong>Year 1</strong>: Squad rotation, learning professional demands, UWCL exposure; (2) <strong>Year 2</strong>: Challenge for starting role, improve finishing; (3) <strong>Year 3</strong>: Establish as regular starter or seek transfer. <strong>Best utilized as:</strong> Second striker or right winger where her <strong>creative abilities</strong> shine. <strong>Training priorities:</strong> Finishing drills (daily), positional awareness, composure exercises. <strong>Realistic ceiling:</strong> 68-72 FGA (mid-tier European professional). <strong>Empire Women Scout final verdict:</strong> <strong>High-upside gamble</strong> with significant risk — could develop into useful squad player or plateau at developmental level.
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>📚 Data Sources & Methodology</h2>
+                <div class="two-col">
+                    <div>
+                        <h3>Primary Data Sources</h3>
+                        <div class="info-row"><span class="info-label">📊 ESPN</span><span class="info-value">Player Profile</span></div>
+                        <div class="info-row"><span class="info-label">⚽ UH Cougars</span><span class="info-value">College Stats</span></div>
+                        <div class="info-row"><span class="info-label">🌍 SFA</span><span class="info-value">2024 Season Data</span></div>
+                        <div class="info-row"><span class="info-label">📈 Soccerdonna</span><span class="info-value">Transfer Data</span></div>
+                    </div>
+                    <div>
+                        <h3>Empire Women Scout System</h3>
+                        <div class="info-row"><span class="info-label">📋 Metrics Used</span><span class="info-value">794 Proprietary</span></div>
+                        <div class="info-row"><span class="info-label">🧠 Philosophies</span><span class="info-value">60-Framework System</span></div>
+                        <div class="info-row"><span class="info-label">⚖️ Rating Scale</span><span class="info-value">0-100 / 0-10</span></div>
+                        <div class="info-row"><span class="info-label">🔍 Last Updated</span><span class="info-value">09 Feb 2026</span></div>
+                    </div>
+                </div>
+                <div class="muted-box" style="margin-top: 16px;">
+                    <strong style="color: var(--gintra);">Methodology Note:</strong> All Empire Women Scout ratings combine <strong>automated statistical analysis</strong> (60% weight), <strong>semi-automated tactical intelligence</strong> (30% weight), and <strong>manual scout assessment</strong> (10% weight). Bowers' rating of <strong>58</strong> reflects her <strong>developmental status</strong> as a <strong>first-year professional</strong> with <strong>significant upside</strong> but <strong>technical limitations</strong>. This rating should be <strong>re-evaluated every 6 months</strong> during her development.
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <footer style="background: var(--card); padding: 30px; text-align: center; border-top: 1px solid rgba(30, 58, 138, 0.2); margin-top: 30px;">
+        <p style="color: var(--muted); font-size: 13px;"><strong style="color: var(--accent1);">Empire Women Scout</strong> — 794 Proprietary Metrics • 60-Philosophy Framework • All Ratings /100 Scale</p>
+        <p style="color: var(--muted); font-size: 11px; margin-top: 6px;">Data validated via ESPN, UH Athletics, SFA Athletics. | Profile Created: 09 February 2026</p>
+        <p style="color: var(--muted); font-size: 10px; margin-top: 12px; opacity: 0.7;">© 2026 Empire Women Scout. All rights reserved. | <em>Field Global Analysis™</em> proprietary system.</p>
+    </footer>
+</body>
+</html>

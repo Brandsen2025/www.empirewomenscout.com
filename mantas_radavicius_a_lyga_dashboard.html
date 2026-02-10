@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mantas Radavicius - A Lyga Empire FGA Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+        * { font-family: 'Inter', sans-serif; }
+        
+        body { 
+            background: radial-gradient(900px 500px at 8% 12%, rgba(213, 26, 75, 0.15), transparent 15%),
+                        radial-gradient(800px 400px at 92% 88%, rgba(20, 20, 30, 0.5), transparent 10%),
+                        #0b0e14;
+            color: #f0f6fc;
+            min-height: 100vh;
+        }
+
+        .glass { background: rgba(21, 25, 33, 0.95); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(213, 26, 75, 0.3); }
+        
+        .gradient-text {
+            background: linear-gradient(to right, #D51A4B, #ff8fa3);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .tab-button {
+            padding: 12px 24px;
+            color: #94a3b8;
+            font-weight: 600;
+            border-bottom: 2px solid transparent;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        .tab-button:hover { color: #fff; }
+        .tab-button.active { color: #D51A4B; border-bottom: 2px solid #D51A4B; }
+        
+        .tab-content { display: none; animation: fadeIn 0.4s ease; }
+        .tab-content.active { display: block; }
+        
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+
+        .database-table { width: 100%; border-collapse: collapse; }
+        .database-table th {
+            background: rgba(213, 26, 75, 0.15);
+            color: #ff8fa3;
+            text-align: left;
+            padding: 14px 12px;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            border-bottom: 1px solid rgba(213, 26, 75, 0.3);
+        }
+        .database-table td {
+            padding: 12px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            vertical-align: middle;
+            font-size: 0.9rem;
+        }
+        .database-table tr:hover { background: rgba(213, 26, 75, 0.05); }
+
+        .stat-card {
+            background: rgba(21, 25, 33, 0.6);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+        }
+        .stat-value { font-size: 2.5rem; font-weight: 800; color: white; }
+        .stat-label { color: #94a3b8; font-size: 0.8rem; text-transform: uppercase; margin-top: 5px; }
+
+        .search-input {
+            background: rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 8px;
+            width: 100%;
+        }
+        .search-input:focus { outline: none; border-color: #D51A4B; }
+
+        .player-card {
+            background: rgba(21, 25, 33, 0.8);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 12px;
+            padding: 20px;
+            transition: all 0.3s;
+        }
+        .player-card:hover {
+            transform: translateY(-2px);
+            border-color: rgba(213, 26, 75, 0.5);
+            box-shadow: 0 10px 30px rgba(213, 26, 75, 0.2);
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+        .badge-elite { background: rgba(213, 26, 75, 0.3); color: #ff8fa3; border: 1px solid #D51A4B; }
+        .badge-high { background: rgba(34, 211, 238, 0.2); color: #22d3ee; }
+        .badge-good { background: rgba(34, 197, 94, 0.2); color: #22c55e; }
+        .badge-avg { background: rgba(251, 191, 36, 0.2); color: #fbbf24; }
+        
+        .badge-gk { background: rgba(251, 191, 36, 0.2); color: #fbbf24; }
+        .badge-def { background: rgba(34, 211, 238, 0.2); color: #22d3ee; }
+        .badge-mid { background: rgba(34, 197, 94, 0.2); color: #22c55e; }
+        .badge-fwd { background: rgba(213, 26, 75, 0.2); color: #ff8fa3; }
+
+        .player-link {
+            color: #60a5fa;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        .player-link:hover { color: #D51A4B; text-decoration: underline; }
+
+        .metric-bar {
+            background: rgba(255,255,255,0.1);
+            height: 6px;
+            border-radius: 3px;
+            overflow: hidden;
+            margin-top: 4px;
+        }
+        .metric-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #D51A4B, #ff8fa3);
+            border-radius: 3px;
+            transition: width 0.5s ease;
+        }
+
+        .fga-badge {
+            font-size: 1.4rem;
+            font-weight: 800;
+            padding: 8px 16px;
+            border-radius: 12px;
+            display: inline-block;
+        }
+
+        .club-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 16px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="glass sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center gap-4">
+                    <div>
+                        <h1 class="text-2xl font-bold gradient-text">Empire FGA - A Lyga Intelligence</h1>
+                        <p class="text-sm text-gray-400">779 Metrics | 60-Philosophy Framework | 2025 Season</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-6">
+                    <div class="text-right">
+                        <p class="text-sm font-semibold text-white">Mantas Radavicius</p>
+                        <p class="text-xs text-gray-400">Sporting Director - FC Gintra</p>
+                    </div>
+                    <div class="w-12 h-12 rounded-full bg-gradient-to-br from-pink-500 to-pink-700 flex items-center justify-center text-white font-bold text-lg">
+                        MR
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation Tabs -->
+    <div class="max-w-7xl mx-auto px-6 py-4">
+        <div class="flex gap-4 border-b border-gray-800 overflow-x-auto">
+            <button class="tab-button active" onclick="showTab('overview')">
+                <i class="fas fa-home mr-2"></i>Overview
+            </button>
+            <button class="tab-button" onclick="showTab('top-performers')">
+                <i class="fas fa-trophy mr-2"></i>Top Performers
+            </button>
+            <button class="tab-button" onclick="showTab('all-players')">
+                <i class="fas fa-users mr-2"></i>All Players (175)
+            </button>
+            <button class="tab-button" onclick="showTab('fk-gintra')">
+                <i class="fas fa-star mr-2"></i>FK Gintra Squad
+            </button>
+            <button class="tab-button" onclick="showTab('by-club')">
+                <i class="fas fa-shield-alt mr-2"></i>By Club
+            </button>
+            <button class="tab-button" onclick="showTab('comparison')">
+                <i class="fas fa-balance-scale mr-2"></i>Compare
+            </button>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="max-w-7xl mx-auto px-6 py-6">
+        
+        <!-- Overview Tab -->
+        <div id="overview" class="tab-content active">
+            <!-- KPI Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-5 gap-6 mb-8">
+                <div class="stat-card">
+                    <div class="stat-value gradient-text">175</div>
+                    <div class="stat-label">Total Players</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value text-pink-400">6</div>
+                    <div class="stat-label">A Lyga Clubs</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value text-cyan-400" id="avgFga">8.1</div>
+                    <div class="stat-label">Avg FGA Rating</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value text-green-400">34</div>
+                    <div class="stat-label">FK Gintra Squad</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value text-yellow-400" id="topRated">9.8</div>
+                    <div class="stat-label">Highest FGA</div>
+                </div>
+            </div>
+
+            <!-- League Info -->
+            <div class="bg-gray-900/50 rounded-xl p-6 mb-8">
+                <h2 class="text-xl font-bold text-pink-400 mb-4">
+                    <i class="fas fa-trophy mr-2"></i>2025 Moterų A Lyga - Season Summary
+                </h2>
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                    <div>
+                        <p class="text-gray-400 text-sm mb-1">Champions</p>
+                        <p class="text-white font-bold">FK Gintra</p>
+                        <p class="text-xs text-gray-500">24th title</p>
+                    </div>
+                    <div>
+                        <p class="text-gray-400 text-sm mb-1">Top Scorer</p>
+                        <p class="text-white font-bold">Laura Spenazzatto</p>
+                        <p class="text-xs text-gray-500">17 goals (Gintra)</p>
+                    </div>
+                    <div>
+                        <p class="text-gray-400 text-sm mb-1">Total Matches</p>
+                        <p class="text-white font-bold">60</p>
+                        <p class="text-xs text-gray-500">20 rounds</p>
+                    </div>
+                    <div>
+                        <p class="text-gray-400 text-sm mb-1">Goals Scored</p>
+                        <p class="text-white font-bold">193</p>
+                        <p class="text-xs text-gray-500">3.22 per match</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Team Standings -->
+            <div class="bg-gray-900/50 rounded-xl p-6">
+                <h2 class="text-xl font-bold text-pink-400 mb-4">
+                    <i class="fas fa-list-ol mr-2"></i>Final Standings
+                </h2>
+                <div class="overflow-x-auto">
+                    <table class="database-table">
+                        <thead>
+                            <tr>
+                                <th>Rank</th>
+                                <th>Team</th>
+                                <th>P</th>
+                                <th>W</th>
+                                <th>D</th>
+                                <th>L</th>
+                                <th>GF</th>
+                                <th>GA</th>
+                                <th>GD</th>
+                                <th>Pts</th>
+                                <th>Players</th>
+                                <th>Avg FGA</th>
+                            </tr>
+                        </thead>
+                        <tbody id="standingsTable">
+                            <!-- Populated by JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Top Performers Tab -->
+        <div id="top-performers" class="tab-content">
+            <div class="bg-gray-900/50 rounded-xl p-6">
+                <h2 class="text-2xl font-bold text-pink-400 mb-4">
+                    <i class="fas fa-trophy mr-2"></i>Top 30 A Lyga Players by Empire FGA Rating
+                </h2>
+                <div class="overflow-x-auto">
+                    <table class="database-table">
+                        <thead>
+                            <tr>
+                                <th>Rank</th>
+                                <th>Player</th>
+                                <th>Club</th>
+                                <th>Pos</th>
+                                <th>Age</th>
+                                <th>FGA</th>
+                                <th>XPS</th>
+                                <th>POI</th>
+                                <th>CPX</th>
+                                <th>MRK</th>
+                                <th>Goals</th>
+                                <th>Philosophy</th>
+                                <th>Profile</th>
+                            </tr>
+                        </thead>
+                        <tbody id="topPerformersTable">
+                            <!-- Populated by JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- All Players Tab -->
+        <div id="all-players" class="tab-content">
+            <div class="bg-gray-900/50 rounded-xl p-6">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-xl font-bold text-pink-400">
+                        <i class="fas fa-database mr-2"></i>Complete Database - 175 Players
+                    </h2>
+                    <input type="text" id="quickSearch" class="search-input max-w-md" placeholder="Search by name or club...">
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="database-table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Player</th>
+                                <th>Club</th>
+                                <th>Pos</th>
+                                <th>Age</th>
+                                <th>FGA</th>
+                                <th>XPS</th>
+                                <th>POI</th>
+                                <th>CPX</th>
+                                <th>MRK</th>
+                                <th>Profile</th>
+                            </tr>
+                        </thead>
+                        <tbody id="allPlayersTable">
+                            <!-- Populated by JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- FK Gintra Tab -->
+        <div id="fk-gintra" class="tab-content">
+            <div class="bg-gray-900/50 rounded-xl p-6 mb-6">
+                <h2 class="text-2xl font-bold text-pink-400 mb-2">
+                    <i class="fas fa-star mr-2"></i>FK Gintra - 2025 Champions Squad
+                </h2>
+                <p class="text-gray-400 text-sm mb-6">24-time Lithuanian Champions | UEFA Women's Champions League Qualifier | Average FGA: <span id="gintraAvgFga" class="text-pink-400 font-bold">9.1</span></p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="gintraSquad">
+                    <!-- Populated by JS -->
+                </div>
+            </div>
+        </div>
+
+        <!-- By Club Tab -->
+        <div id="by-club" class="tab-content">
+            <div id="byClubContainer">
+                <!-- Populated by JS -->
+            </div>
+        </div>
+
+        <!-- Comparison Tab -->
+        <div id="comparison" class="tab-content">
+            <div class="bg-gray-900/50 rounded-xl p-6">
+                <h2 class="text-xl font-bold text-pink-400 mb-4">
+                    <i class="fas fa-balance-scale mr-2"></i>Player Comparison Tool
+                </h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                    <div>
+                        <label class="block text-sm text-gray-400 mb-2">Player 1</label>
+                        <select id="player1Select" class="search-input">
+                            <option value="">Select player...</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm text-gray-400 mb-2">Player 2</label>
+                        <select id="player2Select" class="search-input">
+                            <option value="">Select player...</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div id="comparisonResult" class="hidden">
+                    <canvas id="comparisonChart" height="80"></canvas>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // Real A Lyga Players Data with Empire FGA Ratings
+        const realPlayers = [{"name": "Brianna Nicole Taylor", "club": "FK Gintra", "position": "Midfielder", "nationality": "USA", "age": 27.0, "number": 6.0, "profile_link": "Brianna_Taylor.html", "fga": 9.8, "xps": 9.4, "poi": 9.8, "cpx": 9.8, "mrk": 9.1, "goals": 10, "philosophy": "Modrić - Playmaker"}, {"name": "Lidiane Ribeiro", "club": "FK Gintra", "position": "Forward", "nationality": "Brazil", "age": 27.0, "number": 8.0, "profile_link": "Lidiane_Ribeiro.html", "fga": 9.8, "xps": 9.8, "poi": 9.4, "cpx": 9.4, "mrk": 7.8, "goals": 0, "philosophy": "Suárez - Poacher"}, {"name": "Lidiane Ribeiro", "club": "FK Gintra", "position": "Midfielder", "nationality": "Brazil", "age": 27.0, "number": 8.0, "profile_link": "Lidiane_Ribeiro.html", "fga": 9.7, "xps": 9.4, "poi": 9.8, "cpx": 9.8, "mrk": 9.1, "goals": 0, "philosophy": "Modrić - Playmaker"}, {"name": "Justina Blaževičiūtė", "club": "FK Gintra", "position": "Midfielder", "nationality": "Lithuania", "age": 16.0, "number": 15.0, "profile_link": "Justina_Blaževičiūtė.html", "fga": 9.7, "xps": 8.7, "poi": 9.4, "cpx": 9.1, "mrk": 8.4, "goals": 12, "philosophy": "Modrić - Playmaker"}, {"name": "Meida Proscevičiūtė", "club": "FK Gintra", "position": "Forward", "nationality": "Lithuania", "age": 20.0, "number": 7.0, "profile_link": "Meida_Proscevičiūtė.html", "fga": 9.5, "xps": 9.1, "poi": 8.7, "cpx": 8.7, "mrk": 7.3, "goals": 9, "philosophy": "Suárez - Poacher"}, {"name": "Evelina Supelytė", "club": "FK Gintra", "position": "Forward", "nationality": "Lithuania", "age": 22.0, "number": 28.0, "profile_link": "Evelina_Supelytė.html", "fga": 9.5, "xps": 9.8, "poi": 9.1, "cpx": 9.1, "mrk": 7.6, "goals": 0, "philosophy": "Suárez - Poacher"}, {"name": "Edith Garcia Falero", "club": "FK Transinvest", "position": "Forward", "nationality": "nan", "age": NaN, "number": NaN, "profile_link": "Edith_Falero.html", "fga": 9.5, "xps": 9.5, "poi": 8.4, "cpx": 8.4, "mrk": 7.0, "goals": 10, "philosophy": "Suárez - Poacher"}, {"name": "Marija Galkina", "club": "FK Gintra", "position": "Midfielder", "nationality": "Lithuania", "age": 23.0, "number": 10.0, "profile_link": "Marija_Galkina.html", "fga": 9.4, "xps": 9.1, "poi": 9.8, "cpx": 9.6, "mrk": 8.8, "goals": 0, "philosophy": "Modrić - Playmaker"}, {"name": "Madison Bowers", "club": "FK Gintra", "position": "Midfielder", "nationality": "USA", "age": 23.0, "number": 14.0, "profile_link": "Madison_Bowers.html", "fga": 9.4, "xps": 9.1, "poi": 9.8, "cpx": 9.6, "mrk": 8.8, "goals": 0, "philosophy": "Modrić - Playmaker"}, {"name": "Sabrina Amorim", "club": "FK Gintra", "position": "Defender", "nationality": "Brazil", "age": 22.0, "number": 5.0, "profile_link": "Sabrina_Amorim.html", "fga": 9.3, "xps": 8.0, "poi": 9.6, "cpx": 9.4, "mrk": 9.8, "goals": 0, "philosophy": "Van Dijk - Defensive"}, {"name": "Tereza Romanovskaja", "club": "FK Gintra", "position": "Defender", "nationality": "Lithuania", "age": 22.0, "number": 17.0, "profile_link": "Tereza_Romanovskaja.html", "fga": 9.3, "xps": 8.0, "poi": 9.6, "cpx": 9.4, "mrk": 9.8, "goals": 0, "philosophy": "Van Dijk - Defensive"}, {"name": "Laura Kubiliūtė", "club": "FK Gintra", "position": "Defender", "nationality": "Lithuania", "age": 22.0, "number": 29.0, "profile_link": "Laura_Kubiliūtė.html", "fga": 9.3, "xps": 8.0, "poi": 9.6, "cpx": 9.4, "mrk": 9.8, "goals": 0, "philosophy": "Van Dijk - Defensive"}, {"name": "Kiyani Johnson", "club": "FK Gintra", "position": "Forward", "nationality": "nan", "age": 28.0, "number": 19.0, "profile_link": "Kiyani_Johnson.html", "fga": 9.3, "xps": 9.8, "poi": 9.0, "cpx": 9.0, "mrk": 7.5, "goals": 0, "philosophy": "Suárez - Poacher"}, {"name": "Sabrina", "club": "FK Gintra", "position": "Midfielder", "nationality": "Brazil", "age": NaN, "number": 5.0, "profile_link": "Sabrina.html", "fga": 9.2, "xps": 9.0, "poi": 9.7, "cpx": 9.4, "mrk": 8.6, "goals": 0, "philosophy": "Modrić - Playmaker"}, {"name": "Saulutė Railaitė", "club": "FK Gintra", "position": "Midfielder", "nationality": "Lithuania", "age": NaN, "number": 15.0, "profile_link": "Saulutė_Railaitė.html", "fga": 9.2, "xps": 9.0, "poi": 9.7, "cpx": 9.4, "mrk": 8.6, "goals": 0, "philosophy": "Modrić - Playmaker"}, {"name": "Augustė Baltrušaitytė", "club": "FK Gintra", "position": "Midfielder", "nationality": "Lithuania", "age": NaN, "number": 18.0, "profile_link": "Augustė_Baltrušaitytė.html", "fga": 9.2, "xps": 9.0, "poi": 9.7, "cpx": 9.4, "mrk": 8.6, "goals": 0, "philosophy": "Modrić - Playmaker"}, {"name": "Khrystyna Pereviznyk", "club": "FK Gintra", "position": "Midfielder", "nationality": "Ukraine", "age": 28.0, "number": 88.0, "profile_link": "Khrystyna_Pereviznyk.html", "fga": 9.2, "xps": 9.0, "poi": 9.7, "cpx": 9.4, "mrk": 8.6, "goals": 0, "philosophy": "Modrić - Playmaker"}, {"name": "Ugnė Grincevičiūtė", "club": "FK Gintra", "position": "Midfielder", "nationality": "Lithuania", "age": NaN, "number": NaN, "profile_link": "Ugnė_Grincevičiūtė.html", "fga": 9.2, "xps": 9.0, "poi": 9.7, "cpx": 9.4, "mrk": 8.6, "goals": 0, "philosophy": "Modrić - Playmaker"}, {"name": "Kenneth Tig-Ishor Ikugar", "club": "FK Transinvest", "position": "Forward", "nationality": "Nigeria", "age": 25.0, "number": NaN, "profile_link": "Kenneth_Ikugar.html", "fga": 9.2, "xps": 9.6, "poi": 8.8, "cpx": 8.8, "mrk": 7.4, "goals": 0, "philosophy": "Suárez - Poacher"}, {"name": "Nwoga Chidera Henry", "club": "FK Transinvest", "position": "Forward", "nationality": "Nigeria", "age": 25.0, "number": NaN, "profile_link": "Nwoga_Henry.html", "fga": 9.2, "xps": 9.6, "poi": 8.8, "cpx": 8.8, "mrk": 7.4, "goals": 0, "philosophy": "Suárez - Poacher"}, {"name": "Andžela Vaičytė", "club": "FK Gintra", "position": "Defender", "nationality": "Lithuania", "age": NaN, "number": 4.0, "profile_link": "Andžela_Vaičytė.html", "fga": 9.1, "xps": 7.8, "poi": 9.4, "cpx": 9.2, "mrk": 9.8, "goals": 0, "philosophy": "Van Dijk - Defensive"}, {"name": "Athena Diachenko", "club": "FK Gintra", "position": "Defender", "nationality": "Lithuania", "age": NaN, "number": 22.0, "profile_link": "Athena_Diachenko.html", "fga": 9.1, "xps": 7.8, "poi": 9.4, "cpx": 9.2, "mrk": 9.8, "goals": 0, "philosophy": "Van Dijk - Defensive"}, {"name": "Aistė Šveckutė", "club": "FK Gintra", "position": "Defender", "nationality": "Lithuania", "age": NaN, "number": 23.0, "profile_link": "Aistė_Šveckutė.html", "fga": 9.1, "xps": 7.8, "poi": 9.4, "cpx": 9.2, "mrk": 9.8, "goals": 0, "philosophy": "Van Dijk - Defensive"}, {"name": "Algimantė Mikutaitė", "club": "FK Gintra", "position": "Defender", "nationality": "Lithuania", "age": 29.0, "number": 44.0, "profile_link": "Algimantė_Mikutaitė.html", "fga": 9.1, "xps": 7.8, "poi": 9.4, "cpx": 9.2, "mrk": 9.8, "goals": 0, "philosophy": "Van Dijk - Defensive"}, {"name": "Artem Fedorov", "club": "FK Transinvest", "position": "Midfielder", "nationality": "Lithuania", "age": 27.0, "number": NaN, "profile_link": "Artem_Fedorov.html", "fga": 9.1, "xps": 8.8, "poi": 9.5, "cpx": 9.3, "mrk": 8.5, "goals": 0, "philosophy": "Modrić - Playmaker"}, {"name": "Edvinas Kloniūnas", "club": "FK Transinvest", "position": "Midfielder", "nationality": "Lithuania", "age": 27.0, "number": NaN, "profile_link": "Edvinas_Kloniūnas.html", "fga": 9.1, "xps": 8.8, "poi": 9.5, "cpx": 9.3, "mrk": 8.5, "goals": 0, "philosophy": "Modrić - Playmaker"}, {"name": "Karina Galdikaitė", "club": "FK Gintra", "position": "Goalkeeper", "nationality": "Lithuania", "age": NaN, "number": 44.0, "profile_link": "Karina_Galdikaitė.html", "fga": 9.0, "xps": 8.6, "poi": 9.2, "cpx": 9.4, "mrk": 8.7, "goals": 0, "philosophy": "Neuer - Sweeper Keeper"}, {"name": "Agnieška Kazarina", "club": "FK Gintra", "position": "Forward", "nationality": "Lithuania", "age": 19.0, "number": 16.0, "profile_link": "Agnieška_Kazarina.html", "fga": 9.0, "xps": 9.5, "poi": 8.7, "cpx": 8.7, "mrk": 7.3, "goals": 0, "philosophy": "Suárez - Poacher"}, {"name": "Victoria Igbonoba", "club": "FK Gintra", "position": "Forward", "nationality": "Nigeria", "age": 21.0, "number": 41.0, "profile_link": "Victoria_Igbonoba.html", "fga": 9.0, "xps": 9.5, "poi": 8.7, "cpx": 8.7, "mrk": 7.3, "goals": 0, "philosophy": "Suárez - Poacher"}, {"name": "Arminas Čivilis", "club": "FK Transinvest", "position": "Defender", "nationality": "Lithuania", "age": 27.0, "number": NaN, "profile_link": "Arminas_Čivilis.html", "fga": 9.0, "xps": 7.7, "poi": 9.3, "cpx": 9.1, "mrk": 9.6, "goals": 0, "philosophy": "Van Dijk - Defensive"}, {"name": "Dominyka Misiūnaitė", "club": "FK Gintra", "position": "Midfielder", "nationality": "Lithuania", "age": 19.0, "number": 11.0, "profile_link": "Dominyka_Misiūnaitė.html", "fga": 8.9, "xps": 8.7, "poi": 9.4, "cpx": 9.1, "mrk": 8.4, "goals": 0, "philosophy": "Modrić - Playmaker"}, {"name": "Eitvydė Partikaitė", "club": "FK Gintra", "position": "Midfielder", "nationality": "Lithuania", "age": 21.0, "number": 27.0, "profile_link": "Eitvydė_Partikaitė.html", "fga": 8.9, "xps": 8.7, "poi": 9.4, "cpx": 9.1, "mrk": 8.4, "goals": 0, "philosophy": "Modrić - Playmaker"}, {"name": "Bunmi David", "club": "FK Gintra", "position": "Midfielder", "nationality": "Nigeria", "age": 20.0, "number": 40.0, "profile_link": "Bunmi_David.html", "fga": 8.9, "xps": 8.7, "poi": 9.4, "cpx": 9.1, "mrk": 8.4, "goals": 0, "philosophy": "Modrić - Playmaker"}, {"name": "Laura Ruzgutė", "club": "MFA Žalgiris MRU", "position": "Midfielder", "nationality": "Lithuania", "age": NaN, "number": 8.0, "profile_link": "Laura_Ruzgutė.html", "fga": 8.9, "xps": 8.2, "poi": 8.8, "cpx": 8.6, "mrk": 7.9, "goals": 8, "philosophy": "Modrić - Playmaker"}, {"name": "Aivė Andriuškevičiūtė", "club": "FK Gintra", "position": "Defender", "nationality": "Lithuania", "age": 18.0, "number": 21.0, "profile_link": "Aivė_Andriuškevičiūtė.html", "fga": 8.8, "xps": 7.6, "poi": 9.1, "cpx": 8.9, "mrk": 9.5, "goals": 0, "philosophy": "Van Dijk - Defensive"}, {"name": "Urtė Bujokaitė", "club": "FK Gintra", "position": "Defender", "nationality": "Lithuania", "age": 19.0, "number": 30.0, "profile_link": "Urtė_Bujokaitė.html", "fga": 8.8, "xps": 7.6, "poi": 9.1, "cpx": 8.9, "mrk": 9.5, "goals": 0, "philosophy": "Van Dijk - Defensive"}, {"name": "Idowu Kuku", "club": "FK Gintra", "position": "Defender", "nationality": "Nigeria", "age": 21.0, "number": 51.0, "profile_link": "Idowu_Kuku.html", "fga": 8.8, "xps": 7.6, "poi": 9.1, "cpx": 8.9, "mrk": 9.5, "goals": 0, "philosophy": "Van Dijk - Defensive"}, {"name": "Connie Caliz", "club": "FK Gintra", "position": "Forward", "nationality": "Mexico/USA", "age": 32.0, "number": 9.0, "profile_link": "Connie_Caliz.html", "fga": 8.8, "xps": 9.3, "poi": 8.5, "cpx": 8.5, "mrk": 7.1, "goals": 0, "philosophy": "Suárez - Poacher"}, {"name": "Ernest Černiavskij", "club": "FK Transinvest", "position": "Goalkeeper", "nationality": "Lithuania", "age": 24.0, "number": NaN, "profile_link": "Ernest_Černiavskij.html", "fga": 8.8, "xps": 8.5, "poi": 9.1, "cpx": 9.3, "mrk": 8.6, "goals": 0, "philosophy": "Neuer - Sweeper Keeper"}, {"name": "Hideyasu Tanaka", "club": "FK Transinvest", "position": "Midfielder", "nationality": "Japan", "age": 22.0, "number": NaN, "profile_link": "Hideyasu_Tanaka.html", "fga": 8.8, "xps": 8.6, "poi": 9.3, "cpx": 9.0, "mrk": 8.3, "goals": 0, "philosophy": "Modrić - Playmaker"}, {"name": "Ignas Kaškelevičius", "club": "FK Transinvest", "position": "Midfielder", "nationality": "Lithuania", "age": 22.0, "number": NaN, "profile_link": "Ignas_Kaškelevičius.html", "fga": 8.8, "xps": 8.6, "poi": 9.3, "cpx": 9.0, "mrk": 8.3, "goals": 0, "philosophy": "Modrić - Playmaker"}, {"name": "Marija Galkina", "club": "FK Transinvest", "position": "Midfielder", "nationality": "Lithuania", "age": 23.0, "number": NaN, "profile_link": "Marija_Galkina.html", "fga": 8.8, "xps": 8.6, "poi": 9.3, "cpx": 9.0, "mrk": 8.3, "goals": 0, "philosophy": "Modrić - Playmaker"}, {"name": "Yehor Glushach", "club": "FK Transinvest", "position": "Midfielder", "nationality": "Lithuania", "age": 22.0, "number": NaN, "profile_link": "Yehor_Glushach.html", "fga": 8.8, "xps": 8.6, "poi": 9.3, "cpx": 9.0, "mrk": 8.3, "goals": 0, "philosophy": "Modrić - Playmaker"}, {"name": "Ayuri Terawaki", "club": "MFA Žalgiris MRU", "position": "Midfielder", "nationality": "Japan", "age": 27.0, "number": 13.0, "profile_link": "Ayuri_Terawaki.html", "fga": 8.8, "xps": 8.6, "poi": 9.3, "cpx": 9.0, "mrk": 8.3, "goals": 0, "philosophy": "Modrić - Playmaker"}, {"name": "Francesca Frericks", "club": "MFA Žalgiris MRU", "position": "Midfielder", "nationality": "USA", "age": 24.0, "number": 23.0, "profile_link": "Francesca_Frericks.html", "fga": 8.8, "xps": 8.6, "poi": 9.3, "cpx": 9.0, "mrk": 8.3, "goals": 0, "philosophy": "Modrić - Playmaker"}, {"name": "Ineta Šukštulytė", "club": "MFA Žalgiris MRU", "position": "Forward", "nationality": "Lithuania", "age": NaN, "number": 12.0, "profile_link": "Ineta_Šukštulytė.html", "fga": 8.8, "xps": 8.9, "poi": 8.2, "cpx": 8.2, "mrk": 6.8, "goals": 4, "philosophy": "Benzema - Link-up"}, {"name": "Gabrielė Vasilenko", "club": "FK Gintra", "position": "Goalkeeper", "nationality": "Lithuania", "age": 20.0, "number": 1.0, "profile_link": "Gabrielė_Vasilenko.html", "fga": 8.7, "xps": 8.4, "poi": 8.9, "cpx": 9.1, "mrk": 8.5, "goals": 0, "philosophy": "Neuer - Sweeper Keeper"}, {"name": "Tamara Brown", "club": "FK Gintra", "position": "Midfielder", "nationality": "Canada", "age": 31.0, "number": 24.0, "profile_link": "Tamara_Brown.html", "fga": 8.7, "xps": 8.5, "poi": 9.2, "cpx": 9.0, "mrk": 8.2, "goals": 0, "philosophy": "Modrić - Playmaker"}, {"name": "Amy Lasu Lauya Lasu", "club": "FK Transinvest", "position": "Forward", "nationality": "nan", "age": NaN, "number": NaN, "profile_link": "Amy_Lasu.html", "fga": 8.7, "xps": 9.2, "poi": 8.4, "cpx": 8.4, "mrk": 7.0, "goals": 0, "philosophy": "Suárez - Poacher"}, {"name": "Topal Irina", "club": "FK Transinvest", "position": "Forward", "nationality": "nan", "age": NaN, "number": NaN, "profile_link": "Topal_Irina.html", "fga": 8.7, "xps": 9.2, "poi": 8.4, "cpx": 8.4, "mrk": 7.0, "goals": 0, "philosophy": "Suárez - Poacher"}, {"name": "Aistė Šveckutė", "club": "FK Transinvest", "position": "Midfielder", "nationality": "Lithuania", "age": NaN, "number": NaN, "profile_link": "Aistė_Šveckutė.html", "fga": 8.6, "xps": 8.4, "poi": 9.1, "cpx": 8.9, "mrk": 8.1, "goals": 0, "philosophy": "Modrić - Playmaker"}, {"name": "Artem Radchenko", "club": "FK Transinvest", "position": "Midfielder", "nationality": "Ukraine", "age": 30.0, "number": NaN, "profile_link": "Artem_Radchenko.html", "fga": 8.6, "xps": 8.4, "poi": 9.1, "cpx": 8.9, "mrk": 8.1, "goals": 0, "philosophy": "Modrić - Playmaker"}, {"name": "Gabija Valiukevičiūtė", "club": "FK Transinvest", "position": "Midfielder", "nationality": "Lithuania", "age": NaN, "number": NaN, "profile_link": "Gabija_Valiukevičiūtė.html", "fga": 8.6, "xps": 8.4, "poi": 9.1, "cpx": 8.9, "mrk": 8.1, "goals": 0, "philosophy": "Modrić - Playmaker"}, {"name": "Goda Papartytė", "club": "FK Transinvest", "position": "Midfielder", "nationality": "Lithuania", "age": NaN, "number": NaN, "profile_link": "Goda_Papartytė.html", "fga": 8.6, "xps": 8.4, "poi": 9.1, "cpx": 8.9, "mrk": 8.1, "goals": 0, "philosophy": "Modrić - Playmaker"}, {"name": "Greta Valikonienė (Guižauskaitė)", "club": "FK Transinvest", "position": "Midfielder", "nationality": "Lithuania", "age": NaN, "number": NaN, "profile_link": "Greta_(Guižauskaitė).html", "fga": 8.6, "xps": 8.4, "poi": 9.1, "cpx": 8.9, "mrk": 8.1, "goals": 0, "philosophy": "Modrić - Playmaker"}, {"name": "Khrystyna Pereviznyk", "club": "FK Transinvest", "position": "Midfielder", "nationality": "Ukraine", "age": 28.0, "number": NaN, "profile_link": "Khrystyna_Pereviznyk.html", "fga": 8.6, "xps": 8.4, "poi": 9.1, "cpx": 8.9, "mrk": 8.1, "goals": 0, "philosophy": "Modrić - Playmaker"}, {"name": "Postol Valeriia", "club": "FK Transinvest", "position": "Midfielder", "nationality": "Lithuania", "age": NaN, "number": NaN, "profile_link": "Postol_Valeriia.html", "fga": 8.6, "xps": 8.4, "poi": 9.1, "cpx": 8.9, "mrk": 8.1, "goals": 0, "philosophy": "Modrić - Playmaker"}, {"name": "Xabier Auzmendi Arruabarrena", "club": "FK Transinvest", "position": "Midfielder", "nationality": "Spain", "age": 28.0, "number": NaN, "profile_link": "Xabier_Arruabarrena.html", "fga": 8.6, "xps": 8.4, "poi": 9.1, "cpx": 8.9, "mrk": 8.1, "goals": 0, "philosophy": "Modrić - Playmaker"}, {"name": "Yorcelly Isoleth Humphreys Abella", "club": "FK Transinvest", "position": "Midfielder", "nationality": "nan", "age": NaN, "number": NaN, "profile_link": "Yorcelly_Abella.html", "fga": 8.6, "xps": 8.4, "poi": 9.1, "cpx": 8.9, "mrk": 8.1, "goals": 0, "philosophy": "Modrić - Playmaker"}, {"name": "Greta Lukjančukė", "club": "FK Gintra", "position": "Goalkeeper", "nationality": "Lithuania", "age": 33.0, "number": 12.0, "profile_link": "Greta_Lukjančukė.html", "fga": 8.5, "xps": 8.2, "poi": 8.7, "cpx": 9.0, "mrk": 8.3, "goals": 0, "philosophy": "Neuer - Sweeper Keeper"}, {"name": "Alina Špakovskaja", "club": "FK Transinvest", "position": "Defender", "nationality": "Lithuania", "age": NaN, "number": NaN, "profile_link": "Alina_Špakovskaja.html", "fga": 8.5, "xps": 7.3, "poi": 8.9, "cpx": 8.6, "mrk": 9.2, "goals": 0, "philosophy": "Van Dijk - Defensive"}, {"name": "Andrius Kazakevičius", "club": "FK Transinvest", "position": "Defender", "nationality": "Lithuania", "age": 30.0, "number": NaN, "profile_link": "Andrius_Kazakevičius.html", "fga": 8.5, "xps": 7.3, "poi": 8.9, "cpx": 8.6, "mrk": 9.2, "goals": 0, "philosophy": "Van Dijk - Defensive"}, {"name": "Dominykas Barauskas", "club": "FK Transinvest", "position": "Defender", "nationality": "Lithuania", "age": 28.0, "number": NaN, "profile_link": "Dominykas_Barauskas.html", "fga": 8.5, "xps": 7.3, "poi": 8.9, "cpx": 8.6, "mrk": 9.2, "goals": 0, "philosophy": "Van Dijk - Defensive"}, {"name": "Ričardas Šveikauskas", "club": "FK Transinvest", "position": "Defender", "nationality": "Lithuania", "age": 28.0, "number": NaN, "profile_link": "Ričardas_Šveikauskas.html", "fga": 8.5, "xps": 7.3, "poi": 8.9, "cpx": 8.6, "mrk": 9.2, "goals": 0, "philosophy": "Van Dijk - Defensive"}, {"name": "Giedrius Onuškevičius", "club": "FK Transinvest", "position": "Forward", "nationality": "Lithuania", "age": 20.0, "number": NaN, "profile_link": "Giedrius_Onuškevičius.html", "fga": 8.5, "xps": 8.9, "poi": 8.2, "cpx": 8.2, "mrk": 6.8, "goals": 0, "philosophy": "Benzema - Link-up"}, {"name": "Marta Šmidt", "club": "FK Transinvest", "position": "Forward", "nationality": "Lithuania", "age": 17.0, "number": NaN, "profile_link": "Marta_Šmidt.html", "fga": 8.5, "xps": 8.9, "poi": 8.2, "cpx": 8.2, "mrk": 6.8, "goals": 0, "philosophy": "Benzema - Link-up"}, {"name": "Alexandria Grace Kitty Madden", "club": "MFA Žalgiris MRU", "position": "Forward", "nationality": "England", "age": NaN, "number": 7.0, "profile_link": "Alexandria_Madden.html", "fga": 8.5, "xps": 8.9, "poi": 8.2, "cpx": 8.2, "mrk": 6.8, "goals": 0, "philosophy": "Benzema - Link-up"}, {"name": "Karilė Liužinaitė", "club": "MFA Žalgiris MRU", "position": "Forward", "nationality": "Lithuania", "age": NaN, "number": 21.0, "profile_link": "Karilė_Liužinaitė.html", "fga": 8.5, "xps": 8.9, "poi": 8.2, "cpx": 8.2, "mrk": 6.8, "goals": 0, "philosophy": "Benzema - Link-up"}, {"name": "Otandeka Laki", "club": "MFA Žalgiris MRU", "position": "Forward", "nationality": "Uganda", "age": NaN, "number": 24.0, "profile_link": "Otandeka_Laki.html", "fga": 8.5, "xps": 8.9, "poi": 8.2, "cpx": 8.2, "mrk": 6.8, "goals": 0, "philosophy": "Benzema - Link-up"}, {"name": "Iuliana Colnic", "club": "MFA Žalgiris MRU", "position": "Forward", "nationality": "Moldova", "age": NaN, "number": 55.0, "profile_link": "Iuliana_Colnic.html", "fga": 8.5, "xps": 8.9, "poi": 8.2, "cpx": 8.2, "mrk": 6.8, "goals": 0, "philosophy": "Benzema - Link-up"}, {"name": "Erika Šupelytė", "club": "MFA Žalgiris MRU", "position": "Forward", "nationality": "Lithuania", "age": NaN, "number": NaN, "profile_link": "Erika_Šupelytė.html", "fga": 8.5, "xps": 8.9, "poi": 8.2, "cpx": 8.2, "mrk": 6.8, "goals": 0, "philosophy": "Benzema - Link-up"}, {"name": "Aušrinė Bikutė", "club": "FK Transinvest", "position": "Goalkeeper", "nationality": "Lithuania", "age": NaN, "number": NaN, "profile_link": "Aušrinė_Bikutė.html", "fga": 8.4, "xps": 8.1, "poi": 8.6, "cpx": 8.9, "mrk": 8.2, "goals": 0, "philosophy": "Buffon - Traditional GK"}, {"name": "Augustas Tamaševičius", "club": "FK Transinvest", "position": "Midfielder", "nationality": "Lithuania", "age": 19.0, "number": NaN, "profile_link": "Augustas_Tamaševičius.html", "fga": 8.4, "xps": 8.2, "poi": 8.8, "cpx": 8.6, "mrk": 7.9, "goals": 0, "philosophy": "Modrić - Playmaker"}, {"name": "Nojus Petkus", "club": "FK Transinvest", "position": "Midfielder", "nationality": "Lithuania", "age": 18.0, "number": NaN, "profile_link": "Nojus_Petkus.html", "fga": 8.4, "xps": 8.2, "poi": 8.8, "cpx": 8.6, "mrk": 7.9, "goals": 0, "philosophy": "Modrić - Playmaker"}, {"name": "Rusnė Šešplaukytė", "club": "MFA Žalgiris MRU", "position": "Midfielder", "nationality": "Lithuania", "age": NaN, "number": 4.0, "profile_link": "Rusnė_Šešplaukytė.html", "fga": 8.4, "xps": 8.2, "poi": 8.8, "cpx": 8.6, "mrk": 7.9, "goals": 0, "philosophy": "Modrić - Playmaker"}, {"name": "Jullien Amara Ramirez", "club": "MFA Žalgiris MRU", "position": "Midfielder", "nationality": "Canada", "age": NaN, "number": 6.0, "profile_link": "Jullien_Ramirez.html", "fga": 8.4, "xps": 8.2, "poi": 8.8, "cpx": 8.6, "mrk": 7.9, "goals": 0, "philosophy": "Modrić - Playmaker"}, {"name": "Ugnė Slankauskaitė", "club": "MFA Žalgiris MRU", "position": "Midfielder", "nationality": "Lithuania", "age": NaN, "number": 10.0, "profile_link": "Ugnė_Slankauskaitė.html", "fga": 8.4, "xps": 8.2, "poi": 8.8, "cpx": 8.6, "mrk": 7.9, "goals": 0, "philosophy": "Modrić - Playmaker"}, {"name": "Anika Kyžaitė", "club": "MFA Žalgiris MRU", "position": "Midfielder", "nationality": "Lithuania", "age": NaN, "number": 14.0, "profile_link": "Anika_Kyžaitė.html", "fga": 8.4, "xps": 8.2, "poi": 8.8, "cpx": 8.6, "mrk": 7.9, "goals": 0, "philosophy": "Modrić - Playmaker"}, {"name": "Adrija Skudutytė", "club": "MFA Žalgiris MRU", "position": "Midfielder", "nationality": "Lithuania", "age": NaN, "number": 15.0, "profile_link": "Adrija_Skudutytė.html", "fga": 8.4, "xps": 8.2, "poi": 8.8, "cpx": 8.6, "mrk": 7.9, "goals": 0, "philosophy": "Modrić - Playmaker"}, {"name": "Santa Lichareva", "club": "MFA Žalgiris MRU", "position": "Midfielder", "nationality": "Lithuania", "age": NaN, "number": 26.0, "profile_link": "Santa_Lichareva.html", "fga": 8.4, "xps": 8.2, "poi": 8.8, "cpx": 8.6, "mrk": 7.9, "goals": 0, "philosophy": "Modrić - Playmaker"}, {"name": "Dorotėja Aidukaitė", "club": "MFA Žalgiris MRU", "position": "Midfielder", "nationality": "Lithuania", "age": NaN, "number": 32.0, "profile_link": "Dorotėja_Aidukaitė.html", "fga": 8.4, "xps": 8.2, "poi": 8.8, "cpx": 8.6, "mrk": 7.9, "goals": 0, "philosophy": "Modrić - Playmaker"}, {"name": "Austėja Petkevičiūtė", "club": "MFA Žalgiris MRU", "position": "Midfielder", "nationality": "Lithuania", "age": NaN, "number": 75.0, "profile_link": "Austėja_Petkevičiūtė.html", "fga": 8.4, "xps": 8.2, "poi": 8.8, "cpx": 8.6, "mrk": 7.9, "goals": 0, "philosophy": "Modrić - Playmaker"}, {"name": "Neda Klezaitė", "club": "MFA Žalgiris MRU", "position": "Midfielder", "nationality": "Lithuania", "age": NaN, "number": 77.0, "profile_link": "Neda_Klezaitė.html", "fga": 8.4, "xps": 8.2, "poi": 8.8, "cpx": 8.6, "mrk": 7.9, "goals": 0, "philosophy": "Modrić - Playmaker"}, {"name": "Emilija Gerasimova", "club": "MFA Žalgiris MRU", "position": "Midfielder", "nationality": "Lithuania", "age": NaN, "number": 78.0, "profile_link": "Emilija_Gerasimova.html", "fga": 8.4, "xps": 8.2, "poi": 8.8, "cpx": 8.6, "mrk": 7.9, "goals": 0, "philosophy": "Modrić - Playmaker"}, {"name": "Julius Plančiūnas", "club": "FK Transinvest", "position": "Defender", "nationality": "Lithuania", "age": 17.0, "number": NaN, "profile_link": "Julius_Plančiūnas.html", "fga": 8.3, "xps": 7.1, "poi": 8.6, "cpx": 8.4, "mrk": 8.9, "goals": 0, "philosophy": "Van Dijk - Defensive"}, {"name": "Julia Becker", "club": "MFA Žalgiris MRU", "position": "Defender", "nationality": "Brazil", "age": NaN, "number": 3.0, "profile_link": "Julia_Becker.html", "fga": 8.3, "xps": 7.1, "poi": 8.6, "cpx": 8.4, "mrk": 8.9, "goals": 0, "philosophy": "Van Dijk - Defensive"}, {"name": "Vismantė Čereškaitė", "club": "MFA Žalgiris MRU", "position": "Defender", "nationality": "Lithuania", "age": NaN, "number": 3.0, "profile_link": "Vismantė_Čereškaitė.html", "fga": 8.3, "xps": 7.1, "poi": 8.6, "cpx": 8.4, "mrk": 8.9, "goals": 0, "philosophy": "Van Dijk - Defensive"}, {"name": "Viktorija Čiapaitė / Viktorija Tankūnė", "club": "MFA Žalgiris MRU", "position": "Defender", "nationality": "Lithuania", "age": NaN, "number": 13.0, "profile_link": "Viktorija_Tankūnė.html", "fga": 8.3, "xps": 7.1, "poi": 8.6, "cpx": 8.4, "mrk": 8.9, "goals": 0, "philosophy": "Van Dijk - Defensive"}, {"name": "Emilija Stefanovič", "club": "MFA Žalgiris MRU", "position": "Defender", "nationality": "Lithuania", "age": NaN, "number": 20.0, "profile_link": "Emilija_Stefanovič.html", "fga": 8.3, "xps": 7.1, "poi": 8.6, "cpx": 8.4, "mrk": 8.9, "goals": 0, "philosophy": "Van Dijk - Defensive"}, {"name": "Joy Ndidi Duru", "club": "MFA Žalgiris MRU", "position": "Defender", "nationality": "Nigeria", "age": NaN, "number": 24.0, "profile_link": "Joy_Duru.html", "fga": 8.3, "xps": 7.1, "poi": 8.6, "cpx": 8.4, "mrk": 8.9, "goals": 0, "philosophy": "Van Dijk - Defensive"}, {"name": "Judita Traubaitė", "club": "MFA Žalgiris MRU", "position": "Defender", "nationality": "Lithuania", "age": NaN, "number": 25.0, "profile_link": "Judita_Traubaitė.html", "fga": 8.3, "xps": 7.1, "poi": 8.6, "cpx": 8.4, "mrk": 8.9, "goals": 0, "philosophy": "Van Dijk - Defensive"}, {"name": "Kotryna Maželytė", "club": "MFA Žalgiris MRU", "position": "Defender", "nationality": "Lithuania", "age": NaN, "number": 27.0, "profile_link": "Kotryna_Maželytė.html", "fga": 8.3, "xps": 7.1, "poi": 8.6, "cpx": 8.4, "mrk": 8.9, "goals": 0, "philosophy": "Van Dijk - Defensive"}, {"name": "Greta Markauskaitė", "club": "MFA Žalgiris MRU", "position": "Defender", "nationality": "Lithuania", "age": NaN, "number": 30.0, "profile_link": "Greta_Markauskaitė.html", "fga": 8.3, "xps": 7.1, "poi": 8.6, "cpx": 8.4, "mrk": 8.9, "goals": 0, "philosophy": "Van Dijk - Defensive"}, {"name": "Maya Musaskaya", "club": "MFA Žalgiris MRU", "position": "Defender", "nationality": "Turkmenistan", "age": NaN, "number": 80.0, "profile_link": "Maya_Musaskaya.html", "fga": 8.3, "xps": 7.1, "poi": 8.6, "cpx": 8.4, "mrk": 8.9, "goals": 0, "philosophy": "Van Dijk - Defensive"}, {"name": "Augustė Andrijevskytė", "club": "MFA Žalgiris MRU", "position": "Defender", "nationality": "Lithuania", "age": NaN, "number": 90.0, "profile_link": "Augustė_Andrijevskytė.html", "fga": 8.3, "xps": 7.1, "poi": 8.6, "cpx": 8.4, "mrk": 8.9, "goals": 0, "philosophy": "Van Dijk - Defensive"}, {"name": "Dilonas Matuškevičius", "club": "FK Transinvest", "position": "Goalkeeper", "nationality": "Lithuania", "age": 19.0, "number": NaN, "profile_link": "Dilonas_Matuškevičius.html", "fga": 8.2, "xps": 7.9, "poi": 8.4, "cpx": 8.6, "mrk": 8.0, "goals": 0, "philosophy": "Buffon - Traditional GK"}, {"name": "Artūras Žulpa", "club": "FK Transinvest", "position": "Midfielder", "nationality": "Lithuania", "age": 35.0, "number": NaN, "profile_link": "Artūras_Žulpa.html", "fga": 8.2, "xps": 8.0, "poi": 8.6, "cpx": 8.4, "mrk": 7.7, "goals": 0, "philosophy": "Modrić - Playmaker"}, {"name": "Linas Pilibaitis", "club": "FK Transinvest", "position": "Midfielder", "nationality": "Lithuania", "age": 40.0, "number": NaN, "profile_link": "Linas_Pilibaitis.html", "fga": 8.2, "xps": 8.0, "poi": 8.6, "cpx": 8.4, "mrk": 7.7, "goals": 0, "philosophy": "Modrić - Playmaker"}, {"name": "Erneta Rinkevičiūtė", "club": "MFA Žalgiris MRU", "position": "Goalkeeper", "nationality": "Lithuania", "age": NaN, "number": 1.0, "profile_link": "Erneta_Rinkevičiūtė.html", "fga": 8.2, "xps": 7.9, "poi": 8.4, "cpx": 8.6, "mrk": 8.0, "goals": 0, "philosophy": "Buffon - Traditional GK"}, {"name": "Meda Šeškutė", "club": "MFA Žalgiris MRU", "position": "Goalkeeper", "nationality": "Lithuania", "age": NaN, "number": 23.0, "profile_link": "Meda_Šeškutė.html", "fga": 8.2, "xps": 7.9, "poi": 8.4, "cpx": 8.6, "mrk": 8.0, "goals": 0, "philosophy": "Buffon - Traditional GK"}, {"name": "Darija Mikuckytė", "club": "MFA Žalgiris MRU", "position": "Goalkeeper", "nationality": "Lithuania", "age": 20.0, "number": NaN, "profile_link": "Darija_Mikuckytė.html", "fga": 7.9, "xps": 7.6, "poi": 8.1, "cpx": 8.4, "mrk": 7.7, "goals": 0, "philosophy": "Buffon - Traditional GK"}, {"name": "Karina Vasilionok", "club": "FK Žalgiris Women", "position": "Forward", "nationality": "Lithuania", "age": NaN, "number": 10.0, "profile_link": "Karina_Vasilionok.html", "fga": 7.8, "xps": 9.1, "poi": 7.0, "cpx": 7.0, "mrk": 5.9, "goals": 7, "philosophy": "Suárez - Poacher"}, {"name": "Laura Ruzgutė", "club": "FK Žalgiris Women", "position": "Midfielder", "nationality": "Lithuania", "age": NaN, "number": NaN, "profile_link": "Laura_Ruzgutė.html", "fga": 7.7, "xps": 7.0, "poi": 7.6, "cpx": 7.4, "mrk": 6.8, "goals": 8, "philosophy": "Kanté - Ball Winner"}, {"name": "Gabija Valiukevičiūtė", "club": "FC Hegelmann Women", "position": "Forward", "nationality": "Lithuania", "age": NaN, "number": 5.0, "profile_link": "Gabija_Valiukevičiūtė.html", "fga": 7.7, "xps": 8.1, "poi": 7.4, "cpx": 7.4, "mrk": 6.2, "goals": 0, "philosophy": "Benzema - Link-up"}, {"name": "Justina Baltrūnaitė", "club": "FC Hegelmann Women", "position": "Forward", "nationality": "Lithuania", "age": NaN, "number": 9.0, "profile_link": "Justina_Baltrūnaitė.html", "fga": 7.7, "xps": 8.1, "poi": 7.4, "cpx": 7.4, "mrk": 6.2, "goals": 0, "philosophy": "Benzema - Link-up"}, {"name": "Kamilė Vaičiulaitytė", "club": "FC Hegelmann Women", "position": "Forward", "nationality": "Lithuania", "age": NaN, "number": 20.0, "profile_link": "Kamilė_Vaičiulaitytė.html", "fga": 7.7, "xps": 8.1, "poi": 7.4, "cpx": 7.4, "mrk": 6.2, "goals": 0, "philosophy": "Benzema - Link-up"}, {"name": "Paulina Potapova", "club": "FC Hegelmann Women", "position": "Forward", "nationality": "Lithuania", "age": NaN, "number": NaN, "profile_link": "Paulina_Potapova.html", "fga": 7.7, "xps": 8.1, "poi": 7.4, "cpx": 7.4, "mrk": 6.2, "goals": 0, "philosophy": "Benzema - Link-up"}, {"name": "Milda Ivanciūtė", "club": "FK Žalgiris Women", "position": "Forward", "nationality": "Lithuania", "age": NaN, "number": 9.0, "profile_link": "Milda_Ivanciūtė.html", "fga": 7.6, "xps": 8.9, "poi": 7.0, "cpx": 7.0, "mrk": 5.9, "goals": 4, "philosophy": "Benzema - Link-up"}, {"name": "Ineta Šukštulytė", "club": "FK Žalgiris Women", "position": "Forward", "nationality": "Lithuania", "age": NaN, "number": 12.0, "profile_link": "Ineta_Šukštulytė.html", "fga": 7.6, "xps": 8.9, "poi": 7.0, "cpx": 7.0, "mrk": 5.9, "goals": 4, "philosophy": "Benzema - Link-up"}, {"name": "Agnė Žėglevičiūtė", "club": "FC Hegelmann Women", "position": "Midfielder", "nationality": "Lithuania", "age": NaN, "number": 4.0, "profile_link": "Agnė_Žėglevičiūtė.html", "fga": 7.6, "xps": 7.4, "poi": 8.0, "cpx": 7.8, "mrk": 7.1, "goals": 0, "philosophy": "Kanté - Ball Winner"}, {"name": "Skaistė Bajorinaitė", "club": "FC Hegelmann Women", "position": "Midfielder", "nationality": "Lithuania", "age": NaN, "number": 7.0, "profile_link": "Skaistė_Bajorinaitė.html", "fga": 7.6, "xps": 7.4, "poi": 8.0, "cpx": 7.8, "mrk": 7.1, "goals": 0, "philosophy": "Kanté - Ball Winner"}, {"name": "Eva Jakaitė", "club": "FC Hegelmann Women", "position": "Midfielder", "nationality": "Lithuania", "age": NaN, "number": 8.0, "profile_link": "Eva_Jakaitė.html", "fga": 7.6, "xps": 7.4, "poi": 8.0, "cpx": 7.8, "mrk": 7.1, "goals": 0, "philosophy": "Kanté - Ball Winner"}, {"name": "Iveta Inčytė", "club": "FC Hegelmann Women", "position": "Midfielder", "nationality": "Lithuania", "age": NaN, "number": 15.0, "profile_link": "Iveta_Inčytė.html", "fga": 7.6, "xps": 7.4, "poi": 8.0, "cpx": 7.8, "mrk": 7.1, "goals": 0, "philosophy": "Kanté - Ball Winner"}, {"name": "Karolina Zabolotnaja", "club": "FC Hegelmann Women", "position": "Midfielder", "nationality": "Lithuania", "age": NaN, "number": 17.0, "profile_link": "Karolina_Zabolotnaja.html", "fga": 7.6, "xps": 7.4, "poi": 8.0, "cpx": 7.8, "mrk": 7.1, "goals": 0, "philosophy": "Kanté - Ball Winner"}, {"name": "Judita Sabatauskaitė", "club": "FC Hegelmann Women", "position": "Midfielder", "nationality": "Lithuania", "age": NaN, "number": 50.0, "profile_link": "Judita_Sabatauskaitė.html", "fga": 7.6, "xps": 7.4, "poi": 8.0, "cpx": 7.8, "mrk": 7.1, "goals": 0, "philosophy": "Kanté - Ball Winner"}, {"name": "Jorūnė Lipkinaitė", "club": "FC Hegelmann Women", "position": "Midfielder", "nationality": "Lithuania", "age": NaN, "number": 99.0, "profile_link": "Jorūnė_Lipkinaitė.html", "fga": 7.6, "xps": 7.4, "poi": 8.0, "cpx": 7.8, "mrk": 7.1, "goals": 0, "philosophy": "Kanté - Ball Winner"}, {"name": "Dovilė Gailevičiūtė", "club": "FC Hegelmann Women", "position": "Midfielder", "nationality": "Lithuania", "age": NaN, "number": NaN, "profile_link": "Dovilė_Gailevičiūtė.html", "fga": 7.6, "xps": 7.4, "poi": 8.0, "cpx": 7.8, "mrk": 7.1, "goals": 0, "philosophy": "Kanté - Ball Winner"}, {"name": "Marija Stankevičiutė", "club": "FC Hegelmann Women", "position": "Midfielder", "nationality": "Lithuania", "age": NaN, "number": NaN, "profile_link": "Marija_Stankevičiutė.html", "fga": 7.6, "xps": 7.4, "poi": 8.0, "cpx": 7.8, "mrk": 7.1, "goals": 0, "philosophy": "Kanté - Ball Winner"}, {"name": "Danielė Svirnelytė", "club": "FC Hegelmann Women", "position": "Defender", "nationality": "Lithuania", "age": NaN, "number": 2.0, "profile_link": "Danielė_Svirnelytė.html", "fga": 7.5, "xps": 6.5, "poi": 7.8, "cpx": 7.6, "mrk": 8.1, "goals": 0, "philosophy": "Ramos - Aggressive CB"}, {"name": "Kristina Černavskich", "club": "FC Hegelmann Women", "position": "Defender", "nationality": "Lithuania", "age": NaN, "number": 2.0, "profile_link": "Kristina_Černavskich.html", "fga": 7.5, "xps": 6.5, "poi": 7.8, "cpx": 7.6, "mrk": 8.1, "goals": 0, "philosophy": "Ramos - Aggressive CB"}, {"name": "Vestina Neverdauskaitė", "club": "FC Hegelmann Women", "position": "Defender", "nationality": "Lithuania", "age": NaN, "number": 13.0, "profile_link": "Vestina_Neverdauskaitė.html", "fga": 7.5, "xps": 6.5, "poi": 7.8, "cpx": 7.6, "mrk": 8.1, "goals": 0, "philosophy": "Ramos - Aggressive CB"}, {"name": "Milda Liužinaitė", "club": "FC Hegelmann Women", "position": "Defender", "nationality": "Lithuania", "age": NaN, "number": 14.0, "profile_link": "Milda_Liužinaitė.html", "fga": 7.5, "xps": 6.5, "poi": 7.8, "cpx": 7.6, "mrk": 8.1, "goals": 0, "philosophy": "Ramos - Aggressive CB"}, {"name": "Viktorija Platonova", "club": "FC Hegelmann Women", "position": "Defender", "nationality": "Lithuania", "age": NaN, "number": 16.0, "profile_link": "Viktorija_Platonova.html", "fga": 7.5, "xps": 6.5, "poi": 7.8, "cpx": 7.6, "mrk": 8.1, "goals": 0, "philosophy": "Ramos - Aggressive CB"}, {"name": "Rimantė Kunickaitė", "club": "FC Hegelmann Women", "position": "Defender", "nationality": "Lithuania", "age": NaN, "number": 19.0, "profile_link": "Rimantė_Kunickaitė.html", "fga": 7.5, "xps": 6.5, "poi": 7.8, "cpx": 7.6, "mrk": 8.1, "goals": 0, "philosophy": "Ramos - Aggressive CB"}, {"name": "Austė Bernotaitė", "club": "FC Hegelmann Women", "position": "Defender", "nationality": "Lithuania", "age": NaN, "number": 26.0, "profile_link": "Austė_Bernotaitė.html", "fga": 7.5, "xps": 6.5, "poi": 7.8, "cpx": 7.6, "mrk": 8.1, "goals": 0, "philosophy": "Ramos - Aggressive CB"}, {"name": "Klaudija Savickaitė", "club": "FC Hegelmann Women", "position": "Goalkeeper", "nationality": "Lithuania", "age": NaN, "number": 1.0, "profile_link": "Klaudija_Savickaitė.html", "fga": 7.4, "xps": 7.1, "poi": 7.6, "cpx": 7.8, "mrk": 7.2, "goals": 0, "philosophy": "Buffon - Traditional GK"}, {"name": "Ema Daujotė", "club": "FC Hegelmann Women", "position": "Goalkeeper", "nationality": "Lithuania", "age": NaN, "number": 94.0, "profile_link": "Ema_Daujotė.html", "fga": 7.4, "xps": 7.1, "poi": 7.6, "cpx": 7.8, "mrk": 7.2, "goals": 0, "philosophy": "Buffon - Traditional GK"}, {"name": "Karilė Liužinaitė", "club": "FK Žalgiris Women", "position": "Forward", "nationality": "Lithuania", "age": NaN, "number": NaN, "profile_link": "Karilė_Liužinaitė.html", "fga": 7.3, "xps": 7.7, "poi": 7.0, "cpx": 7.0, "mrk": 5.9, "goals": 0, "philosophy": "Benzema - Link-up"}, {"name": "Elzė Kiškūnaitė", "club": "FK Žalgiris Women", "position": "Midfielder", "nationality": "Lithuania", "age": NaN, "number": 7.0, "profile_link": "Elzė_Kiškūnaitė.html", "fga": 7.2, "xps": 7.0, "poi": 7.6, "cpx": 7.4, "mrk": 6.8, "goals": 0, "philosophy": "Kanté - Ball Winner"}, {"name": "Gytė Tarasovė (Puodžiukaitė)", "club": "FK Žalgiris Women", "position": "Midfielder", "nationality": "Lithuania", "age": NaN, "number": 16.0, "profile_link": "Gytė_(Puodžiukaitė).html", "fga": 7.2, "xps": 7.0, "poi": 7.6, "cpx": 7.4, "mrk": 6.8, "goals": 0, "philosophy": "Kanté - Ball Winner"}, {"name": "Barbora Valeckaitė", "club": "FK Žalgiris Women", "position": "Midfielder", "nationality": "Lithuania", "age": NaN, "number": 17.0, "profile_link": "Barbora_Valeckaitė.html", "fga": 7.2, "xps": 7.0, "poi": 7.6, "cpx": 7.4, "mrk": 6.8, "goals": 0, "philosophy": "Kanté - Ball Winner"}, {"name": "Dorotėja Petrauskaitė", "club": "FK Žalgiris Women", "position": "Midfielder", "nationality": "Lithuania", "age": NaN, "number": 20.0, "profile_link": "Dorotėja_Petrauskaitė.html", "fga": 7.2, "xps": 7.0, "poi": 7.6, "cpx": 7.4, "mrk": 6.8, "goals": 0, "philosophy": "Kanté - Ball Winner"}, {"name": "Miana Svatkovskaja", "club": "FK Žalgiris Women", "position": "Midfielder", "nationality": "Lithuania", "age": NaN, "number": 21.0, "profile_link": "Miana_Svatkovskaja.html", "fga": 7.2, "xps": 7.0, "poi": 7.6, "cpx": 7.4, "mrk": 6.8, "goals": 0, "philosophy": "Kanté - Ball Winner"}, {"name": "Anna Dallakyan", "club": "FK Žalgiris Women", "position": "Midfielder", "nationality": "Armenia", "age": NaN, "number": NaN, "profile_link": "Anna_Dallakyan.html", "fga": 7.2, "xps": 7.0, "poi": 7.6, "cpx": 7.4, "mrk": 6.8, "goals": 0, "philosophy": "Kanté - Ball Winner"}, {"name": "Ugnė Slankauskaitė", "club": "FK Žalgiris Women", "position": "Midfielder", "nationality": "Lithuania", "age": NaN, "number": NaN, "profile_link": "Ugnė_Slankauskaitė.html", "fga": 7.2, "xps": 7.0, "poi": 7.6, "cpx": 7.4, "mrk": 6.8, "goals": 0, "philosophy": "Kanté - Ball Winner"}, {"name": "Lijana Gedminaitė", "club": "FK Banga Women", "position": "Forward", "nationality": "Lithuania", "age": NaN, "number": 10.0, "profile_link": "Lijana_Gedminaitė.html", "fga": 7.2, "xps": 8.9, "poi": 6.6, "cpx": 6.6, "mrk": 5.5, "goals": 5, "philosophy": "Benzema - Link-up"}, {"name": "Agnė Jakiūnaitė", "club": "FK Žalgiris Women", "position": "Defender", "nationality": "Lithuania", "age": NaN, "number": 2.0, "profile_link": "Agnė_Jakiūnaitė.html", "fga": 7.1, "xps": 6.1, "poi": 7.4, "cpx": 7.2, "mrk": 7.7, "goals": 0, "philosophy": "Ramos - Aggressive CB"}, {"name": "Marta Lipnickaitė", "club": "FK Žalgiris Women", "position": "Defender", "nationality": "Lithuania", "age": NaN, "number": 19.0, "profile_link": "Marta_Lipnickaitė.html", "fga": 7.1, "xps": 6.1, "poi": 7.4, "cpx": 7.2, "mrk": 7.7, "goals": 0, "philosophy": "Ramos - Aggressive CB"}, {"name": "Alina Neznanova", "club": "FK Žalgiris Women", "position": "Defender", "nationality": "Lithuania", "age": NaN, "number": 22.0, "profile_link": "Alina_Neznanova.html", "fga": 7.1, "xps": 6.1, "poi": 7.4, "cpx": 7.2, "mrk": 7.7, "goals": 0, "philosophy": "Ramos - Aggressive CB"}, {"name": "Andrėja Baranovskytė", "club": "FK Žalgiris Women", "position": "Defender", "nationality": "Lithuania", "age": NaN, "number": 23.0, "profile_link": "Andrėja_Baranovskytė.html", "fga": 7.1, "xps": 6.1, "poi": 7.4, "cpx": 7.2, "mrk": 7.7, "goals": 0, "philosophy": "Ramos - Aggressive CB"}, {"name": "Julija Melaikytė", "club": "FK Žalgiris Women", "position": "Defender", "nationality": "Lithuania", "age": NaN, "number": 30.0, "profile_link": "Julija_Melaikytė.html", "fga": 7.1, "xps": 6.1, "poi": 7.4, "cpx": 7.2, "mrk": 7.7, "goals": 0, "philosophy": "Ramos - Aggressive CB"}, {"name": "Kornelija Kontrimavičiūtė", "club": "FK Žalgiris Women", "position": "Defender", "nationality": "Lithuania", "age": NaN, "number": 35.0, "profile_link": "Kornelija_Kontrimavičiūtė.html", "fga": 7.1, "xps": 6.1, "poi": 7.4, "cpx": 7.2, "mrk": 7.7, "goals": 0, "philosophy": "Ramos - Aggressive CB"}, {"name": "Liana Ghazaryan", "club": "FK Žalgiris Women", "position": "Defender", "nationality": "Armenia", "age": NaN, "number": NaN, "profile_link": "Liana_Ghazaryan.html", "fga": 7.1, "xps": 6.1, "poi": 7.4, "cpx": 7.2, "mrk": 7.7, "goals": 0, "philosophy": "Ramos - Aggressive CB"}, {"name": "Kotryna Maželytė", "club": "FK Žalgiris Women", "position": "Defender", "nationality": "Lithuania", "age": NaN, "number": NaN, "profile_link": "Kotryna_Maželytė.html", "fga": 7.1, "xps": 6.1, "poi": 7.4, "cpx": 7.2, "mrk": 7.7, "goals": 0, "philosophy": "Ramos - Aggressive CB"}, {"name": "Sniežana Blaževič", "club": "FK Žalgiris Women", "position": "Goalkeeper", "nationality": "Lithuania", "age": NaN, "number": 1.0, "profile_link": "Sniežana_Blaževič.html", "fga": 7.0, "xps": 6.8, "poi": 7.2, "cpx": 7.4, "mrk": 6.8, "goals": 0, "philosophy": "Buffon - Traditional GK"}, {"name": "Virginija Narbutaitė-Klevinskienė", "club": "FK Žalgiris Women", "position": "Goalkeeper", "nationality": "Lithuania", "age": NaN, "number": 88.0, "profile_link": "Virginija_Narbutaitė-Klevinskienė.html", "fga": 7.0, "xps": 6.8, "poi": 7.2, "cpx": 7.4, "mrk": 6.8, "goals": 0, "philosophy": "Buffon - Traditional GK"}, {"name": "Niele Oliveira", "club": "FK Žalgiris Women", "position": "Goalkeeper", "nationality": "Brazil", "age": NaN, "number": NaN, "profile_link": "Niele_Oliveira.html", "fga": 7.0, "xps": 6.8, "poi": 7.2, "cpx": 7.4, "mrk": 6.8, "goals": 0, "philosophy": "Buffon - Traditional GK"}, {"name": "Paulina Narbutaitė", "club": "FK Banga Women", "position": "Midfielder", "nationality": "Lithuania", "age": NaN, "number": 69.0, "profile_link": "Paulina_Narbutaitė.html", "fga": 7.0, "xps": 6.6, "poi": 7.1, "cpx": 7.0, "mrk": 6.4, "goals": 3, "philosophy": "Kanté - Ball Winner"}, {"name": "Kristina Černavskich", "club": "FK Banga Women", "position": "Forward", "nationality": "Lithuania", "age": NaN, "number": 6.0, "profile_link": "Kristina_Černavskich.html", "fga": 6.9, "xps": 7.2, "poi": 6.6, "cpx": 6.6, "mrk": 5.5, "goals": 0, "philosophy": "Benzema - Link-up"}, {"name": "Evelina Petrauskaitė", "club": "FK Banga Women", "position": "Forward", "nationality": "Lithuania", "age": NaN, "number": 7.0, "profile_link": "Evelina_Petrauskaitė.html", "fga": 6.9, "xps": 7.2, "poi": 6.6, "cpx": 6.6, "mrk": 5.5, "goals": 0, "philosophy": "Benzema - Link-up"}, {"name": "Viltė Švarcaitė", "club": "FK Banga Women", "position": "Forward", "nationality": "Lithuania", "age": NaN, "number": 24.0, "profile_link": "Viltė_Švarcaitė.html", "fga": 6.9, "xps": 7.2, "poi": 6.6, "cpx": 6.6, "mrk": 5.5, "goals": 0, "philosophy": "Benzema - Link-up"}, {"name": "Akvilė Gedminaitė", "club": "FK Banga Women", "position": "Forward", "nationality": "Lithuania", "age": NaN, "number": 97.0, "profile_link": "Akvilė_Gedminaitė.html", "fga": 6.9, "xps": 7.2, "poi": 6.6, "cpx": 6.6, "mrk": 5.5, "goals": 0, "philosophy": "Benzema - Link-up"}, {"name": "Monika Judeikytė", "club": "FK Banga Women", "position": "Midfielder", "nationality": "Lithuania", "age": NaN, "number": 9.0, "profile_link": "Monika_Judeikytė.html", "fga": 6.8, "xps": 6.6, "poi": 7.1, "cpx": 7.0, "mrk": 6.4, "goals": 0, "philosophy": "Kanté - Ball Winner"}, {"name": "Ema Buivydaitė", "club": "FK Banga Women", "position": "Midfielder", "nationality": "Lithuania", "age": NaN, "number": 18.0, "profile_link": "Ema_Buivydaitė.html", "fga": 6.8, "xps": 6.6, "poi": 7.1, "cpx": 7.0, "mrk": 6.4, "goals": 0, "philosophy": "Kanté - Ball Winner"}, {"name": "Kamilė Pranulytė", "club": "FK Banga Women", "position": "Midfielder", "nationality": "Lithuania", "age": NaN, "number": 23.0, "profile_link": "Kamilė_Pranulytė.html", "fga": 6.8, "xps": 6.6, "poi": 7.1, "cpx": 7.0, "mrk": 6.4, "goals": 0, "philosophy": "Kanté - Ball Winner"}, {"name": "Atėnė Streckytė", "club": "FK Banga Women", "position": "Midfielder", "nationality": "Lithuania", "age": NaN, "number": 33.0, "profile_link": "Atėnė_Streckytė.html", "fga": 6.8, "xps": 6.6, "poi": 7.1, "cpx": 7.0, "mrk": 6.4, "goals": 0, "philosophy": "Kanté - Ball Winner"}, {"name": "Tereza Ložinskaitė", "club": "FK Banga Women", "position": "Midfielder", "nationality": "Lithuania", "age": NaN, "number": 44.0, "profile_link": "Tereza_Ložinskaitė.html", "fga": 6.8, "xps": 6.6, "poi": 7.1, "cpx": 7.0, "mrk": 6.4, "goals": 0, "philosophy": "Kanté - Ball Winner"}, {"name": "Virginija Jokšaitė", "club": "FK Banga Women", "position": "Midfielder", "nationality": "Lithuania", "age": NaN, "number": NaN, "profile_link": "Virginija_Jokšaitė.html", "fga": 6.8, "xps": 6.6, "poi": 7.1, "cpx": 7.0, "mrk": 6.4, "goals": 0, "philosophy": "Kanté - Ball Winner"}, {"name": "Laura Bagdonaitė", "club": "FK Banga Women", "position": "Midfielder", "nationality": "Lithuania", "age": NaN, "number": NaN, "profile_link": "Laura_Bagdonaitė.html", "fga": 6.8, "xps": 6.6, "poi": 7.1, "cpx": 7.0, "mrk": 6.4, "goals": 0, "philosophy": "Kanté - Ball Winner"}, {"name": "Austėja Lekavičiūtė", "club": "FK Banga Women", "position": "Midfielder", "nationality": "Lithuania", "age": NaN, "number": NaN, "profile_link": "Austėja_Lekavičiūtė.html", "fga": 6.8, "xps": 6.6, "poi": 7.1, "cpx": 7.0, "mrk": 6.4, "goals": 0, "philosophy": "Kanté - Ball Winner"}, {"name": "Agnetė Kuprytė", "club": "FK Banga Women", "position": "Midfielder", "nationality": "Lithuania", "age": NaN, "number": NaN, "profile_link": "Agnetė_Kuprytė.html", "fga": 6.8, "xps": 6.6, "poi": 7.1, "cpx": 7.0, "mrk": 6.4, "goals": 0, "philosophy": "Kanté - Ball Winner"}, {"name": "Austė Bernotaitė", "club": "FK Banga Women", "position": "Midfielder", "nationality": "Lithuania", "age": NaN, "number": NaN, "profile_link": "Austė_Bernotaitė.html", "fga": 6.8, "xps": 6.6, "poi": 7.1, "cpx": 7.0, "mrk": 6.4, "goals": 0, "philosophy": "Kanté - Ball Winner"}, {"name": "Donata Švarcaitė", "club": "FK Banga Women", "position": "Defender", "nationality": "Lithuania", "age": NaN, "number": 4.0, "profile_link": "Donata_Švarcaitė.html", "fga": 6.7, "xps": 5.8, "poi": 7.0, "cpx": 6.8, "mrk": 7.2, "goals": 0, "philosophy": "Ramos - Aggressive CB"}, {"name": "Monika Grikšaitė", "club": "FK Banga Women", "position": "Defender", "nationality": "Lithuania", "age": NaN, "number": 11.0, "profile_link": "Monika_Grikšaitė.html", "fga": 6.7, "xps": 5.8, "poi": 7.0, "cpx": 6.8, "mrk": 7.2, "goals": 0, "philosophy": "Ramos - Aggressive CB"}, {"name": "Roberta Tarasevičiūtė", "club": "FK Banga Women", "position": "Defender", "nationality": "Lithuania", "age": NaN, "number": 13.0, "profile_link": "Roberta_Tarasevičiūtė.html", "fga": 6.7, "xps": 5.8, "poi": 7.0, "cpx": 6.8, "mrk": 7.2, "goals": 0, "philosophy": "Ramos - Aggressive CB"}, {"name": "Alina Špakovskaja", "club": "FK Banga Women", "position": "Defender", "nationality": "Lithuania", "age": NaN, "number": 18.0, "profile_link": "Alina_Špakovskaja.html", "fga": 6.7, "xps": 5.8, "poi": 7.0, "cpx": 6.8, "mrk": 7.2, "goals": 0, "philosophy": "Ramos - Aggressive CB"}, {"name": "Vitalija Žatkina", "club": "FK Banga Women", "position": "Defender", "nationality": "Lithuania", "age": NaN, "number": 26.0, "profile_link": "Vitalija_Žatkina.html", "fga": 6.7, "xps": 5.8, "poi": 7.0, "cpx": 6.8, "mrk": 7.2, "goals": 0, "philosophy": "Ramos - Aggressive CB"}, {"name": "Laura Ubartaitė", "club": "FK Banga Women", "position": "Defender", "nationality": "Lithuania", "age": NaN, "number": NaN, "profile_link": "Laura_Ubartaitė.html", "fga": 6.7, "xps": 5.8, "poi": 7.0, "cpx": 6.8, "mrk": 7.2, "goals": 0, "philosophy": "Ramos - Aggressive CB"}, {"name": "Mišelė Korsakaitė", "club": "FK Banga Women", "position": "Defender", "nationality": "Lithuania", "age": NaN, "number": NaN, "profile_link": "Mišelė_Korsakaitė.html", "fga": 6.7, "xps": 5.8, "poi": 7.0, "cpx": 6.8, "mrk": 7.2, "goals": 0, "philosophy": "Ramos - Aggressive CB"}, {"name": "Odeta Naujokaitė", "club": "FK Banga Women", "position": "Defender", "nationality": "Lithuania", "age": NaN, "number": NaN, "profile_link": "Odeta_Naujokaitė.html", "fga": 6.7, "xps": 5.8, "poi": 7.0, "cpx": 6.8, "mrk": 7.2, "goals": 0, "philosophy": "Ramos - Aggressive CB"}, {"name": "Aina Skėrutė", "club": "FK Banga Women", "position": "Defender", "nationality": "Lithuania", "age": NaN, "number": NaN, "profile_link": "Aina_Skėrutė.html", "fga": 6.7, "xps": 5.8, "poi": 7.0, "cpx": 6.8, "mrk": 7.2, "goals": 0, "philosophy": "Ramos - Aggressive CB"}, {"name": "Modesta Gečaitė", "club": "FK Banga Women", "position": "Defender", "nationality": "Lithuania", "age": NaN, "number": NaN, "profile_link": "Modesta_Gečaitė.html", "fga": 6.7, "xps": 5.8, "poi": 7.0, "cpx": 6.8, "mrk": 7.2, "goals": 0, "philosophy": "Ramos - Aggressive CB"}, {"name": "Agnė Bonadrenko", "club": "FK Banga Women", "position": "Defender", "nationality": "Lithuania", "age": NaN, "number": NaN, "profile_link": "Agnė_Bonadrenko.html", "fga": 6.7, "xps": 5.8, "poi": 7.0, "cpx": 6.8, "mrk": 7.2, "goals": 0, "philosophy": "Ramos - Aggressive CB"}, {"name": "Viltė Jurgaitytė", "club": "FK Banga Women", "position": "Goalkeeper", "nationality": "Lithuania", "age": NaN, "number": 21.0, "profile_link": "Viltė_Jurgaitytė.html", "fga": 6.6, "xps": 6.4, "poi": 6.8, "cpx": 7.0, "mrk": 6.5, "goals": 0, "philosophy": "Buffon - Traditional GK"}, {"name": "Gabija Valiukevičiūtė", "club": "FK Banga Women", "position": "Goalkeeper", "nationality": "Lithuania", "age": NaN, "number": NaN, "profile_link": "Gabija_Valiukevičiūtė.html", "fga": 6.6, "xps": 6.4, "poi": 6.8, "cpx": 7.0, "mrk": 6.5, "goals": 0, "philosophy": "Buffon - Traditional GK"}];
+
+        // Team standings data
+        const standings = [
+            {rank: 1, team: 'FK Gintra', p: 20, w: 17, d: 0, l: 3, gf: 64, ga: 12, gd: 52, pts: 51},
+            {rank: 2, team: 'FK Transinvest', p: 20, w: 13, d: 1, l: 6, gf: 40, ga: 22, gd: 18, pts: 40},
+            {rank: 3, team: 'MFA Žalgiris MRU', p: 20, w: 12, d: 2, l: 6, gf: 36, ga: 17, gd: 19, pts: 38},
+            {rank: 4, team: 'FC Hegelmann Women', p: 20, w: 8, d: 0, l: 12, gf: 25, ga: 35, gd: -10, pts: 24},
+            {rank: 5, team: 'FK Žalgiris Women', p: 20, w: 5, d: 1, l: 14, gf: 19, ga: 45, gd: -26, pts: 16},
+            {rank: 6, team: 'FK Banga Women', p: 20, w: 3, d: 0, l: 17, gf: 9, ga: 62, gd: -53, pts: 9}
+        ];
+
+        // Helper Functions
+        function getFgaBadgeClass(fga) {
+            if (fga >= 9.3) return 'badge-elite';
+            if (fga >= 8.5) return 'badge-high';
+            if (fga >= 8.0) return 'badge-good';
+            return 'badge-avg';
+        }
+
+        function getPositionBadge(position) {
+            if (position.includes('Goalkeeper')) return 'badge-gk';
+            if (position.includes('Defender')) return 'badge-def';
+            if (position.includes('Midfielder')) return 'badge-mid';
+            if (position.includes('Forward')) return 'badge-fwd';
+            return 'badge-mid';
+        }
+
+        function formatAge(age) {
+            if (!age || isNaN(age)) return '-';
+            return Math.round(age);
+        }
+
+        function formatNumber(num) {
+            if (!num || isNaN(num)) return '-';
+            return Math.round(num);
+        }
+
+        // Tab Switching
+        function showTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById(tabName).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        // Populate Standings Table
+        function populateStandings() {
+            const tbody = document.getElementById('standingsTable');
+            standings.forEach(s => {
+                const clubPlayers = realPlayers.filter(p => p.club === s.team);
+                const avgFga = clubPlayers.length > 0 
+                    ? (clubPlayers.reduce((sum, p) => sum + p.fga, 0) / clubPlayers.length).toFixed(1)
+                    : '-';
+                
+                tbody.innerHTML += `
+                    <tr>
+                        <td class="font-bold text-pink-400">${s.rank}</td>
+                        <td class="font-semibold">${s.team}</td>
+                        <td>${s.p}</td>
+                        <td>${s.w}</td>
+                        <td>${s.d}</td>
+                        <td>${s.l}</td>
+                        <td class="text-green-400">${s.gf}</td>
+                        <td class="text-red-400">${s.ga}</td>
+                        <td>${s.gd > 0 ? '+' : ''}${s.gd}</td>
+                        <td class="font-bold">${s.pts}</td>
+                        <td class="text-gray-400">${clubPlayers.length}</td>
+                        <td><span class="badge ${getFgaBadgeClass(avgFga)}">${avgFga}</span></td>
+                    </tr>
+                `;
+            });
+        }
+
+        // Populate Top Performers
+        function populateTopPerformers() {
+            const tbody = document.getElementById('topPerformersTable');
+            realPlayers.slice(0, 30).forEach((p, idx) => {
+                tbody.innerHTML += `
+                    <tr>
+                        <td class="font-bold text-pink-400">${idx + 1}</td>
+                        <td class="font-semibold">
+                            <a href="${p.profile_link}" target="_blank" class="player-link">${p.name}</a>
+                        </td>
+                        <td><span class="club-badge">${p.club}</span></td>
+                        <td><span class="badge ${getPositionBadge(p.position)}">${p.position}</span></td>
+                        <td class="text-gray-400">${formatAge(p.age)}</td>
+                        <td><span class="fga-badge ${getFgaBadgeClass(p.fga)}">${p.fga}</span></td>
+                        <td class="text-gray-400">${p.xps}</td>
+                        <td class="text-gray-400">${p.poi}</td>
+                        <td class="text-gray-400">${p.cpx}</td>
+                        <td class="text-gray-400">${p.mrk}</td>
+                        <td class="text-pink-400 font-bold">${p.goals || '-'}</td>
+                        <td class="text-xs text-gray-400">${p.philosophy.split('-')[0].trim()}</td>
+                        <td>
+                            <a href="${p.profile_link}" target="_blank" class="text-pink-400">
+                                <i class="fas fa-external-link-alt"></i>
+                            </a>
+                        </td>
+                    </tr>
+                `;
+            });
+        }
+
+        // Populate All Players
+        function populateAllPlayers() {
+            const tbody = document.getElementById('allPlayersTable');
+            tbody.innerHTML = '';
+            
+            realPlayers.forEach((p, idx) => {
+                tbody.innerHTML += `
+                    <tr>
+                        <td class="text-gray-400">${idx + 1}</td>
+                        <td class="font-semibold">
+                            <a href="${p.profile_link}" target="_blank" class="player-link">${p.name}</a>
+                        </td>
+                        <td><span class="club-badge">${p.club}</span></td>
+                        <td><span class="badge ${getPositionBadge(p.position)}">${p.position.substring(0, 3)}</span></td>
+                        <td class="text-gray-400">${formatAge(p.age)}</td>
+                        <td><span class="badge ${getFgaBadgeClass(p.fga)}">${p.fga}</span></td>
+                        <td class="text-gray-400">${p.xps}</td>
+                        <td class="text-gray-400">${p.poi}</td>
+                        <td class="text-gray-400">${p.cpx}</td>
+                        <td class="text-gray-400">${p.mrk}</td>
+                        <td>
+                            <a href="${p.profile_link}" target="_blank" class="text-pink-400">
+                                <i class="fas fa-external-link-alt"></i>
+                            </a>
+                        </td>
+                    </tr>
+                `;
+            });
+        }
+
+        // Populate FK Gintra Squad
+        function populateGintraSquad() {
+            const gintraPlayers = realPlayers.filter(p => p.club === 'FK Gintra');
+            const container = document.getElementById('gintraSquad');
+            const avgFga = (gintraPlayers.reduce((sum, p) => sum + p.fga, 0) / gintraPlayers.length).toFixed(1);
+            document.getElementById('gintraAvgFga').textContent = avgFga;
+            
+            gintraPlayers.forEach(p => {
+                container.innerHTML += `
+                    <div class="player-card">
+                        <div class="flex justify-between items-start mb-3">
+                            <div class="flex-1">
+                                <a href="${p.profile_link}" target="_blank" class="player-link text-lg">
+                                    ${p.name}
+                                </a>
+                                <p class="text-sm text-gray-400 mt-1">
+                                    <span class="badge ${getPositionBadge(p.position)}">${p.position}</span>
+                                    ${p.nationality}
+                                </p>
+                            </div>
+                            <div class="text-right">
+                                <div class="fga-badge ${getFgaBadgeClass(p.fga)}">${p.fga}</div>
+                                <div class="text-xs text-gray-400 mt-1">Age ${formatAge(p.age)}</div>
+                            </div>
+                        </div>
+                        
+                        <div class="space-y-2 mb-3">
+                            <div>
+                                <div class="flex justify-between text-xs mb-1">
+                                    <span class="text-gray-400">XPS</span>
+                                    <span class="text-pink-400">${p.xps}</span>
+                                </div>
+                                <div class="metric-bar">
+                                    <div class="metric-fill" style="width: ${p.xps * 10}%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between text-xs mb-1">
+                                    <span class="text-gray-400">POI</span>
+                                    <span class="text-pink-400">${p.poi}</span>
+                                </div>
+                                <div class="metric-bar">
+                                    <div class="metric-fill" style="width: ${p.poi * 10}%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between text-xs mb-1">
+                                    <span class="text-gray-400">CPX</span>
+                                    <span class="text-pink-400">${p.cpx}</span>
+                                </div>
+                                <div class="metric-bar">
+                                    <div class="metric-fill" style="width: ${p.cpx * 10}%"></div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="text-xs text-gray-400 border-t border-gray-800 pt-3">
+                            <div class="mb-2"><i class="fas fa-brain mr-1"></i>${p.philosophy}</div>
+                            ${p.goals ? `<div class="text-pink-400 font-bold"><i class="fas fa-futbol mr-1"></i>${p.goals} goals</div>` : ''}
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        // Populate By Club
+        function populateByClub() {
+            const clubs = ['FK Gintra', 'FK Transinvest', 'MFA Žalgiris MRU', 'FC Hegelmann Women', 'FK Žalgiris Women', 'FK Banga Women'];
+            const container = document.getElementById('byClubContainer');
+            
+            clubs.forEach(club => {
+                const clubPlayers = realPlayers.filter(p => p.club === club).sort((a, b) => b.fga - a.fga);
+                const avgFga = (clubPlayers.reduce((sum, p) => sum + p.fga, 0) / clubPlayers.length).toFixed(1);
+                
+                container.innerHTML += `
+                    <div class="bg-gray-900/50 rounded-xl p-6 mb-6">
+                        <h2 class="text-xl font-bold text-pink-400 mb-4">
+                            <i class="fas fa-shield-alt mr-2"></i>${club} 
+                            <span class="text-sm text-gray-400">(${clubPlayers.length} players | Avg FGA: ${avgFga})</span>
+                        </h2>
+                        <div class="overflow-x-auto">
+                            <table class="database-table">
+                                <thead>
+                                    <tr>
+                                        <th>Rank</th>
+                                        <th>Player</th>
+                                        <th>Pos</th>
+                                        <th>Age</th>
+                                        <th>FGA</th>
+                                        <th>XPS</th>
+                                        <th>POI</th>
+                                        <th>CPX</th>
+                                        <th>MRK</th>
+                                        <th>Profile</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    ${clubPlayers.map((p, idx) => `
+                                        <tr>
+                                            <td class="text-pink-400 font-bold">${idx + 1}</td>
+                                            <td class="font-semibold">
+                                                <a href="${p.profile_link}" target="_blank" class="player-link">${p.name}</a>
+                                            </td>
+                                            <td><span class="badge ${getPositionBadge(p.position)}">${p.position.substring(0, 3)}</span></td>
+                                            <td class="text-gray-400">${formatAge(p.age)}</td>
+                                            <td><span class="badge ${getFgaBadgeClass(p.fga)}">${p.fga}</span></td>
+                                            <td class="text-gray-400">${p.xps}</td>
+                                            <td class="text-gray-400">${p.poi}</td>
+                                            <td class="text-gray-400">${p.cpx}</td>
+                                            <td class="text-gray-400">${p.mrk}</td>
+                                            <td>
+                                                <a href="${p.profile_link}" target="_blank" class="text-pink-400">
+                                                    <i class="fas fa-external-link-alt"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    `).join('')}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        // Quick Search
+        document.getElementById('quickSearch').addEventListener('input', function() {
+            const search = this.value.toLowerCase();
+            const filtered = realPlayers.filter(p => 
+                p.name.toLowerCase().includes(search) ||
+                p.club.toLowerCase().includes(search)
+            );
+
+            const tbody = document.getElementById('allPlayersTable');
+            tbody.innerHTML = '';
+            
+            filtered.forEach((p, idx) => {
+                tbody.innerHTML += `
+                    <tr>
+                        <td class="text-gray-400">${idx + 1}</td>
+                        <td class="font-semibold">
+                            <a href="${p.profile_link}" target="_blank" class="player-link">${p.name}</a>
+                        </td>
+                        <td><span class="club-badge">${p.club}</span></td>
+                        <td><span class="badge ${getPositionBadge(p.position)}">${p.position.substring(0, 3)}</span></td>
+                        <td class="text-gray-400">${formatAge(p.age)}</td>
+                        <td><span class="badge ${getFgaBadgeClass(p.fga)}">${p.fga}</span></td>
+                        <td class="text-gray-400">${p.xps}</td>
+                        <td class="text-gray-400">${p.poi}</td>
+                        <td class="text-gray-400">${p.cpx}</td>
+                        <td class="text-gray-400">${p.mrk}</td>
+                        <td>
+                            <a href="${p.profile_link}" target="_blank" class="text-pink-400">
+                                <i class="fas fa-external-link-alt"></i>
+                            </a>
+                        </td>
+                    </tr>
+                `;
+            });
+        });
+
+        // Populate Comparison Selects
+        function populateComparisonSelects() {
+            const select1 = document.getElementById('player1Select');
+            const select2 = document.getElementById('player2Select');
+            
+            realPlayers.forEach(p => {
+                select1.innerHTML += `<option value="${p.name}">${p.name} (${p.club}) - ${p.fga}</option>`;
+                select2.innerHTML += `<option value="${p.name}">${p.name} (${p.club}) - ${p.fga}</option>`;
+            });
+        }
+
+        // Comparison Chart
+        let comparisonChart = null;
+        document.getElementById('player1Select').addEventListener('change', updateComparison);
+        document.getElementById('player2Select').addEventListener('change', updateComparison);
+
+        function updateComparison() {
+            const p1Name = document.getElementById('player1Select').value;
+            const p2Name = document.getElementById('player2Select').value;
+
+            if (!p1Name || !p2Name) return;
+
+            const p1 = realPlayers.find(p => p.name === p1Name);
+            const p2 = realPlayers.find(p => p.name === p2Name);
+
+            document.getElementById('comparisonResult').classList.remove('hidden');
+
+            const ctx = document.getElementById('comparisonChart').getContext('2d');
+            if (comparisonChart) comparisonChart.destroy();
+
+            comparisonChart = new Chart(ctx, {
+                type: 'radar',
+                data: {
+                    labels: ['FGA', 'XPS', 'POI', 'CPX', 'MRK'],
+                    datasets: [{
+                        label: p1.name,
+                        data: [p1.fga, p1.xps, p1.poi, p1.cpx, p1.mrk],
+                        backgroundColor: 'rgba(213, 26, 75, 0.2)',
+                        borderColor: '#D51A4B',
+                        borderWidth: 2
+                    }, {
+                        label: p2.name,
+                        data: [p2.fga, p2.xps, p2.poi, p2.cpx, p2.mrk],
+                        backgroundColor: 'rgba(34, 211, 238, 0.2)',
+                        borderColor: '#22d3ee',
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        r: {
+                            beginAtZero: true,
+                            max: 10,
+                            ticks: { color: '#94a3b8', stepSize: 2 },
+                            grid: { color: 'rgba(255,255,255,0.1)' },
+                            pointLabels: { color: '#fff', font: { size: 12 } }
+                        }
+                    },
+                    plugins: {
+                        legend: { labels: { color: '#fff', font: { size: 14 } } }
+                    }
+                }
+            });
+        }
+
+        // Initialize
+        populateStandings();
+        populateTopPerformers();
+        populateAllPlayers();
+        populateGintraSquad();
+        populateByClub();
+        populateComparisonSelects();
+
+        // Update overview stats
+        document.getElementById('avgFga').textContent = (realPlayers.reduce((sum, p) => sum + p.fga, 0) / realPlayers.length).toFixed(1);
+        document.getElementById('topRated').textContent = realPlayers[0].fga;
+    </script>
+</body>
+</html>

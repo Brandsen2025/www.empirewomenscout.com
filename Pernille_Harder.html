@@ -1,0 +1,1546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pernille Harder — Empire Women Scout Profile | The Danish Dynamo</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg: #0a0a0a;
+            --card: #141414;
+            --white: #f5f5f5;
+            --muted: #a0a0a0;
+            --accent1: #FFD700;
+            --accent2: #DC143C;
+            --club: #DC052D;
+            --prospect: #0066B2;
+            --win: #22c55e;
+            --loss: #ef4444;
+            --draw: #eab308;
+            --denmark: #C60C30;
+            --bayern: #DC052D;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            background:
+                radial-gradient(900px 500px at 8% 12%, rgba(220, 5, 45, 0.12), transparent 10%),
+                radial-gradient(800px 400px at 92% 88%, rgba(198, 12, 48, 0.08), transparent 8%),
+                var(--bg);
+            color: var(--white);
+            font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        header {
+            max-width: 1300px;
+            margin: 18px auto;
+            padding: 0 22px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        header img {
+            height: 32px;
+            object-fit: contain;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .header-title {
+            font-size: 20px;
+            font-weight: 800;
+            color: var(--accent1);
+        }
+
+        .header-date {
+            font-size: 13px;
+            color: var(--muted);
+            margin-left: 12px;
+            padding: 4px 10px;
+            background: rgba(220, 5, 45, 0.15);
+            border-radius: 6px;
+            border: 1px solid rgba(220, 5, 45, 0.3);
+        }
+
+        .container {
+            max-width: 1300px;
+            margin: 18px auto;
+            padding: 22px;
+            display: grid;
+            grid-template-columns: 360px 1fr;
+            gap: 26px;
+        }
+
+        .card {
+            background: var(--card);
+            padding: 18px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            position: relative;
+            margin-bottom: 18px;
+        }
+
+        .photo {
+            width: 100%;
+            height: 480px;
+            object-fit: cover;
+            object-position: center top;
+            border-radius: 10px;
+            border: 3px solid var(--bayern);
+            background: #000;
+            filter: contrast(1.05) saturate(1.1);
+        }
+
+        .title {
+            font-size: 32px;
+            font-weight: 900;
+            margin: 14px 0;
+            color: var(--white);
+            line-height: 1.2;
+        }
+
+        .sub {
+            color: var(--muted);
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+
+        .club-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: linear-gradient(135deg, rgba(220, 5, 45, 0.2), rgba(0, 0, 0, 0.3));
+            padding: 8px 14px;
+            border-radius: 8px;
+            border: 1px solid rgba(220, 5, 45, 0.4);
+            margin-bottom: 12px;
+        }
+
+        .club-badge span {
+            font-weight: 700;
+            color: var(--white);
+            font-size: 14px;
+        }
+
+        .nationality-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: linear-gradient(135deg, rgba(198, 12, 48, 0.20), rgba(0, 0, 0, 0.3));
+            padding: 6px 12px;
+            border-radius: 8px;
+            border: 1px solid rgba(198, 12, 48, 0.3);
+            margin-left: 8px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--white);
+        }
+
+        .rating-badge {
+            position: absolute;
+            right: 18px;
+            top: 18px;
+            background: linear-gradient(90deg, var(--accent1), #FF6B35);
+            color: #000;
+            font-weight: 900;
+            padding: 10px 14px;
+            border-radius: 16px;
+            font-size: 22px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            line-height: 1.1;
+        }
+
+        .rating-badge .rating-value {
+            font-size: 28px;
+            font-weight: 900;
+        }
+
+        .rating-badge .rating-label {
+            font-size: 9px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            opacity: 0.8;
+        }
+
+        .section {
+            margin-top: 18px;
+        }
+
+        .section h2 {
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--accent1);
+            margin-bottom: 16px;
+        }
+
+        .section h3 {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--accent1);
+            margin: 16px 0 12px;
+        }
+
+        .two-col, .three-col {
+            display: grid;
+            gap: 14px;
+        }
+
+        .two-col { grid-template-columns: 1fr 1fr; }
+        .three-col { grid-template-columns: 1fr 1fr 1fr; }
+
+        .small {
+            color: var(--muted);
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .lead {
+            color: var(--white);
+            font-size: 16px;
+            line-height: 1.5;
+        }
+
+        .visual-canvas {
+            background: transparent;
+            border-radius: 8px;
+            padding: 12px;
+            height: 420px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px dashed rgba(255, 215, 0, 0.18);
+        }
+
+        .muted-box, .highlight-box, .development-box, .warning-box {
+            padding: 14px;
+            border-radius: 10px;
+            margin-top: 12px;
+        }
+
+        .muted-box {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            color: var(--muted);
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.12), rgba(220, 5, 45, 0.08));
+            border: 1px solid rgba(255, 215, 0, 0.2);
+        }
+
+        .development-box {
+            background: linear-gradient(135deg, rgba(0, 102, 178, 0.12), rgba(0, 0, 0, 0.3));
+            border: 1px solid rgba(0, 102, 178, 0.2);
+        }
+
+        .warning-box {
+            background: linear-gradient(135deg, rgba(220, 20, 60, 0.12), rgba(0, 0, 0, 0.3));
+            border: 1px solid rgba(220, 20, 60, 0.3);
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .info-row:last-child { border-bottom: none; }
+
+        .info-label { color: var(--muted); font-size: 14px; }
+        .info-value { color: var(--white); font-weight: 600; font-size: 14px; }
+        .info-value.prospect { color: var(--club); }
+        .info-value.highlight { color: var(--accent1); }
+
+        .metric-item { margin: 14px 0; }
+        .metric-header { display: flex; justify-content: space-between; margin-bottom: 6px; }
+        .metric-name { font-weight: 600; color: var(--white); font-size: 13px; }
+        .metric-score { color: var(--accent1); font-weight: 800; font-size: 15px; }
+        .metric-bar {
+            height: 6px;
+            background: rgba(255, 255, 255, 0.06);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+        .metric-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent1) 0%, #FF6B35 100%);
+            border-radius: 3px;
+        }
+
+        .timeline-item {
+            padding: 14px;
+            border-left: 3px solid var(--bayern);
+            margin: 12px 0;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 6px;
+        }
+        .timeline-date {
+            color: var(--bayern);
+            font-weight: 700;
+            margin-bottom: 6px;
+            font-size: 14px;
+        }
+        .timeline-date.denmark { color: #C60C30; }
+        .timeline-date.wolfsburg { color: #65FF00; }
+        .timeline-date.chelsea { color: #034694; }
+        .timeline-date.linkoping { color: #0066B2; }
+        .timeline-event {
+            color: var(--muted);
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .stat-box, .season-stat-box, .trophy-box {
+            text-align: center;
+            border-radius: 8px;
+        }
+        .stat-box {
+            background: rgba(220, 5, 45, 0.1);
+            border: 1px solid rgba(220, 5, 45, 0.2);
+            padding: 14px;
+        }
+        .stat-value {
+            font-size: 28px;
+            font-weight: 900;
+            color: var(--accent1);
+            display: block;
+        }
+        .stat-value.prospect {
+            color: var(--club);
+        }
+        .stat-label {
+            font-size: 12px;
+            color: var(--muted);
+            margin-top: 4px;
+        }
+
+        .season-stats-grid, .trophy-grid {
+            display: grid;
+            gap: 12px;
+            margin-top: 16px;
+        }
+        .season-stats-grid { grid-template-columns: repeat(4, 1fr); }
+        .trophy-grid { grid-template-columns: repeat(3, 1fr); }
+
+        .season-stat-box {
+            background: rgba(220, 5, 45, 0.05);
+            border: 1px solid rgba(220, 5, 45, 0.15);
+            padding: 16px;
+            transition: transform 0.2s;
+        }
+        .season-stat-box:hover {
+            transform: translateY(-2px);
+            border-color: rgba(220, 5, 45, 0.4);
+        }
+        .season-stat-value {
+            font-size: 32px;
+            font-weight: 900;
+            color: var(--accent1);
+        }
+        .season-stat-value.prospect {
+            color: var(--club);
+        }
+        .season-stat-label {
+            font-size: 11px;
+            color: var(--muted);
+            margin-top: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .tier-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.3), rgba(255, 215, 0, 0.1));
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-weight: 800;
+            font-size: 12px;
+            color: var(--accent1);
+            border: 1px solid rgba(255, 215, 0, 0.4);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 8px;
+        }
+
+        .scout-alert {
+            background: linear-gradient(135deg, rgba(220, 5, 45, 0.15), rgba(0, 0, 0, 0.2));
+            border: 1px solid rgba(220, 5, 45, 0.3);
+            padding: 14px;
+            border-radius: 10px;
+            margin-top: 16px;
+        }
+        .scout-alert-title {
+            color: var(--bayern);
+            font-weight: 800;
+            font-size: 14px;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .scout-alert-text {
+            color: var(--muted);
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        .match-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 10px;
+            padding: 16px;
+            margin-bottom: 12px;
+            display: grid;
+            grid-template-columns: 1fr auto 1fr auto;
+            align-items: center;
+            gap: 16px;
+        }
+        .match-teams { display: flex; flex-direction: column; gap: 4px; }
+        .match-team {
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--white);
+        }
+        .match-team.home { color: var(--club); }
+        .match-score {
+            background: linear-gradient(135deg, var(--accent1), rgba(255, 107, 0, 0.7));
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-weight: 900;
+            font-size: 18px;
+            color: #000;
+            text-align: center;
+            min-width: 70px;
+        }
+        .result-w .match-score {
+            background: linear-gradient(135deg, var(--win), rgba(34, 197, 94, 0.7));
+        }
+        .result-l .match-score {
+            background: linear-gradient(135deg, var(--loss), rgba(239, 68, 68, 0.7));
+        }
+        .result-d .match-score {
+            background: linear-gradient(135deg, var(--draw), rgba(234, 179, 8, 0.7));
+        }
+        .match-info { text-align: right; }
+        .match-date {
+            font-size: 12px;
+            color: var(--muted);
+        }
+        .match-comp {
+            font-size: 11px;
+            color: var(--accent1);
+            font-weight: 600;
+        }
+
+        .form-indicator {
+            display: flex;
+            gap: 6px;
+            margin-top: 12px;
+        }
+        .form-box {
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 6px;
+            font-weight: 800;
+            font-size: 13px;
+        }
+        .form-box.w {
+            background: rgba(34, 197, 94, 0.25);
+            color: #22c55e;
+            border: 1px solid rgba(34, 197, 94, 0.4);
+        }
+        .form-box.d {
+            background: rgba(234, 179, 8, 0.25);
+            color: #eab308;
+            border: 1px solid rgba(234, 179, 8, 0.4);
+        }
+        .form-box.l {
+            background: rgba(239, 68, 68, 0.25);
+            color: #ef4444;
+            border: 1px solid rgba(239, 68, 68, 0.4);
+        }
+
+        .personality-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-top: 16px;
+        }
+        .personality-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 10px;
+            padding: 16px;
+            text-align: center;
+        }
+        .personality-icon {
+            font-size: 28px;
+            margin-bottom: 8px;
+        }
+        .personality-title {
+            font-weight: 700;
+            color: var(--white);
+            font-size: 13px;
+            margin-bottom: 4px;
+        }
+        .personality-score {
+            font-size: 24px;
+            font-weight: 900;
+            color: var(--accent1);
+        }
+        .personality-desc {
+            font-size: 11px;
+            color: var(--muted);
+            margin-top: 6px;
+            line-height: 1.4;
+        }
+
+        .relationship-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            padding: 14px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 10px;
+            margin-bottom: 12px;
+        }
+        .relationship-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent1), #FF6B35);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            font-size: 18px;
+            color: #000;
+            flex-shrink: 0;
+        }
+        .relationship-content { flex: 1; }
+        .relationship-name {
+            font-weight: 700;
+            color: var(--white);
+            font-size: 15px;
+            margin-bottom: 2px;
+        }
+        .relationship-role {
+            font-size: 12px;
+            color: var(--accent1);
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+        .relationship-desc {
+            font-size: 13px;
+            color: var(--muted);
+            line-height: 1.5;
+        }
+        .relationship-dynamic {
+            display: inline-block;
+            background: rgba(255, 215, 0, 0.15);
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--accent1);
+            margin-top: 8px;
+            border: 1px solid rgba(255, 215, 0, 0.2);
+        }
+
+        .trait-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(220, 5, 45, 0.15);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--white);
+            margin: 4px;
+            border: 1px solid rgba(220, 5, 45, 0.25);
+        }
+
+        .career-path {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin: 16px 0;
+            padding: 16px;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 10px;
+        }
+        .career-club {
+            background: rgba(198, 12, 48, 0.2);
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            border: 1px solid rgba(198, 12, 48, 0.3);
+            color: #FF69B4;
+        }
+        .career-club.current {
+            background: rgba(220, 5, 45, 0.3);
+            border-color: rgba(220, 5, 45, 0.6);
+            color: #FFD700;
+        }
+        .career-club.wolfsburg { background: rgba(101, 255, 0, 0.2); border-color: rgba(101, 255, 0, 0.4); color: #65FF00; }
+        .career-club.chelsea { background: rgba(3, 70, 148, 0.2); border-color: rgba(3, 70, 148, 0.4); color: #034694; }
+        .career-club.linkoping { background: rgba(0, 102, 178, 0.2); border-color: rgba(0, 102, 178, 0.4); color: #0066B2; }
+        .career-arrow {
+            color: var(--accent1);
+            font-weight: 700;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 12px;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            font-size: 14px;
+        }
+        th {
+            color: var(--accent1);
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 12px;
+            letter-spacing: 0.5px;
+        }
+        td {
+            color: var(--white);
+        }
+        tr:hover {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .pill {
+            display: inline-block;
+            background: rgba(0, 0, 0, 0.4);
+            padding: 7px 12px;
+            border-radius: 999px;
+            font-weight: 700;
+            font-size: 13px;
+            color: var(--white);
+            margin: 6px 8px 6px 0;
+            border: 1px solid rgba(220, 5, 45, 0.3);
+        }
+
+        .philosophy-table {
+            width: 100%;
+            margin: 16px 0;
+            border-collapse: collapse;
+        }
+        .philosophy-table th {
+            background: rgba(255, 215, 0, 0.1);
+            color: var(--accent1);
+            padding: 12px;
+            text-align: left;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-bottom: 2px solid rgba(255, 215, 0, 0.3);
+        }
+        .philosophy-table td {
+            padding: 14px 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            font-size: 14px;
+        }
+        .philosophy-table tr:hover {
+            background: rgba(255, 255, 255, 0.03);
+        }
+        .philosophy-code {
+            font-family: 'Courier New', monospace;
+            font-weight: 700;
+            color: var(--accent1);
+            font-size: 16px;
+        }
+        .philosophy-score {
+            font-weight: 900;
+            color: var(--club);
+            font-size: 18px;
+        }
+        .new-badge {
+            background: rgba(0, 102, 178, 0.2);
+            color: var(--prospect);
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 10px;
+            font-weight: 700;
+            margin-left: 8px;
+            text-transform: uppercase;
+        }
+
+        .formula-box {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            border-radius: 8px;
+            padding: 16px;
+            margin: 12px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+        }
+        .formula-title {
+            color: var(--accent1);
+            font-weight: 700;
+            margin-bottom: 8px;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            border-radius: 10px;
+            border: 2px solid rgba(255, 215, 0, 0.3);
+            margin: 16px 0;
+            background: #000;
+        }
+        .video-container video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 10px;
+        }
+
+        @media (max-width: 980px) {
+            .container { grid-template-columns: 1fr; }
+            .photo { height: 380px; }
+            .visual-canvas { height: auto; }
+            .two-col, .three-col { grid-template-columns: 1fr; }
+            .trophy-grid { grid-template-columns: repeat(2, 1fr); }
+            .match-card { grid-template-columns: 1fr; text-align: center; }
+            .match-info { text-align: center; }
+            .season-stats-grid { grid-template-columns: repeat(2, 1fr); }
+            .personality-grid { grid-template-columns: 1fr; }
+            .career-path { flex-direction: column; align-items: flex-start; }
+            .career-arrow { transform: rotate(90deg); }
+        }
+    </style>
+<base target="_blank">
+</head>
+<body>
+
+    <header>
+        <div class="header-left">
+            <img src="https://media.licdn.com/dms/image/v2/D4E12AQEjuDAF0uOTrw/article-cover_image-shrink_720_1280/B4EZiOwG01GwAI-/0/1754741632806?e=2147483647&v=beta&t=L9ct0jEaWdSp7vfTI0urIqPPig0MspEd-6RtzxaQzzQ" alt="Empire Women Scout">
+            <div class="header-title">EMPIRE WOMEN SCOUT</div>
+            <span class="header-date">📅 09 Feb 2026 • 2X UEFA PLAYER OF THE YEAR</span>
+        </div>
+    </header>
+
+    <div class="container">
+
+        <!-- Sidebar -->
+        <div>
+            <div class="card">
+                <img src="https://miasanrot.de/wp-content/uploads/2024/09/GettyImages-2173978466-1000x563.jpg" alt="Pernille Harder" style="width: 100%; height: 480px; object-fit: cover; object-position: center top; border-radius: 10px; border: 3px solid var(--bayern); background: #000; filter: contrast(1.05) saturate(1.1);">
+                <div class="title">Pernille Harder</div>
+                <div class="sub">The Danish Dynamo • Attacking Midfielder</div>
+
+                <div class="club-badge">
+                    <span>🔴 FC Bayern Munich</span>
+                </div>
+                <span class="nationality-badge">🇩🇰 Denmark</span>
+
+                <div class="rating-badge">
+                    <span class="rating-value">94</span>
+                    <span class="rating-label">FGA /100</span>
+                </div>
+
+                <div class="section">
+                    <div class="stat-box" style="margin-bottom: 10px;">
+                        <span class="stat-value prospect">9.4</span>
+                        <span class="stat-label">Empire FGA Rating /10</span>
+                    </div>
+                    <div class="tier-badge">⚡ IMMORTAL</div>
+                    <div class="pill" style="margin-top: 8px;">🦶 Two-Footed</div>
+                    <div class="pill" style="margin-top: 4px;">📏 1.69m</div>
+                    <div class="pill" style="margin-top: 4px;">⚽ #21</div>
+                </div>
+
+                <div class="section">
+                    <h3>Current Status</h3>
+                    <div class="info-row"><span class="info-label">Full Name</span><span class="info-value">Pernille Mosegaard Harder</span></div>
+                    <div class="info-row"><span class="info-label">Date of Birth</span><span class="info-value">15 Nov 1992 (33 y)</span></div>
+                    <div class="info-row"><span class="info-label">Place of Birth</span><span class="info-value">Ikast, Denmark</span></div>
+                    <div class="info-row"><span class="info-label">Nationality</span><span class="info-value highlight">🇩🇰 Danish</span></div>
+                    <div class="info-row"><span class="info-label">Height / Weight</span><span class="info-value">1.69 m / 62 kg</span></div>
+                    <div class="info-row"><span class="info-label">Primary Position</span><span class="info-value">Attacking Midfielder</span></div>
+                    <div class="info-row"><span class="info-label">Secondary</span><span class="info-value">Forward / Striker</span></div>
+                    <div class="info-row"><span class="info-label">Strong Foot</span><span class="info-value highlight">Both (Ambidextrous)</span></div>
+                    <div class="info-row"><span class="info-label">Current Club</span><span class="info-value prospect">FC Bayern Munich</span></div>
+                    <div class="info-row"><span class="info-label">League</span><span class="info-value">Frauen-Bundesliga</span></div>
+                    <div class="info-row"><span class="info-label">Joined</span><span class="info-value">July 2023</span></div>
+                    <div class="info-row"><span class="info-label">Contract Until</span><span class="info-value highlight">June 2028</span></div>
+                    <div class="info-row"><span class="info-label">Previous Club</span><span class="info-value">Chelsea FC</span></div>
+                    <div class="info-row"><span class="info-label">Market Value</span><span class="info-value highlight">€800K</span></div>
+                </div>
+
+                <div class="section">
+                    <h3>Career Honors</h3>
+                    <div class="info-row"><span class="info-label">🏆 UEFA Player of the Year</span><span class="info-value">2018, 2020</span></div>
+                    <div class="info-row"><span class="info-label">🏆 Ballon d'Or Féminin</span><span class="info-value">2nd Place (2018)</span></div>
+                    <div class="info-row"><span class="info-label">🏆 Bundesliga Champion</span><span class="info-value">6 titles (2017-2025)</span></div>
+                    <div class="info-row"><span class="info-label">🏆 WSL Champion</span><span class="info-value">3 titles (2021-2023)</span></div>
+                    <div class="info-row"><span class="info-label">🏆 DFB-Pokal</span><span class="info-value">5 titles</span></div>
+                    <div class="info-row"><span class="info-label">🏆 Damallsvenskan</span><span class="info-value">2016</span></div>
+                    <div class="info-row"><span class="info-label">🥈 UWCL Runner-up</span><span class="info-value">2018, 2020, 2021</span></div>
+                    <div class="info-row"><span class="info-label">🥈 Euro 2017</span><span class="info-value">Runner-up (Denmark)</span></div>
+                </div>
+
+                <div class="section">
+                    <h3>Career Statistics</h3>
+                    <div class="info-row"><span class="info-label">Club Appearances</span><span class="info-value">294</span></div>
+                    <div class="info-row"><span class="info-label">Club Goals</span><span class="info-value highlight">216</span></div>
+                    <div class="info-row"><span class="info-label">International Caps</span><span class="info-value">167</span></div>
+                    <div class="info-row"><span class="info-label">International Goals</span><span class="info-value highlight">81</span></div>
+                    <div class="info-row"><span class="info-label">Career Goal Ratio</span><span class="info-value">0.74 goals/game</span></div>
+                    <div class="info-row"><span class="info-label">UWCL Goals</span><span class="info-value">46+ (All-time Top 5)</span></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div>
+
+            <!-- FGA Analysis -->
+            <div class="card">
+                <h2>🌍 Empire Women Scout Analysis — The Danish Dynamo</h2>
+                <p class="lead">
+                    Pernille Harder stands as one of the <strong>greatest female footballers of all time</strong> — a complete attacking midfielder whose <strong>10 consecutive league titles</strong> across four clubs in three countries (2015-2025) represent an <strong>unprecedented achievement</strong> in women's football. At <strong>33 years old</strong>, she remains at the <strong>absolute peak of European football</strong> with Bayern Munich, having just extended her contract until <strong>2028</strong>. Her <strong>FGA rating of 94</strong> reflects <strong>elite technical ability</strong>, <strong>tactical intelligence</strong>, and <strong>proven winning mentality</strong> at the highest level. With <strong>216 career goals in 294 appearances</strong> (0.74 ratio) and <strong>81 international goals for Denmark</strong>, Harder combines <strong>lethal finishing</strong> with <strong>exceptional playmaking</strong> — a true "<strong>complete forward</strong>" in every sense.
+                </p>
+
+                <div class="career-path">
+                    <span class="career-club linkoping">🔵 Linköping (2012-16)</span>
+                    <span class="career-arrow">→</span>
+                    <span class="career-club wolfsburg">🟢 Wolfsburg (2017-20)</span>
+                    <span class="career-arrow">→</span>
+                    <span class="career-club chelsea">🔵 Chelsea (2020-23)</span>
+                    <span class="career-arrow">→</span>
+                    <span class="career-club current">🔴 Bayern Munich (2023-28)</span>
+                </div>
+
+                <div class="highlight-box">
+                    <strong style="color: var(--accent1);">👑 The Unprecedented Winning Streak:</strong> Harder's <strong>10 consecutive league championships</strong> (2015-2025) is a feat unmatched in women's football history. Starting with <strong>Linköping in Sweden (2016)</strong>, continuing through <strong>four doubles with Wolfsburg in Germany</strong>, <strong>three WSL titles with Chelsea in England</strong>, and now <strong>back-to-back Bundesliga crowns with Bayern</strong>, she has proven her winning formula <strong>transcends leagues and cultures</strong>. This streak demonstrates not just <strong>individual excellence</strong> but <strong>leadership</strong>, <strong>adaptability</strong>, and the ability to <strong>elevate teammates</strong> — the mark of a true champion. <strong>Empire Women Scout assessment:</strong> Generational talent with 3-4 years of elite production remaining.
+                </div>
+
+                <div class="season-stats-grid">
+                    <div class="season-stat-box">
+                        <div class="season-stat-value prospect">94</div>
+                        <div class="season-stat-label">FGA Rating</div>
+                    </div>
+                    <div class="season-stat-box">
+                        <div class="season-stat-value">33</div>
+                        <div class="season-stat-label">Years Old</div>
+                    </div>
+                    <div class="season-stat-box">
+                        <div class="season-stat-value">0.74</div>
+                        <div class="season-stat-label">Goals/Game</div>
+                    </div>
+                    <div class="season-stat-box">
+                        <div class="season-stat-value">10</div>
+                        <div class="season-stat-label">Consecutive Titles</div>
+                    </div>
+                </div>
+
+                <div class="scout-alert">
+                    <div class="scout-alert-title">⚠️ Career Trajectory Analysis</div>
+                    <div class="scout-alert-text">
+                        Harder's <strong>FGA rating of 94</strong> places her in the <strong>top 1% of all female players</strong> globally. At <strong>33</strong>, she is experiencing a <strong>career renaissance</strong> at Bayern Munich — 23 goals in all competitions (2024-25) and <strong>top scorer in the UWCL league phase</strong>. The <strong>contract extension to 2028</strong> (age 36) reflects Bayern's belief in her <strong>longevity</strong>. While <strong>pace may decline slightly</strong>, her <strong>positional intelligence</strong>, <strong>technical excellence</strong>, and <strong>leadership</strong> will sustain elite performance. <strong>Injury history:</strong> Hamstring issues in 2022-23 have been managed effectively. <strong>Projected elite window:</strong> 3-4 more seasons.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Development Journey -->
+            <div class="card">
+                <h2>🌍 Career Journey — From Ikast to Immortality</h2>
+                <p class="small" style="margin-bottom: 16px;">Unprecedented 10-year championship streak across three leagues and four elite clubs.</p>
+
+                <div class="timeline-item">
+                    <div class="timeline-date">1992-2007 — Ikast, Denmark</div>
+                    <div class="timeline-event">Born in Ikast to footballing parents. Played with boys' teams until age 11 (only girl in Midtjylland academy). Senior debut at 14 with Team Viborg. Early signs of exceptional technical ability and competitive drive.</div>
+                </div>
+
+                <div class="timeline-item" style="border-left-color: #0066B2;">
+                    <div class="timeline-date linkoping">2010-2012 — IK Skovbakken</div>
+                    <div class="timeline-event">Moved to Skovbakken at 17. One of only four contracted players. Averaged more than a goal per game. Formed early partnership with Nadia Nadim. Established as Denmark's brightest young talent.</div>
+                </div>
+
+                <div class="timeline-item" style="border-left-color: #0066B2;">
+                    <div class="timeline-date linkoping">2012-2016 — Linköping FC</div>
+                    <div class="timeline-event"><strong>Breakthrough years.</strong> 71 goals in 88 games. Damallsvenskan top scorer (2016) with 23 goals. Won Swedish league and cup double. Named Danish Footballer of the Year (2015, 2016). Moved to Wall of Fame in Linköping.</div>
+                </div>
+
+                <div class="timeline-item" style="border-left-color: #65FF00;">
+                    <div class="timeline-date wolfsburg">2017-2020 — VfL Wolfsburg</div>
+                    <div class="timeline-event"><strong>European elite arrival.</strong> Four consecutive Bundesliga+DFB-Pokal doubles. 68 goals in 75 games. Bundesliga top scorer (2018, 2020). UWCL runner-up 2018 (scored in final). First UEFA Women's Player of the Year award (2018).</div>
+                </div>
+
+                <div class="timeline-item" style="border-left-color: #034694;">
+                    <div class="timeline-date chelsea">2020-2023 — Chelsea FC</div>
+                    <div class="timeline-event"><strong>World's most expensive player.</strong> Transfer record £250K+. Three WSL titles, three FA Cups. 24 goals in 48 games. UWCL runner-up 2021. Second UEFA Player of the Year (2020). Ballon d'Or 2nd place (2018).</div>
+                </div>
+
+                <div class="timeline-item" style="border-left-color: #DC052D;">
+                    <div class="timeline-date">2023-Present — FC Bayern Munich</div>
+                    <div class="timeline-event"><strong>Career renaissance.</strong> Back-to-back Bundesliga titles. 28 goals in 47 games. DFB-Pokal winner 2025. Contract extended to 2028. Top scorer in UWCL league phase (2025-26). 10th consecutive league title achieved.</div>
+                </div>
+
+                <div class="muted-box" style="margin-top: 16px;">
+                    <strong style="color: var(--bayern);">The Champion's DNA:</strong> Harder's career exemplifies <strong>consistent excellence at the highest level</strong>. Unlike many stars who peak at one club, she has <strong>repeated her winning formula</strong> in <strong>Sweden, Germany, and England</strong> — adapting her game to different leagues and styles. Her <strong>81 international goals for Denmark</strong> (record holder) and <strong>Euro 2017 final appearance</strong> prove her impact transcends club football. The <strong>10 consecutive league titles</strong> (2015-2025) will likely never be matched.
+                </div>
+            </div>
+
+            <!-- FGA Metrics -->
+            <div class="card">
+                <h2>📊 Core FGA Intelligence Metrics</h2>
+                <p class="small" style="margin-bottom: 16px;">Metrics as of Feb 2026 — Elite attacking midfielder assessment.</p>
+
+                <h3>Tier 1: Automated Metrics (60% Weight)</h3>
+                <div class="two-col">
+                    <div>
+                        <div class="metric-item">
+                            <div class="metric-header"><span class="metric-name">XPS (Attacking Threat)</span><span class="metric-score">96</span></div>
+                            <div class="metric-bar"><div class="metric-fill" style="width: 96%"></div></div>
+                        </div>
+                        <div class="metric-item">
+                            <div class="metric-header"><span class="metric-name">KEY (Key Passes)</span><span class="metric-score">94</span></div>
+                            <div class="metric-bar"><div class="metric-fill" style="width: 94%"></div></div>
+                        </div>
+                        <div class="metric-item">
+                            <div class="metric-header"><span class="metric-name">RDS (Finishing)</span><span class="metric-score">93</span></div>
+                            <div class="metric-bar"><div class="metric-fill" style="width: 93%"></div></div>
+                        </div>
+                        <div class="metric-item">
+                            <div class="metric-header"><span class="metric-name">TBP (Progression)</span><span class="metric-score">92</span></div>
+                            <div class="metric-bar"><div class="metric-fill" style="width: 92%"></div></div>
+                        </div>
+                        <div class="metric-item">
+                            <div class="metric-header"><span class="metric-name">STK (Through Balls)</span><span class="metric-score">91</span></div>
+                            <div class="metric-bar"><div class="metric-fill" style="width: 91%"></div></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="metric-item">
+                            <div class="metric-header"><span class="metric-name">CAR (Ball Carries)</span><span class="metric-score">89</span></div>
+                            <div class="metric-bar"><div class="metric-fill" style="width: 89%"></div></div>
+                        </div>
+                        <div class="metric-item">
+                            <div class="metric-header"><span class="metric-name">CPX (Composure)</span><span class="metric-score">94</span></div>
+                            <div class="metric-bar"><div class="metric-fill" style="width: 94%"></div></div>
+                        </div>
+                        <div class="metric-item">
+                            <div class="metric-header"><span class="metric-name">POI (Position Intelligence)</span><span class="metric-score">96</span></div>
+                            <div class="metric-bar"><div class="metric-fill" style="width: 96%"></div></div>
+                        </div>
+                        <div class="metric-item">
+                            <div class="metric-header"><span class="metric-name">DEF (Defensive Work)</span><span class="metric-score">76</span></div>
+                            <div class="metric-bar"><div class="metric-fill" style="width: 76%"></div></div>
+                        </div>
+                        <div class="metric-item">
+                            <div class="metric-header"><span class="metric-name">PVI (Pass Variety)</span><span class="metric-score">95</span></div>
+                            <div class="metric-bar"><div class="metric-fill" style="width: 95%"></div></div>
+                        </div>
+                    </div>
+                </div>
+
+                <h3>Tier 2: Semi-Automated Metrics (30% Weight)</h3>
+                <div class="two-col">
+                    <div class="metric-item">
+                        <div class="metric-header"><span class="metric-name">TAC (Tactical IQ)</span><span class="metric-score">95</span></div>
+                        <div class="metric-bar"><div class="metric-fill" style="width: 95%"></div></div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="metric-header"><span class="metric-name">COM (Communication)</span><span class="metric-score">90</span></div>
+                        <div class="metric-bar"><div class="metric-fill" style="width: 90%"></div></div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="metric-header"><span class="metric-name">ORG (Organization)</span><span class="metric-score">88</span></div>
+                        <div class="metric-bar"><div class="metric-fill" style="width: 88%"></div></div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="metric-header"><span class="metric-name">CPI (Creative Index)</span><span class="metric-score">96</span></div>
+                        <div class="metric-bar"><div class="metric-fill" style="width: 96%"></div></div>
+                    </div>
+                </div>
+
+                <h3>Tier 3: Manual Scout Assessment (10% Weight)</h3>
+                <div class="two-col">
+                    <div>
+                        <div class="metric-item">
+                            <div class="metric-header"><span class="metric-name">CHR (Character)</span><span class="metric-score">98</span></div>
+                            <div class="metric-bar"><div class="metric-fill" style="width: 98%"></div></div>
+                        </div>
+                        <div class="metric-item">
+                            <div class="metric-header"><span class="metric-name">LEA (Leadership)</span><span class="metric-score">95</span></div>
+                            <div class="metric-bar"><div class="metric-fill" style="width: 95%"></div></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="metric-item">
+                            <div class="metric-header"><span class="metric-name">MCS (Mental)</span><span class="metric-score">97</span></div>
+                            <div class="metric-bar"><div class="metric-fill" style="width: 97%"></div></div>
+                        </div>
+                        <div class="metric-item">
+                            <div class="metric-header"><span class="metric-name">PRO (Professionalism)</span><span class="metric-score">99</span></div>
+                            <div class="metric-bar"><div class="metric-fill" style="width: 99%"></div></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="development-box" style="margin-top: 16px;">
+                    <strong style="color: var(--prospect);">📈 Elite Profile Analysis:</strong>
+                    <p class="small" style="margin-top: 8px; margin-bottom: 0;">
+                        Harder's metrics reveal a <strong>"complete forward"</strong> archetype with <strong>no significant weaknesses</strong>. Her <strong>attacking threat (96)</strong> and <strong>position intelligence (96)</strong> are world-class, while her <strong>professionalism (99)</strong> and <strong>character (98)</strong> reflect her <strong>10-year winning streak</strong>. The <strong>creative index (96)</strong> demonstrates she's not just a scorer but a <strong>playmaker</strong> — 22 assists in 2024-25 season. Even at <strong>33</strong>, her <strong>mobility remains elite</strong> through <strong>intelligent movement</strong> rather than pure pace. <strong>Defensive work (76)</strong> is adequate but not her focus — best utilized in <strong>advanced roles</strong> with minimal defensive duties.
+                    </p>
+                </div>
+            </div>
+
+            <!-- 60-Philosophy Framework -->
+            <div class="card">
+                <h2>🧠 60-Philosophy Framework Alignment</h2>
+                <p class="small" style="margin-bottom: 16px;"><strong>Empire FGA 60-Philosophy System</strong> — The Danish Dynamo.</p>
+
+                <h3>Top 10 Philosophy Fits</h3>
+                <table class="philosophy-table">
+                    <thead>
+                        <tr>
+                            <th>Code</th>
+                            <th>Philosophy Name</th>
+                            <th>School</th>
+                            <th>Score</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="background: rgba(220, 5, 45, 0.05);">
+                            <td><span class="philosophy-code">GUÁ</span></td>
+                            <td>Guardiola Positional <span class="new-badge">SPANISH</span></td>
+                            <td>Spanish School</td>
+                            <td class="philosophy-score">96</td>
+                        </tr>
+                        <tr>
+                            <td><span class="philosophy-code">CRU</span></td>
+                            <td>Cruyff Intelligence <span class="new-badge">DUTCH</span></td>
+                            <td>Dutch School</td>
+                            <td class="philosophy-score">95</td>
+                        </tr>
+                        <tr>
+                            <td><span class="philosophy-code">WEN</span></td>
+                            <td>Wenger Development <span class="new-badge">FRENCH</span></td>
+                            <td>French School</td>
+                            <td class="philosophy-score">94</td>
+                        </tr>
+                        <tr>
+                            <td><span class="philosophy-code">FON</span></td>
+                            <td>Fontaine Finishing <span class="new-badge">FRENCH</span></td>
+                            <td>French School</td>
+                            <td class="philosophy-score">93</td>
+                        </tr>
+                        <tr>
+                            <td><span class="philosophy-code">ANC</span></td>
+                            <td>Ancelotti Adaptability <span class="new-badge">MODERN</span></td>
+                            <td>Modern Masters</td>
+                            <td class="philosophy-score">92</td>
+                        </tr>
+                        <tr>
+                            <td><span class="philosophy-code">LIP</span></td>
+                            <td>Lippi Organization <span class="new-badge">ITALIAN</span></td>
+                            <td>Italian School</td>
+                            <td class="philosophy-score">90</td>
+                        </tr>
+                        <tr>
+                            <td><span class="philosophy-code">HEY</span></td>
+                            <td>Heynckes Complete <span class="new-badge">GERMAN</span></td>
+                            <td>German School</td>
+                            <td class="philosophy-score">89</td>
+                        </tr>
+                        <tr>
+                            <td><span class="philosophy-code">BEE</span></td>
+                            <td>Beenhakker Technique <span class="new-badge">DUTCH</span></td>
+                            <td>Dutch School</td>
+                            <td class="philosophy-score">88</td>
+                        </tr>
+                        <tr>
+                            <td><span class="philosophy-code">PEL</span></td>
+                            <td>Pellegrini Elegance <span class="new-badge">SPANISH</span></td>
+                            <td>Spanish School</td>
+                            <td class="philosophy-score">87</td>
+                        </tr>
+                        <tr>
+                            <td><span class="philosophy-code">DES</span></td>
+                            <td>Deschamps Pragmatism <span class="new-badge">FRENCH</span></td>
+                            <td>French School</td>
+                            <td class="philosophy-score">85</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="highlight-box" style="margin-top: 20px;">
+                    <strong style="color: var(--accent1);">🎯 Philosophy DNA Profile:</strong>
+                    <p class="small" style="margin-top: 8px; margin-bottom: 0;">
+                        <strong>Primary School:</strong> Spanish/Modern (94 avg) — Dominant alignment with <strong>Guardiola Positional (96)</strong> reflects Harder's <strong>exceptional understanding of space</strong>, <strong>combination play</strong>, and <strong>tempo control</strong>. She embodies the "<strong>total footballer</strong>" concept, capable of <strong>scoring, creating, and controlling</strong> simultaneously. The <strong>high Cruyff score (95)</strong> shows her <strong>intelligent movement</strong> and <strong>positional flexibility</strong> — she can operate as a <strong>false 9</strong>, <strong>attacking midfielder</strong>, or <strong>inside forward</strong>.<br><br>
+                        <strong>Secondary School:</strong> French/Dutch (90 avg) — <strong>Wenger Development (94)</strong> and <strong>Fontaine Finishing (93)</strong> highlight her <strong>technical perfection</strong> and <strong>lethal finishing</strong> — she scores with <strong>both feet</strong> and <strong>head</strong> with equal proficiency. <strong>Ancelotti Adaptability (92)</strong> reflects her <strong>success across three leagues</strong> and <strong>four tactical systems</strong>.<br><br>
+                        <strong>Tactical Archetype:</strong> <span style="color: var(--club); font-weight: 700;">"The Complete Forward"</span> — A player who combines the <strong>goal-scoring instinct of a striker</strong> with the <strong>creative vision of a number 10</strong> and the <strong>tactical intelligence of a modern midfielder</strong>. Capable of playing any attacking role at elite level.
+                    </p>
+                </div>
+
+                <h3 style="margin-top: 24px;">Key Philosophy Formulas</h3>
+
+                <div class="formula-box">
+                    <div class="formula-title">🇪🇸 Guardiola Positional [GUÁ] — Spanish School <span style="float: right; color: var(--club);">96/100</span></div>
+                    <div style="color: var(--muted); margin-bottom: 8px;">Spanish School | Positional Play</div>
+                    <code style="color: var(--accent1);">([TAC]×1.2)+([COM]×1.1)+([ORG]×1.1)+([PVI]×1.2)+([POI]×1.1)</code>
+                    <p class="small" style="margin-top: 8px; margin-bottom: 0; color: var(--muted);">
+                        <strong>Rationale:</strong> Pep Guardiola's philosophy demands <strong>intelligent movement</strong>, <strong>technical security</strong>, and <strong>positional discipline</strong> — all Harder strengths. Her ability to <strong>find space between lines</strong>, <strong>combine in tight areas</strong>, and <strong>maintain possession under pressure</strong> mirrors Guardiola's ideal player profile.
+                    </p>
+                </div>
+
+                <div class="formula-box">
+                    <div class="formula-title">🇳🇱 Crujff Intelligence [CRU] — Dutch School <span style="float: right; color: var(--club);">95/100</span></div>
+                    <div style="color: var(--muted); margin-bottom: 8px;">Dutch School | Total Football</div>
+                    <code style="color: var(--accent1);">([CPI]×1.2)+([POI]×1.2)+([TBP]×1.1)+([CAR]×1.0)</code>
+                    <p class="small" style="margin-top: 8px; margin-bottom: 0; color: var(--muted);">
+                        <strong>Rationale:</strong> Johan Cruyff's "<strong>total football</strong>" concept emphasizes <strong>versatility</strong> and <strong>intelligence</strong>. Harder's ability to <strong>play multiple positions</strong>, <strong>dictate tempo</strong>, and <strong>create chances from any zone</strong> aligns with Cruyff's vision of the <strong>modern attacking player</strong>.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Player Comparison -->
+            <div class="card">
+                <h2>📊 Player Comparison — Elite Attacking Midfielders</h2>
+                <p class="small" style="margin-bottom: 16px;">Empire Women Scout comparative analysis vs. world-class peers.</p>
+
+                <div class="visual-canvas" style="height: 450px;">
+                    <canvas id="peerComparisonChart" style="max-width: 100%; max-height: 100%;"></canvas>
+                </div>
+
+                <div class="season-stats-grid" style="margin-top: 20px;">
+                    <div class="season-stat-box" style="border: 2px solid #FFD700; background: rgba(255, 215, 0, 0.1);">
+                        <div class="season-stat-value" style="color: #FFD700;">94.0</div>
+                        <div class="season-stat-label" style="color: #fff; font-weight: 600;">Harder (33)</div>
+                        <div class="small" style="font-size: 10px; margin-top: 4px;">Bayern Munich</div>
+                    </div>
+                    <div class="season-stat-box">
+                        <div class="season-stat-value" style="color: #4A90E2;">91.5</div>
+                        <div class="season-stat-label" style="color: #4A90E2; font-weight: 600;">Aitana Bonmatí</div>
+                        <div class="small" style="font-size: 10px; margin-top: 4px;">Barcelona</div>
+                    </div>
+                    <div class="season-stat-box">
+                        <div class="season-stat-value" style="color: #9B59B6;">90.0</div>
+                        <div class="season-stat-label" style="color: #9B59B6; font-weight: 600;">Wendie Renard</div>
+                        <div class="small" style="font-size: 10px; margin-top: 4px;">Lyon</div>
+                    </div>
+                    <div class="season-stat-box">
+                        <div class="season-stat-value" style="color: #E74C3C;">89.5</div>
+                        <div class="season-stat-label" style="color: #E74C3C; font-weight: 600;">Sam Kerr</div>
+                        <div class="small" style="font-size: 10px; margin-top: 4px;">Chelsea</div>
+                    </div>
+                </div>
+
+                <div class="highlight-box" style="margin-top: 16px;">
+                    <strong style="color: var(--accent1);">⚖️ Comparative Analysis:</strong>
+                    <p class="small" style="margin-top: 8px; margin-bottom: 0;">
+                        Harder's <strong>94.0 FGA rating</strong> establishes her in the <strong>absolute elite tier</strong> of women's football. Compared to <strong>Bonmatí (91.5)</strong>, Harder offers <strong>superior goal-scoring</strong> (0.74 vs 0.35 ratio) and <strong>proven winning record</strong> across multiple leagues, though Bonmatí may have <strong>edge in pure playmaking</strong> in Barcelona's system. <strong>Renard (90.0)</strong> dominates defensively but lacks Harder's <strong>attacking versatility</strong>. <strong>Kerr (89.5)</strong> matches Harder's scoring but lacks her <strong>creative passing range</strong>. Harder's <strong>unique value</strong> is her <strong>combination of elite scoring and elite creating</strong> — a true "<strong>complete forward</strong>" profile unmatched in the modern game.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Psychological Profile -->
+            <div class="card">
+                <h2>🧬 Psychological Profile & Character Analysis</h2>
+                <p class="small" style="margin-bottom: 16px;">Empire Women Scout Mental Competence System (MCS) — The Champion's Mindset.</p>
+
+                <div class="personality-grid">
+                    <div class="personality-card">
+                        <div class="personality-icon">🏆</div>
+                        <div class="personality-title">Winning Mentality</div>
+                        <div class="personality-score">99</div>
+                        <div class="personality-desc">10 consecutive titles</div>
+                    </div>
+                    <div class="personality-card">
+                        <div class="personality-icon">🧠</div>
+                        <div class="personality-title">Game Intelligence</div>
+                        <div class="personality-score">97</div>
+                        <div class="personality-desc">Tactical mastery</div>
+                    </div>
+                    <div class="personality-card">
+                        <div class="personality-icon">💪</div>
+                        <div class="personality-title">Resilience</div>
+                        <div class="personality-score">95</div>
+                        <div class="personality-desc">Injury comeback</div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h3>Personality Archetype: The Elite Competitor</h3>
+                    <div class="two-col">
+                        <div>
+                            <div class="info-row"><span class="info-label">MCS Profile</span><span class="info-value">ENTJ (Commander)</span></div>
+                            <div class="info-row"><span class="info-label">Primary Drive</span><span class="info-value">Championship Success</span></div>
+                            <div class="info-row"><span class="info-label">Stress Response</span><span class="info-value">Elevated Performance</span></div>
+                            <div class="info-row"><span class="info-label">Social Style</span><span class="info-value">Natural Leader</span></div>
+                        </div>
+                        <div>
+                            <div class="info-row"><span class="info-label">Adaptability</span><span class="info-value">Elite 95/100</span></div>
+                            <div class="info-row"><span class="info-label">Leadership</span><span class="info-value">Exceptional 95/100</span></div>
+                            <div class="info-row"><span class="info-label">Consistency</span><span class="info-value">Elite 98/100</span></div>
+                            <div class="info-row"><span class="info-label">Confidence</span><span class="info-value">Supreme 99/100</span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h3>Behavioral Markers</h3>
+                    <div style="margin-bottom: 12px;">
+                        <span class="trait-pill">🇩🇰 Danish</span>
+                        <span class="trait-pill">⚽ Elite Goalscorer</span>
+                        <span class="trait-pill">🧠 Playmaker</span>
+                        <span class="trait-pill">🏆 Champion</span>
+                        <span class="trait-pill">🦶 Two-Footed</span>
+                        <span class="trait-pill">🎯 Clutch</span>
+                        <span class="trait-pill">🗣️ Leader</span>
+                        <span class="trait-pill">💪 Resilient</span>
+                    </div>
+                    <p class="small">
+                        <strong>Empire Analysis:</strong> Harder exhibits the <strong>"elite competitor"</strong> psychology — a player defined by <strong>unrelenting drive for success</strong>. Her <strong>ENTJ profile</strong> explains her <strong>natural leadership</strong> and <strong>strategic thinking</strong> — she doesn't just play, she <strong>directs</strong>. The <strong>10 consecutive league titles</strong> are not coincidence but <strong>psychological inevitability</strong> — she <strong>demands excellence</strong> from herself and teammates. <strong>Post-injury comeback</strong> (2023-24) demonstrates <strong>mental resilience</strong>. <strong>Psychological projection:</strong> Future elite coach or sporting director — her <strong>tactical understanding</strong> and <strong>leadership</strong> suggest front-office success post-retirement.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Key Relationships -->
+            <div class="card">
+                <h2>🤝 Key Relationships & Network Analysis</h2>
+                <p class="small" style="margin-bottom: 16px;">Empire Women Scout Network Analysis — The Winning Circle.</p>
+
+                <div class="relationship-item">
+                    <div class="relationship-avatar" style="background: linear-gradient(135deg, #DC052D, #FFD700);">PM</div>
+                    <div class="relationship-content">
+                        <div class="relationship-name">Magdalena Eriksson (Partner)</div>
+                        <div class="relationship-role">Life Partner & Former Chelsea Teammate</div>
+                        <div class="relationship-desc">
+                            <strong>Power couple.</strong> Both elite defenders/captains at Chelsea (2020-23). Relationship provides <strong>emotional stability</strong> and <strong>shared professional understanding</strong>. Eriksson followed Harder to Bayern, creating <strong>synergistic partnership</strong> both on and off pitch. Mutual support system for high-pressure careers.
+                        </div>
+                        <div class="relationship-dynamic">💕 Life Partner</div>
+                    </div>
+                </div>
+
+                <div class="relationship-item">
+                    <div class="relationship-avatar" style="background: linear-gradient(135deg, #1E3A8A, #FFFFFF);">AL</div>
+                    <div class="relationship-content">
+                        <div class="relationship-name">Alexander Straus</div>
+                        <div class="relationship-role">Bayern Munich Head Coach</div>
+                        <div class="relationship-desc">
+                            <strong>Strategic partnership.</strong> Straus's appointment in 2022 coincided with Bayern's return to dominance. Harder's 2023 arrival completed the <strong>title-winning formula</strong>. Straus utilizes Harder as <strong>attacking focal point</strong> in fluid 4-2-3-1/4-3-3 hybrid. Mutual trust evident in <strong>contract extension to 2028</strong>.
+                        </div>
+                        <div class="relationship-dynamic">⚽ Coach-Ally</div>
+                    </div>
+                </div>
+
+                <div class="relationship-item">
+                    <div class="relationship-avatar" style="background: linear-gradient(135deg, #C60C30, #FFD700);">DB</div>
+                    <div class="relationship-content">
+                        <div class="relationship-name">Danish National Team</div>
+                        <div class="relationship-role">National Team Captain (2016-2025)</div>
+                        <div class="relationship-desc">
+                            <strong>National icon.</strong> 167 caps, 81 goals (all-time record). Euro 2017 finalist. Recently <strong>retired from international duty</strong> (July 2025) to focus on club career. Left legacy as <strong>Denmark's greatest female player</strong>. Jersey retired, statues commissioned.
+                        </div>
+                        <div class="relationship-dynamic">🇩🇰 National Legend</div>
+                    </div>
+                </div>
+
+                <div class="relationship-item">
+                    <div class="relationship-avatar" style="background: linear-gradient(135deg, #DC052D, #1E3A8A);">BW</div>
+                    <div class="relationship-content">
+                        <div class="relationship-name">Bayern Munich Leadership</div>
+                        <div class="relationship-role">Club Hierarchy & Medical Team</div>
+                        <div class="relationship-desc">
+                            <strong>Institutional support.</strong> Bayern's <strong>contract extension to 2028</strong> (ages 36) demonstrates <strong>faith in her longevity</strong>. Elite medical team managed 2023 hamstring injury. Club provides <strong>platform for UWCL success</strong> — the one major trophy missing from her cabinet.
+                        </div>
+                        <div class="relationship-dynamic">🏢 Institutional Backing</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Matches -->
+            <div class="card">
+                <h2>⚽ Recent Career Snapshot</h2>
+                <p class="small" style="margin-bottom: 16px;">2025-26 season with Bayern Munich — Bundesliga & UWCL dominance.</p>
+
+                <div class="match-card result-w">
+                    <div class="match-teams">
+                        <div class="match-team home">Bayern Munich</div>
+                        <div class="match-team">Arsenal</div>
+                    </div>
+                    <div class="match-score">4-0</div>
+                    <div class="match-info">
+                        <div class="match-date">23 Jan 2026</div>
+                        <div class="match-comp">UWCL</div>
+                    </div>
+                </div>
+
+                <div class="match-card result-w">
+                    <div class="match-teams">
+                        <div class="match-team">Hammarby</div>
+                        <div class="match-team home">Bayern Munich</div>
+                    </div>
+                    <div class="match-score">4-3</div>
+                    <div class="match-info">
+                        <div class="match-date">21 Jan 2026</div>
+                        <div class="match-comp">UWCL</div>
+                    </div>
+                </div>
+
+                <div class="match-card result-w">
+                    <div class="match-teams">
+                        <div class="match-team home">Bayern Munich</div>
+                        <div class="match-team">Valerenga</div>
+                    </div>
+                    <div class="match-score">3-0</div>
+                    <div class="match-info">
+                        <div class="match-date">08 Dec 2025</div>
+                        <div class="match-comp">UWCL</div>
+                    </div>
+                </div>
+
+                <div class="match-card result-w">
+                    <div class="match-teams">
+                        <div class="match-team">Juventus</div>
+                        <div class="match-team home">Bayern Munich</div>
+                    </div>
+                    <div class="match-score">2-0</div>
+                    <div class="match-info">
+                        <div class="match-date">17 Dec 2025</div>
+                        <div class="match-comp">UWCL</div>
+                    </div>
+                </div>
+
+                <div class="season-stats-grid" style="margin-top: 20px;">
+                    <div class="season-stat-box">
+                        <div class="season-stat-value">10</div>
+                        <div class="season-stat-label">Bundesliga Apps</div>
+                    </div>
+                    <div class="season-stat-box">
+                        <div class="season-stat-value">5</div>
+                        <div class="season-stat-label">Goals (2025-26)</div>
+                    </div>
+                    <div class="season-stat-box">
+                        <div class="season-stat-value">4</div>
+                        <div class="season-stat-label">Assists</div>
+                    </div>
+                    <div class="season-stat-box">
+                        <div class="season-stat-value">6</div>
+                        <div class="season-stat-label">UWCL Apps</div>
+                    </div>
+                </div>
+
+                <div class="muted-box" style="margin-top: 16px;">
+                    <strong style="color: var(--accent1);">2025-26 Season Analysis:</strong> Continued <strong>elite production</strong> at age 33. <strong>Top scorer in UWCL league phase</strong> (2024-25 with 7 goals). <strong>22 assists in 2024-25</strong> across all competitions demonstrates <strong>evolution into complete playmaker</strong>. <strong>Leadership role</strong> growing — directing Bayern's attack and mentoring younger players. <strong>Physical management</strong> excellent — playing 85+ minutes regularly without recurrence of 2023 hamstring issues. <strong>Contract extension</strong> through 2028 confirms <strong>3-4 more elite seasons projected</strong>.
+                </div>
+            </div>
+
+            <!-- Final Assessment -->
+            <div class="card">
+                <h2>🎯 Final Assessment & Scouting Verdict</h2>
+
+                <div class="highlight-box">
+                    <strong style="color: var(--accent1);">📋 Empire Women Scout Summary:</strong>
+                    <p class="lead" style="margin-top: 8px; margin-bottom: 0;">
+                        Pernille Harder is a <strong>generational talent</strong> and one of the <strong>greatest female footballers in history</strong>. Her <strong>FGA rating of 94</strong> reflects <strong>complete mastery of the attacking midfield position</strong> — combining <strong>elite goal-scoring</strong> (216 goals, 0.74 ratio), <strong>world-class playmaking</strong> (22 assists in 2024-25), and <strong>proven winning mentality</strong> (10 consecutive league titles). At <strong>33</strong>, she remains at the <strong>absolute peak</strong> of European football with Bayern Munich. The <strong>10-year winning streak</strong> (2015-2025) across <strong>three leagues and four clubs</strong> is an <strong>unprecedented achievement</strong> that may never be replicated. Her <strong>two UEFA Women's Player of the Year awards</strong> (2018, 2020) and <strong>81 international goals for Denmark</strong> cement her legacy. <strong>Only missing piece:</strong> UWCL winner's medal — the primary motivation for her <strong>contract extension to 2028</strong>.
+                    </p>
+                </div>
+
+                <div class="two-col" style="margin-top: 16px;">
+                    <div class="development-box">
+                        <strong style="color: var(--prospect);">✅ Strengths</strong>
+                        <ul class="small" style="margin-top: 8px; padding-left: 18px; color: var(--muted);">
+                            <li>Elite goal-scoring instinct (0.74 career ratio)</li>
+                            <li>Two-footed finisher — lethal with either foot</li>
+                            <li>Exceptional playmaking (22 assists in 2024-25)</li>
+                            <li>Tactical intelligence — multiple positions</li>
+                            <li>Proven winner — 10 consecutive league titles</li>
+                            <li>Leadership — captain material at every club</li>
+                            <li>Mental toughness — injury comeback, big moments</li>
+                            <li>Experience — 294 club games, 167 internationals</li>
+                            <li>Set-piece threat — delivery and finishing</li>
+                            <li>Professional longevity — elite at 33</li>
+                        </ul>
+                    </div>
+                    <div class="warning-box">
+                        <strong style="color: #ef4444;">⚠️ Considerations</strong>
+                        <ul class="small" style="margin-top: 8px; padding-left: 18px; color: var(--muted);">
+                            <li>Age 33 — physical decline inevitable eventually</li>
+                            <li>Pace — no longer elite burst (relies on positioning)</li>
+                            <li>Injury history — hamstring issues 2022-23</li>
+                            <li>Defensive contribution — limited pressing from front</li>
+                            <li>High salary — significant wage investment</li>
+                            <li>UWCL gap — yet to win ultimate club prize</li>
+                            <li>International retirement — no more Denmark caps</li>
+                            <li>Replacement needed — Bayern must plan post-2028</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="scout-alert" style="margin-top: 16px;">
+                    <div class="scout-alert-title">🎯 Scouting Recommendation</div>
+                    <div class="scout-alert-text">
+                        <strong>IRREPLACEABLE ASSET — Build Around Her</strong> — Harder is a <strong>once-in-a-generation talent</strong> that Bayern Munich must <strong>build their dynasty around</strong>. The <strong>contract extension to 2028</strong> is <strong>essential business</strong> — losing her would create a <strong>void impossible to fill</strong>. Best utilized as <strong>attacking focal point</strong> in fluid systems (4-2-3-1 or 4-3-3) with <strong>freedom to interchange positions</strong>. <strong>Surround with:</strong> pacey wingers to exploit space she creates, defensive midfielder to cover her limited pressing. <strong>Manage minutes:</strong> 25-28 league starts per season, full UWCL availability. <strong>Post-2028 transition:</strong> Move into coaching/ambassador role. <strong>Empire Women Scout final verdict:</strong> A <strong>living legend</strong> whose presence <strong>guarantees competitiveness</strong> — the <strong>definition of a franchise player</strong>.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Data Sources & Credits -->
+            <div class="card">
+                <h2>📚 Data Sources & Methodology</h2>
+                <div class="two-col">
+                    <div>
+                        <h3>Primary Data Sources</h3>
+                        <div class="info-row"><span class="info-label">📊 Soccerway</span><span class="info-value">Match Statistics</span></div>
+                        <div class="info-row"><span class="info-label">⚽ Wikipedia</span><span class="info-value">Biographical Data</span></div>
+                        <div class="info-row"><span class="info-label">🌍 UEFA</span><span class="info-value">UWCL Statistics</span></div>
+                        <div class="info-row"><span class="info-label">📈 Flashscore</span><span class="info-value">Performance Data</span></div>
+                    </div>
+                    <div>
+                        <h3>Empire Women Scout System</h3>
+                        <div class="info-row"><span class="info-label">📋 Metrics Used</span><span class="info-value">794 Proprietary</span></div>
+                        <div class="info-row"><span class="info-label">🧠 Philosophies</span><span class="info-value">60-Framework System</span></div>
+                        <div class="info-row"><span class="info-label">⚖️ Rating Scale</span><span class="info-value">0-100 / 0-10</span></div>
+                        <div class="info-row"><span class="info-label">🔍 Last Updated</span><span class="info-value">09 Feb 2026</span></div>
+                    </div>
+                </div>
+
+                <div class="muted-box" style="margin-top: 16px;">
+                    <strong style="color: var(--bayern);">Methodology Note:</strong> All Empire Women Scout ratings combine <strong>automated statistical analysis</strong> (60% weight), <strong>semi-automated tactical intelligence</strong> (30% weight), and <strong>manual scout assessment</strong> (10% weight). Harder's rating of <strong>94</strong> places her in the <strong>top 1% globally</strong>. Her <strong>10 consecutive league titles</strong> (2015-2025) provide unique context requiring <strong>era-adjusted analysis</strong> — her consistency across multiple leagues and clubs is <strong>statistically unprecedented</strong>.
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <footer style="background: var(--card); padding: 30px; text-align: center; border-top: 1px solid rgba(220, 5, 45, 0.2); margin-top: 30px;">
+        <p style="color: var(--muted); font-size: 13px;">
+            <strong style="color: var(--accent1);">Empire Women Scout</strong> — 794 Proprietary Metrics • 60-Philosophy Framework • All Ratings /100 Scale
+        </p>
+        <p style="color: var(--muted); font-size: 11px; margin-top: 6px;">
+            Data validated via Soccerway, UEFA, Flashscore. | Profile Created: 09 February 2026
+        </p>
+        <p style="color: var(--muted); font-size: 10px; margin-top: 12px; opacity: 0.7;">
+            © 2026 Empire Women Scout. All rights reserved. | <em>Field Global Analysis™</em> proprietary system.
+        </p>
+    </footer>
+
+    <script>
+        // Peer Comparison Chart
+        const ctx = document.getElementById('peerComparisonChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'radar',
+            data: {
+                labels: ['XPS', 'KEY', 'RDS', 'TBP', 'CPX', 'POI'],
+                datasets: [
+                    {
+                        label: 'Harder (94)',
+                        data: [96, 94, 93, 92, 94, 96],
+                        backgroundColor: 'rgba(255, 215, 0, 0.2)',
+                        borderColor: '#FFD700',
+                        borderWidth: 2,
+                        pointBackgroundColor: '#FFD700',
+                        pointBorderColor: '#fff',
+                        pointRadius: 4
+                    },
+                    {
+                        label: 'Bonmatí (91.5)',
+                        data: [88, 96, 82, 94, 93, 90],
+                        backgroundColor: 'rgba(74, 144, 226, 0.1)',
+                        borderColor: '#4A90E2',
+                        borderWidth: 2,
+                        pointBackgroundColor: '#4A90E2',
+                        pointBorderColor: '#fff',
+                        pointRadius: 3,
+                        borderDash: [5, 5]
+                    },
+                    {
+                        label: 'Renard (90.0)',
+                        data: [75, 78, 85, 82, 88, 92],
+                        backgroundColor: 'rgba(155, 89, 182, 0.1)',
+                        borderColor: '#9B59B6',
+                        borderWidth: 2,
+                        pointBackgroundColor: '#9B59B6',
+                        pointBorderColor: '#fff',
+                        pointRadius: 3,
+                        borderDash: [5, 5]
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                        labels: {
+                            color: '#f5f5f5',
+                            font: { family: 'Inter', size: 12 }
+                        }
+                    },
+                    title: {
+                        display: true,
+                        text: 'Elite Attacking Midfielders Comparison',
+                        color: '#f5f5f5',
+                        font: { family: 'Inter', size: 14, weight: 'bold' }
+                    }
+                },
+                scales: {
+                    r: {
+                        angleLines: { color: 'rgba(255, 255, 255, 0.1)' },
+                        grid: { color: 'rgba(255, 255, 255, 0.1)' },
+                        pointLabels: {
+                            color: '#f5f5f5',
+                            font: { family: 'Inter', size: 11 }
+                        },
+                        ticks: {
+                            color: '#a0a0a0',
+                            backdropColor: 'transparent',
+                            stepSize: 20
+                        },
+                        min: 60,
+                        max: 100
+                    }
+                }
+            }
+        });
+    </script>
+
+</body>
+</html>

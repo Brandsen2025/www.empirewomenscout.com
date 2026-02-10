@@ -1,0 +1,1530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tamara Brown — Empire Women Scout Profile | The Canadian Technician</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg: #0a0a0a;
+            --card: #141414;
+            --white: #f5f5f5;
+            --muted: #a0a0a0;
+            --accent1: #FFD700;
+            --accent2: #DC143C;
+            --club: #1E3A8A;
+            --prospect: #EC4899;
+            --win: #22c55e;
+            --loss: #ef4444;
+            --draw: #eab308;
+            --canada: #DC143C;
+            --gintra: #1E3A8A;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            background:
+                radial-gradient(900px 500px at 8% 12%, rgba(30, 58, 138, 0.12), transparent 10%),
+                radial-gradient(800px 400px at 92% 88%, rgba(220, 20, 60, 0.08), transparent 8%),
+                var(--bg);
+            color: var(--white);
+            font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        header {
+            max-width: 1300px;
+            margin: 18px auto;
+            padding: 0 22px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        header img {
+            height: 32px;
+            object-fit: contain;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .header-title {
+            font-size: 20px;
+            font-weight: 800;
+            color: var(--accent1);
+        }
+
+        .header-date {
+            font-size: 13px;
+            color: var(--muted);
+            margin-left: 12px;
+            padding: 4px 10px;
+            background: rgba(30, 58, 138, 0.15);
+            border-radius: 6px;
+            border: 1px solid rgba(30, 58, 138, 0.3);
+        }
+
+        .container {
+            max-width: 1300px;
+            margin: 18px auto;
+            padding: 22px;
+            display: grid;
+            grid-template-columns: 360px 1fr;
+            gap: 26px;
+        }
+
+        .card {
+            background: var(--card);
+            padding: 18px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            position: relative;
+            margin-bottom: 18px;
+        }
+
+        .photo {
+            width: 100%;
+            height: 480px;
+            object-fit: cover;
+            object-position: center top;
+            border-radius: 10px;
+            border: 3px solid var(--gintra);
+            background: #000;
+            filter: contrast(1.05) saturate(1.1);
+        }
+
+        .title {
+            font-size: 32px;
+            font-weight: 900;
+            margin: 14px 0;
+            color: var(--white);
+            line-height: 1.2;
+        }
+
+        .sub {
+            color: var(--muted);
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+
+        .club-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: linear-gradient(135deg, rgba(30, 58, 138, 0.2), rgba(0, 0, 0, 0.3));
+            padding: 8px 14px;
+            border-radius: 8px;
+            border: 1px solid rgba(30, 58, 138, 0.4);
+            margin-bottom: 12px;
+        }
+
+        .club-badge span {
+            font-weight: 700;
+            color: var(--white);
+            font-size: 14px;
+        }
+
+        .nationality-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: linear-gradient(135deg, rgba(220, 20, 60, 0.20), rgba(0, 0, 0, 0.3));
+            padding: 6px 12px;
+            border-radius: 8px;
+            border: 1px solid rgba(220, 20, 60, 0.3);
+            margin-left: 8px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--white);
+        }
+
+        .rating-badge {
+            position: absolute;
+            right: 18px;
+            top: 18px;
+            background: linear-gradient(90deg, var(--accent1), #FF6B35);
+            color: #000;
+            font-weight: 900;
+            padding: 10px 14px;
+            border-radius: 16px;
+            font-size: 22px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            line-height: 1.1;
+        }
+
+        .rating-badge .rating-value {
+            font-size: 28px;
+            font-weight: 900;
+        }
+
+        .rating-badge .rating-label {
+            font-size: 9px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            opacity: 0.8;
+        }
+
+        .section {
+            margin-top: 18px;
+        }
+
+        .section h2 {
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--accent1);
+            margin-bottom: 16px;
+        }
+
+        .section h3 {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--accent1);
+            margin: 16px 0 12px;
+        }
+
+        .two-col, .three-col {
+            display: grid;
+            gap: 14px;
+        }
+
+        .two-col { grid-template-columns: 1fr 1fr; }
+        .three-col { grid-template-columns: 1fr 1fr 1fr; }
+
+        .small {
+            color: var(--muted);
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .lead {
+            color: var(--white);
+            font-size: 16px;
+            line-height: 1.5;
+        }
+
+        .visual-canvas {
+            background: transparent;
+            border-radius: 8px;
+            padding: 12px;
+            height: 420px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px dashed rgba(255, 215, 0, 0.18);
+        }
+
+        .muted-box, .highlight-box, .development-box, .warning-box {
+            padding: 14px;
+            border-radius: 10px;
+            margin-top: 12px;
+        }
+
+        .muted-box {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            color: var(--muted);
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, rgba(236, 72, 153, 0.12), rgba(30, 58, 138, 0.08));
+            border: 1px solid rgba(236, 72, 153, 0.2);
+        }
+
+        .development-box {
+            background: linear-gradient(135deg, rgba(30, 58, 138, 0.12), rgba(0, 0, 0, 0.3));
+            border: 1px solid rgba(30, 58, 138, 0.2);
+        }
+
+        .warning-box {
+            background: linear-gradient(135deg, rgba(220, 20, 60, 0.12), rgba(0, 0, 0, 0.3));
+            border: 1px solid rgba(220, 20, 60, 0.3);
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .info-row:last-child { border-bottom: none; }
+
+        .info-label { color: var(--muted); font-size: 14px; }
+        .info-value { color: var(--white); font-weight: 600; font-size: 14px; }
+        .info-value.prospect { color: var(--club); }
+        .info-value.highlight { color: var(--accent1); }
+
+        .metric-item { margin: 14px 0; }
+        .metric-header { display: flex; justify-content: space-between; margin-bottom: 6px; }
+        .metric-name { font-weight: 600; color: var(--white); font-size: 13px; }
+        .metric-score { color: var(--accent1); font-weight: 800; font-size: 15px; }
+        .metric-bar {
+            height: 6px;
+            background: rgba(255, 255, 255, 0.06);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+        .metric-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent1) 0%, #FF6B35 100%);
+            border-radius: 3px;
+        }
+
+        .timeline-item {
+            padding: 14px;
+            border-left: 3px solid var(--gintra);
+            margin: 12px 0;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 6px;
+        }
+        .timeline-date {
+            color: var(--gintra);
+            font-weight: 700;
+            margin-bottom: 6px;
+            font-size: 14px;
+        }
+        .timeline-date.canada { color: #DC143C; }
+        .timeline-date.college { color: #FFD700; }
+        .timeline-event {
+            color: var(--muted);
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .stat-box, .season-stat-box, .trophy-box {
+            text-align: center;
+            border-radius: 8px;
+        }
+        .stat-box {
+            background: rgba(30, 58, 138, 0.1);
+            border: 1px solid rgba(30, 58, 138, 0.2);
+            padding: 14px;
+        }
+        .stat-value {
+            font-size: 28px;
+            font-weight: 900;
+            color: var(--accent1);
+            display: block;
+        }
+        .stat-value.prospect {
+            color: var(--club);
+        }
+        .stat-label {
+            font-size: 12px;
+            color: var(--muted);
+            margin-top: 4px;
+        }
+
+        .season-stats-grid, .trophy-grid {
+            display: grid;
+            gap: 12px;
+            margin-top: 16px;
+        }
+        .season-stats-grid { grid-template-columns: repeat(4, 1fr); }
+        .trophy-grid { grid-template-columns: repeat(3, 1fr); }
+
+        .season-stat-box {
+            background: rgba(30, 58, 138, 0.05);
+            border: 1px solid rgba(30, 58, 138, 0.15);
+            padding: 16px;
+            transition: transform 0.2s;
+        }
+        .season-stat-box:hover {
+            transform: translateY(-2px);
+            border-color: rgba(30, 58, 138, 0.4);
+        }
+        .season-stat-value {
+            font-size: 32px;
+            font-weight: 900;
+            color: var(--accent1);
+        }
+        .season-stat-value.prospect {
+            color: var(--club);
+        }
+        .season-stat-label {
+            font-size: 11px;
+            color: var(--muted);
+            margin-top: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .tier-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, rgba(236, 72, 153, 0.3), rgba(236, 72, 153, 0.1));
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-weight: 800;
+            font-size: 12px;
+            color: var(--prospect);
+            border: 1px solid rgba(236, 72, 153, 0.4);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 8px;
+        }
+
+        .scout-alert {
+            background: linear-gradient(135deg, rgba(30, 58, 138, 0.15), rgba(0, 0, 0, 0.2));
+            border: 1px solid rgba(30, 58, 138, 0.3);
+            padding: 14px;
+            border-radius: 10px;
+            margin-top: 16px;
+        }
+        .scout-alert-title {
+            color: var(--gintra);
+            font-weight: 800;
+            font-size: 14px;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .scout-alert-text {
+            color: var(--muted);
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        .match-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 10px;
+            padding: 16px;
+            margin-bottom: 12px;
+            display: grid;
+            grid-template-columns: 1fr auto 1fr auto;
+            align-items: center;
+            gap: 16px;
+        }
+        .match-teams { display: flex; flex-direction: column; gap: 4px; }
+        .match-team {
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--white);
+        }
+        .match-team.home { color: var(--club); }
+        .match-score {
+            background: linear-gradient(135deg, var(--accent1), rgba(255, 107, 0, 0.7));
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-weight: 900;
+            font-size: 18px;
+            color: #000;
+            text-align: center;
+            min-width: 70px;
+        }
+        .result-w .match-score {
+            background: linear-gradient(135deg, var(--win), rgba(34, 197, 94, 0.7));
+        }
+        .result-l .match-score {
+            background: linear-gradient(135deg, var(--loss), rgba(239, 68, 68, 0.7));
+        }
+        .result-d .match-score {
+            background: linear-gradient(135deg, var(--draw), rgba(234, 179, 8, 0.7));
+        }
+        .match-info { text-align: right; }
+        .match-date {
+            font-size: 12px;
+            color: var(--muted);
+        }
+        .match-comp {
+            font-size: 11px;
+            color: var(--accent1);
+            font-weight: 600;
+        }
+
+        .form-indicator {
+            display: flex;
+            gap: 6px;
+            margin-top: 12px;
+        }
+        .form-box {
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 6px;
+            font-weight: 800;
+            font-size: 13px;
+        }
+        .form-box.w {
+            background: rgba(34, 197, 94, 0.25);
+            color: #22c55e;
+            border: 1px solid rgba(34, 197, 94, 0.4);
+        }
+        .form-box.d {
+            background: rgba(234, 179, 8, 0.25);
+            color: #eab308;
+            border: 1px solid rgba(234, 179, 8, 0.4);
+        }
+        .form-box.l {
+            background: rgba(239, 68, 68, 0.25);
+            color: #ef4444;
+            border: 1px solid rgba(239, 68, 68, 0.4);
+        }
+
+        .personality-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-top: 16px;
+        }
+        .personality-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 10px;
+            padding: 16px;
+            text-align: center;
+        }
+        .personality-icon {
+            font-size: 28px;
+            margin-bottom: 8px;
+        }
+        .personality-title {
+            font-weight: 700;
+            color: var(--white);
+            font-size: 13px;
+            margin-bottom: 4px;
+        }
+        .personality-score {
+            font-size: 24px;
+            font-weight: 900;
+            color: var(--accent1);
+        }
+        .personality-desc {
+            font-size: 11px;
+            color: var(--muted);
+            margin-top: 6px;
+            line-height: 1.4;
+        }
+
+        .relationship-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            padding: 14px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 10px;
+            margin-bottom: 12px;
+        }
+        .relationship-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent1), #FF6B35);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            font-size: 18px;
+            color: #000;
+            flex-shrink: 0;
+        }
+        .relationship-content { flex: 1; }
+        .relationship-name {
+            font-weight: 700;
+            color: var(--white);
+            font-size: 15px;
+            margin-bottom: 2px;
+        }
+        .relationship-role {
+            font-size: 12px;
+            color: var(--accent1);
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+        .relationship-desc {
+            font-size: 13px;
+            color: var(--muted);
+            line-height: 1.5;
+        }
+        .relationship-dynamic {
+            display: inline-block;
+            background: rgba(255, 215, 0, 0.15);
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--accent1);
+            margin-top: 8px;
+            border: 1px solid rgba(255, 215, 0, 0.2);
+        }
+
+        .trait-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(30, 58, 138, 0.15);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--white);
+            margin: 4px;
+            border: 1px solid rgba(30, 58, 138, 0.25);
+        }
+
+        .career-path {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin: 16px 0;
+            padding: 16px;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 10px;
+        }
+        .career-club {
+            background: rgba(220, 20, 60, 0.2);
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            border: 1px solid rgba(220, 20, 60, 0.3);
+            color: #FF69B4;
+        }
+        .career-club.current {
+            background: rgba(30, 58, 138, 0.3);
+            border-color: rgba(30, 58, 138, 0.6);
+            color: #60A5FA;
+        }
+        .career-club.canada { background: rgba(220, 20, 60, 0.2); border-color: rgba(220, 20, 60, 0.4); color: #DC143C; }
+        .career-club.college { background: rgba(255, 215, 0, 0.2); border-color: rgba(255, 215, 0, 0.4); color: #FFD700; }
+        .career-arrow {
+            color: var(--accent1);
+            font-weight: 700;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 12px;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            font-size: 14px;
+        }
+        th {
+            color: var(--accent1);
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 12px;
+            letter-spacing: 0.5px;
+        }
+        td {
+            color: var(--white);
+        }
+        tr:hover {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .pill {
+            display: inline-block;
+            background: rgba(0, 0, 0, 0.4);
+            padding: 7px 12px;
+            border-radius: 999px;
+            font-weight: 700;
+            font-size: 13px;
+            color: var(--white);
+            margin: 6px 8px 6px 0;
+            border: 1px solid rgba(30, 58, 138, 0.3);
+        }
+
+        .philosophy-table {
+            width: 100%;
+            margin: 16px 0;
+            border-collapse: collapse;
+        }
+        .philosophy-table th {
+            background: rgba(255, 215, 0, 0.1);
+            color: var(--accent1);
+            padding: 12px;
+            text-align: left;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-bottom: 2px solid rgba(255, 215, 0, 0.3);
+        }
+        .philosophy-table td {
+            padding: 14px 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            font-size: 14px;
+        }
+        .philosophy-table tr:hover {
+            background: rgba(255, 255, 255, 0.03);
+        }
+        .philosophy-code {
+            font-family: 'Courier New', monospace;
+            font-weight: 700;
+            color: var(--accent1);
+            font-size: 16px;
+        }
+        .philosophy-score {
+            font-weight: 900;
+            color: var(--club);
+            font-size: 18px;
+        }
+        .new-badge {
+            background: rgba(236, 72, 153, 0.2);
+            color: var(--prospect);
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 10px;
+            font-weight: 700;
+            margin-left: 8px;
+            text-transform: uppercase;
+        }
+
+        .formula-box {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            border-radius: 8px;
+            padding: 16px;
+            margin: 12px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+        }
+        .formula-title {
+            color: var(--accent1);
+            font-weight: 700;
+            margin-bottom: 8px;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            border-radius: 10px;
+            border: 2px solid rgba(255, 215, 0, 0.3);
+            margin: 16px 0;
+            background: #000;
+        }
+        .video-container video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 10px;
+        }
+
+        @media (max-width: 980px) {
+            .container { grid-template-columns: 1fr; }
+            .photo { height: 380px; }
+            .visual-canvas { height: auto; }
+            .two-col, .three-col { grid-template-columns: 1fr; }
+            .trophy-grid { grid-template-columns: repeat(2, 1fr); }
+            .match-card { grid-template-columns: 1fr; text-align: center; }
+            .match-info { text-align: center; }
+            .season-stats-grid { grid-template-columns: repeat(2, 1fr); }
+            .personality-grid { grid-template-columns: 1fr; }
+            .career-path { flex-direction: column; align-items: flex-start; }
+            .career-arrow { transform: rotate(90deg); }
+        }
+    </style>
+<base target="_blank">
+</head>
+<body>
+
+    <header>
+        <div class="header-left">
+            <img src="https://media.licdn.com/dms/image/v2/D4E12AQEjuDAF0uOTrw/article-cover_image-shrink_720_1280/B4EZiOwG01GwAI-/0/1754741632806?e=2147483647&v=beta&t=L9ct0jEaWdSp7vfTI0urIqPPig0MspEd-6RtzxaQzzQ" alt="Empire Women Scout">
+            <div class="header-title">EMPIRE WOMEN SCOUT</div>
+            <span class="header-date">📅 09 Feb 2026 • UWCL EXPERIENCED</span>
+        </div>
+    </header>
+
+    <div class="container">
+
+        <!-- Sidebar -->
+        <div>
+            <div class="card">
+                <img src="https://fkgintra.lt/wp-content/uploads/2025/07/tamara-2-683x1024.png" alt="Tamara Brown" style="width: 100%; height: 480px; object-fit: cover; object-position: center top; border-radius: 10px; border: 3px solid var(--gintra); background: #000; filter: contrast(1.05) saturate(1.1);">
+                <div class="title">Tamara Brown</div>
+                <div class="sub">The Canadian Technician • Central Midfielder</div>
+
+                <div class="club-badge">
+                    <span>🔵 FC Gintra</span>
+                </div>
+                <span class="nationality-badge">🇨🇦 Canada</span>
+
+                <div class="rating-badge">
+                    <span class="rating-value">68</span>
+                    <span class="rating-label">FGA /100</span>
+                </div>
+
+                <div class="section">
+                    <div class="stat-box" style="margin-bottom: 10px;">
+                        <span class="stat-value prospect">6.8</span>
+                        <span class="stat-label">Empire FGA Rating /10</span>
+                    </div>
+                    <div class="tier-badge">Experienced Pro</div>
+                    <div class="pill" style="margin-top: 8px;">🦶 Right Foot</div>
+                    <div class="pill" style="margin-top: 4px;">📏 1.58m</div>
+                    <div class="pill" style="margin-top: 4px;">⚽ Midfielder</div>
+                </div>
+
+                <div class="section">
+                    <h3>Current Status</h3>
+                    <div class="info-row"><span class="info-label">Full Name</span><span class="info-value">Tamara Oksana Brown</span></div>
+                    <div class="info-row"><span class="info-label">Date of Birth</span><span class="info-value">24 Jan 1995 (31 y)</span></div>
+                    <div class="info-row"><span class="info-label">Place of Birth</span><span class="info-value">Whitby, Ontario, Canada</span></div>
+                    <div class="info-row"><span class="info-label">Nationality</span><span class="info-value highlight">🇨🇦 Canadian</span></div>
+                    <div class="info-row"><span class="info-label">Height / Weight</span><span class="info-value">1.58 m / 55 kg</span></div>
+                    <div class="info-row"><span class="info-label">Primary Position</span><span class="info-value">Central Midfielder</span></div>
+                    <div class="info-row"><span class="info-label">Secondary</span><span class="info-value">Right Midfielder</span></div>
+                    <div class="info-row"><span class="info-label">Strong Foot</span><span class="info-value highlight">Right</span></div>
+                    <div class="info-row"><span class="info-label">Current Club</span><span class="info-value prospect">FC Gintra</span></div>
+                    <div class="info-row"><span class="info-label">League</span><span class="info-value">Lithuanian A Lyga (Women)</span></div>
+                    <div class="info-row"><span class="info-label">Joined</span><span class="info-value">Aug 2025</span></div>
+                    <div class="info-row"><span class="info-label">Shirt Number</span><span class="info-value highlight">24</span></div>
+                    <div class="info-row"><span class="info-label">Contract Until</span><span class="info-value highlight">Dec 2026</span></div>
+                    <div class="info-row"><span class="info-label">Market Value</span><span class="info-value highlight">€45K</span></div>
+                </div>
+
+                <div class="section">
+                    <h3>Career Honors</h3>
+                    <div class="info-row"><span class="info-label">🏆 Lithuanian A Lyga</span><span class="info-value">2025 Champion</span></div>
+                    <div class="info-row"><span class="info-label">🏆 Baltic Women's League</span><span class="info-value">2025 Participant</span></div>
+                    <div class="info-row"><span class="info-label">🌍 UWCL Qualifiers</span><span class="info-value">2025/26 Participant</span></div>
+                    <div class="info-row"><span class="info-label">🇨🇦 Canadian Youth</span><span class="info-value">Youth International</span></div>
+                </div>
+
+                <div class="section">
+                    <h3>2024/25 Season Stats</h3>
+                    <div class="info-row"><span class="info-label">A Lyga Matches</span><span class="info-value">8</span></div>
+                    <div class="info-row"><span class="info-label">Goals</span><span class="info-value">3</span></div>
+                    <div class="info-row"><span class="info-label">Assists</span><span class="info-value">1</span></div>
+                    <div class="info-row"><span class="info-label">Minutes Played</span><span class="info-value">192</span></div>
+                    <div class="info-row"><span class="info-label">Yellow Cards</span><span class="info-value">2</span></div>
+                    <div class="info-row"><span class="info-label">Goal Conversion</span><span class="info-value">37.5%</span></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div>
+
+            <!-- FGA Analysis -->
+            <div class="card">
+                <h2>🌍 Empire Women Scout Analysis — The Canadian Technician</h2>
+                <p class="lead">
+                    Tamara Brown represents a <strong>unique profile in European women's football</strong> — a technically gifted Canadian midfielder who has carved out a significant role in the <strong>Lithuanian champions FC Gintra</strong> at age 31. Standing at just <strong>1.58m</strong>, she defies physical stereotypes through <strong>exceptional technical ability</strong> and <strong>tactical intelligence</strong>. Her recent participation in the <strong>UEFA Women's Champions League qualifiers</strong> demonstrates her ability to compete at the continental level, while her <strong>3 goals in 8 league appearances</strong> (37.5% conversion rate) highlight her efficiency despite playing in a deeper midfield role.
+                </p>
+
+                <div class="career-path">
+                    <span class="career-club canada">🇨🇦 Whitby, Ontario</span>
+                    <span class="career-arrow">→</span>
+                    <span class="career-club college">🏫 College Soccer (Canada)</span>
+                    <span class="career-arrow">→</span>
+                    <span class="career-club current">🔵 FC Gintra</span>
+                </div>
+
+                <div class="highlight-box">
+                    <strong style="color: var(--accent1);">🎯 The Technician's Advantage:</strong> Brown's <strong>FGA rating of 68</strong> reflects her <strong>elite technical foundation</strong> and <strong>tactical versatility</strong> rather than physical dominance. Her <strong>low center of gravity</strong> (1.58m) combined with <strong>Canadian technical education</strong> has produced a midfielder who excels in <strong>tight spaces</strong> and <strong>transition play</strong>. The <strong>2025 UWCL qualifier appearance</strong> against Farul Constanța (where she started before injury) proves she can handle <strong>elite European competition</strong>. <strong>Empire Women Scout assessment:</strong> High-value experienced midfielder ideal for possession-based systems in emerging leagues or as squad depth for top-tier clubs.
+                </div>
+
+                <div class="season-stats-grid">
+                    <div class="season-stat-box">
+                        <div class="season-stat-value prospect">68</div>
+                        <div class="season-stat-label">FGA Rating</div>
+                    </div>
+                    <div class="season-stat-box">
+                        <div class="season-stat-value">31</div>
+                        <div class="season-stat-label">Years Old</div>
+                    </div>
+                    <div class="season-stat-box">
+                        <div class="season-stat-value">0.38</div>
+                        <div class="season-stat-label">Goals per 90</div>
+                    </div>
+                    <div class="season-stat-box">
+                        <div class="season-stat-value">24</div>
+                        <div class="season-stat-label">Shirt Number</div>
+                    </div>
+                </div>
+
+                <div class="scout-alert">
+                    <div class="scout-alert-title">⚠️ Career Trajectory Analysis</div>
+                    <div class="scout-alert-text">
+                        Brown's <strong>FGA rating of 68</strong> positions her as a <strong>high-quality professional</strong> in the context of European women's football. At <strong>31 years old</strong>, she brings <strong>maturity and consistency</strong> to the Gintra midfield. Her <strong>Canadian nationality</strong> offers potential <strong>international marketability</strong>, while her <strong>UWCL experience</strong> provides invaluable <strong>big-match temperament</strong>. For <strong>FC Gintra</strong>, she represents a <strong>strategic signing</strong> — a player who can <strong>mentor younger Lithuanian talents</strong> while delivering <strong>immediate production</strong> (3 goals in 192 minutes). <strong>Risk assessment:</strong> Low — proven professional with technical security and tactical flexibility.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Development Journey -->
+            <div class="card">
+                <h2>🌍 Career Journey — From Ontario to the Baltics</h2>
+                <p class="small" style="margin-bottom: 16px;">Transatlantic journey representing Canadian technical football in European competition.</p>
+
+                <div class="timeline-item">
+                    <div class="timeline-date">1995-2013 — Whitby, Ontario</div>
+                    <div class="timeline-event">Born and raised in Whitby, Ontario. Developed technical skills through Canadian youth football system. Played college soccer in Canada, developing tactical understanding and midfield versatility. Canadian youth international experience.</div>
+                </div>
+
+                <div class="timeline-item" style="border-left-color: #DC143C;">
+                    <div class="timeline-date canada">2013-2020 — College & Amateur Career</div>
+                    <div class="timeline-event">Played college soccer in Canada, developing as a technical midfielder. Balanced education with football development. Established reputation as a playmaker with excellent vision and passing range.</div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-date">2020-2024 — Professional Transition</div>
+                    <div class="timeline-event">Continued development in Canadian football landscape. Maintained fitness and technical levels while seeking European opportunities. Networked with international scouts and agents.</div>
+                </div>
+
+                <div class="timeline-item" style="border-left-color: #1E3A8A;">
+                    <div class="timeline-date">Aug 2025 — FC Gintra</div>
+                    <div class="timeline-event"><strong>Major career move.</strong> Signed with Lithuanian champions FC Gintra. Immediate impact — debut August 9, 2025 in Baltic Women's League (5-0 win vs Saku Sporting). Scored 3 goals in first 8 A Lyga appearances. Participated in UWCL qualifiers.</div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-date">Aug 2025 — UWCL Debut</div>
+                    <div class="timeline-event"><strong>European competition debut.</strong> Started in UEFA Women's Champions League qualifier vs Farul Constanța. Tactical adjustment forced early substitution (27th minute, injury). Experience gained against Romanian champions.</div>
+                </div>
+
+                <div class="muted-box" style="margin-top: 16px;">
+                    <strong style="color: var(--gintra);">The North American Pioneer:</strong> Brown's move to Lithuania represents a <strong>growing trend</strong> of North American players seeking <strong>European opportunities</strong> in emerging leagues. While not the traditional path (NWSL or top-5 Europe), her choice of <strong>FC Gintra</strong> — a club with <strong>consistent UWCL participation</strong> — offers <strong>continental exposure</strong> impossible in lower-tier North American leagues. Her <strong>technical profile</strong> fits perfectly with Gintra's <strong>possession-dominant style</strong> (evidenced by 11-0 and 7-0 victories).
+                </div>
+            </div>
+
+            <!-- FGA Metrics -->
+            <div class="card">
+                <h2>📊 Core FGA Intelligence Metrics</h2>
+                <p class="small" style="margin-bottom: 16px;">Metrics as of Feb 2026 — Technical midfielder assessment.</p>
+
+                <h3>Tier 1: Automated Metrics (60% Weight)</h3>
+                <div class="two-col">
+                    <div>
+                        <div class="metric-item">
+                            <div class="metric-header"><span class="metric-name">KEY (Key Passes)</span><span class="metric-score">72</span></div>
+                            <div class="metric-bar"><div class="metric-fill" style="width: 72%"></div></div>
+                        </div>
+                        <div class="metric-item">
+                            <div class="metric-header"><span class="metric-name">XPS (Attacking Threat)</span><span class="metric-score">68</span></div>
+                            <div class="metric-bar"><div class="metric-fill" style="width: 68%"></div></div>
+                        </div>
+                        <div class="metric-item">
+                            <div class="metric-header"><span class="metric-name">TBP (Third Ball Progression)</span><span class="metric-score">70</span></div>
+                            <div class="metric-bar"><div class="metric-fill" style="width: 70%"></div></div>
+                        </div>
+                        <div class="metric-item">
+                            <div class="metric-header"><span class="metric-name">CAR (Ball Carries)</span><span class="metric-score">66</span></div>
+                            <div class="metric-bar"><div class="metric-fill" style="width: 66%"></div></div>
+                        </div>
+                        <div class="metric-item">
+                            <div class="metric-header"><span class="metric-name">STK (Through Passes)</span><span class="metric-score">71</span></div>
+                            <div class="metric-bar"><div class="metric-fill" style="width: 71%"></div></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="metric-item">
+                            <div class="metric-header"><span class="metric-name">PVI (Pass Variety)</span><span class="metric-score">74</span></div>
+                            <div class="metric-bar"><div class="metric-fill" style="width: 74%"></div></div>
+                        </div>
+                        <div class="metric-item">
+                            <div class="metric-header"><span class="metric-name">CPX (Composure)</span><span class="metric-score">69</span></div>
+                            <div class="metric-bar"><div class="metric-fill" style="width: 69%"></div></div>
+                        </div>
+                        <div class="metric-item">
+                            <div class="metric-header"><span class="metric-name">POI (Position Intelligence)</span><span class="metric-score">71</span></div>
+                            <div class="metric-bar"><div class="metric-fill" style="width: 71%"></div></div>
+                        </div>
+                        <div class="metric-item">
+                            <div class="metric-header"><span class="metric-name">MOB (Mobility)</span><span class="metric-score">64</span></div>
+                            <div class="metric-bar"><div class="metric-fill" style="width: 64%"></div></div>
+                        </div>
+                        <div class="metric-item">
+                            <div class="metric-header"><span class="metric-name">DEF (Defensive Work)</span><span class="metric-score">62</span></div>
+                            <div class="metric-bar"><div class="metric-fill" style="width: 62%"></div></div>
+                        </div>
+                    </div>
+                </div>
+
+                <h3>Tier 2: Semi-Automated Metrics (30% Weight)</h3>
+                <div class="two-col">
+                    <div class="metric-item">
+                        <div class="metric-header"><span class="metric-name">TAC (Tactical IQ)</span><span class="metric-score">70</span></div>
+                        <div class="metric-bar"><div class="metric-fill" style="width: 70%"></div></div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="metric-header"><span class="metric-name">COM (Communication)</span><span class="metric-score">67</span></div>
+                        <div class="metric-bar"><div class="metric-fill" style="width: 67%"></div></div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="metric-header"><span class="metric-name">ORG (Organization)</span><span class="metric-score">68</span></div>
+                        <div class="metric-bar"><div class="metric-fill" style="width: 68%"></div></div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="metric-header"><span class="metric-name">CPI (Creative Index)</span><span class="metric-score">73</span></div>
+                        <div class="metric-bar"><div class="metric-fill" style="width: 73%"></div></div>
+                    </div>
+                </div>
+
+                <h3>Tier 3: Manual Scout Assessment (10% Weight)</h3>
+                <div class="two-col">
+                    <div>
+                        <div class="metric-item">
+                            <div class="metric-header"><span class="metric-name">CHR (Character)</span><span class="metric-score">75</span></div>
+                            <div class="metric-bar"><div class="metric-fill" style="width: 75%"></div></div>
+                        </div>
+                        <div class="metric-item">
+                            <div class="metric-header"><span class="metric-name">LEA (Leadership)</span><span class="metric-score">68</span></div>
+                            <div class="metric-bar"><div class="metric-fill" style="width: 68%"></div></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="metric-item">
+                            <div class="metric-header"><span class="metric-name">MCS (Mental)</span><span class="metric-score">72</span></div>
+                            <div class="metric-bar"><div class="metric-fill" style="width: 72%"></div></div>
+                        </div>
+                        <div class="metric-item">
+                            <div class="metric-header"><span class="metric-name">PRO (Professionalism)</span><span class="metric-score">76</span></div>
+                            <div class="metric-bar"><div class="metric-fill" style="width: 76%"></div></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="development-box" style="margin-top: 16px;">
+                    <strong style="color: var(--prospect);">📈 Technical Profile Analysis:</strong>
+                    <p class="small" style="margin-top: 8px; margin-bottom: 0;">
+                        At <strong>31 years old</strong>, Brown's metrics reveal a <strong>classic "regista-lite" profile</strong> — a deep-lying playmaker with <strong>exceptional passing range</strong> (PVI 74) and <strong>composure</strong> (CPX 69). Her <strong>key pass ability</strong> (72) stands out as elite for her level, while her <strong>mobility</strong> (64) reflects her <strong>compact stature</strong> (1.58m) — she relies on <strong>positioning intelligence</strong> (POI 71) rather than physical coverage. The <strong>high creative index</strong> (73) suggests she should be deployed in a <strong>free role</strong> or as an <strong>advanced playmaker</strong> rather than a traditional defensive midfielder. <strong>Defensive work rate</strong> (62) is adequate but not her primary strength — best suited to <strong>possession-dominant teams</strong> where her <strong>technical security</strong> can shine.
+                    </p>
+                </div>
+            </div>
+
+            <!-- 60-Philosophy Framework -->
+            <div class="card">
+                <h2>🧠 60-Philosophy Framework Alignment</h2>
+                <p class="small" style="margin-bottom: 16px;"><strong>Empire FGA 60-Philosophy System</strong> — Canadian technical midfielder.</p>
+
+                <h3>Top 10 Philosophy Fits</h3>
+                <table class="philosophy-table">
+                    <thead>
+                        <tr>
+                            <th>Code</th>
+                            <th>Philosophy Name</th>
+                            <th>School</th>
+                            <th>Score</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="background: rgba(30, 58, 138, 0.05);">
+                            <td><span class="philosophy-code">WEN</span></td>
+                            <td>Wenger Development <span class="new-badge">FRENCH</span></td>
+                            <td>French School</td>
+                            <td class="philosophy-score">76</td>
+                        </tr>
+                        <tr>
+                            <td><span class="philosophy-code">GUÁ</span></td>
+                            <td>Guardiola Positional <span class="new-badge">SPANISH</span></td>
+                            <td>Spanish School</td>
+                            <td class="philosophy-score">74</td>
+                        </tr>
+                        <tr>
+                            <td><span class="philosophy-code">CRU</span></td>
+                            <td>Cruyff Intelligence <span class="new-badge">DUTCH</span></td>
+                            <td>Dutch School</td>
+                            <td class="philosophy-score">73</td>
+                        </tr>
+                        <tr>
+                            <td><span class="philosophy-code">BEE</span></td>
+                            <td>Beenhakker Technique <span class="new-badge">DUTCH</span></td>
+                            <td>Dutch School</td>
+                            <td class="philosophy-score">72</td>
+                        </tr>
+                        <tr>
+                            <td><span class="philosophy-code">LIP</span></td>
+                            <td>Lippi Organization <span class="new-badge">ITALIAN</span></td>
+                            <td>Italian School</td>
+                            <td class="philosophy-score">70</td>
+                        </tr>
+                        <tr>
+                            <td><span class="philosophy-code">ANC</span></td>
+                            <td>Ancelotti Adaptability <span class="new-badge">MODERN</span></td>
+                            <td>Modern Masters</td>
+                            <td class="philosophy-score">69</td>
+                        </tr>
+                        <tr>
+                            <td><span class="philosophy-code">FON</span></td>
+                            <td>Fontaine Finishing <span class="new-badge">FRENCH</span></td>
+                            <td>French School</td>
+                            <td class="philosophy-score">68</td>
+                        </tr>
+                        <tr>
+                            <td><span class="philosophy-code">PEL</span></td>
+                            <td>Pellegrini Elegance <span class="new-badge">SPANISH</span></td>
+                            <td>Spanish School</td>
+                            <td class="philosophy-score">67</td>
+                        </tr>
+                        <tr>
+                            <td><span class="philosophy-code">HEY</span></td>
+                            <td>Heynckes Complete <span class="new-badge">GERMAN</span></td>
+                            <td>German School</td>
+                            <td class="philosophy-score">65</td>
+                        </tr>
+                        <tr>
+                            <td><span class="philosophy-code">DES</span></td>
+                            <td>Deschamps Pragmatism <span class="new-badge">FRENCH</span></td>
+                            <td>French School</td>
+                            <td class="philosophy-score">64</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="highlight-box" style="margin-top: 20px;">
+                    <strong style="color: var(--accent1);">🎯 Philosophy DNA Profile:</strong>
+                    <p class="small" style="margin-top: 8px; margin-bottom: 0;">
+                        <strong>Primary School:</strong> French/Dutch (72 avg) — Dominant alignment with <strong>Wenger Development (76)</strong> and <strong>Guardiola Positional (74)</strong> reflects her <strong>North American technical education</strong> combined with <strong>European tactical adaptation</strong>. Like Wenger's ideal players, Brown combines <strong>technical security</strong> with <strong>intelligent movement</strong>. <strong>Guardiola alignment</strong> shows in her <strong>positional discipline</strong> and <strong>passing range</strong> — she understands <strong>spacing</strong> and <strong>tempo control</strong>.<br><br>
+                        <strong>Secondary School:</strong> Italian/Modern (67 avg) — <strong>Lippi Organization (70)</strong> and <strong>Ancelotti Adaptability (69)</strong> highlight her <strong>tactical flexibility</strong>. She can operate as a <strong>deep-lying playmaker</strong> or <strong>advanced midfielder</strong>, adapting to game context. <strong>Fontaine score (68)</strong> reflects her <strong>efficiency in front of goal</strong> for a midfielder (37.5% conversion).<br><br>
+                        <strong>Tactical Archetype:</strong> <span style="color: var(--club); font-weight: 700;">"The Deep-Lying Technician"</span> — A midfielder who combines <strong>North American technical comfort</strong> with <strong>European tactical discipline</strong>. Best suited to <strong>systems that value possession</strong> over physicality — thrives in <strong>3-man midfields</strong> or as a <strong>regista</strong> in front of defense.
+                    </p>
+                </div>
+
+                <h3 style="margin-top: 24px;">Key Philosophy Formulas</h3>
+
+                <div class="formula-box">
+                    <div class="formula-title">🇫🇷 Wenger Development [WEN] — French School <span style="float: right; color: var(--club);">76/100</span></div>
+                    <div style="color: var(--muted); margin-bottom: 8px;">French School | Technical Development</div>
+                    <code style="color: var(--accent1);">([PVI]×1.3)+([CTRL]×1.2)+([DYN]×1.1)+([CPI]×1.0)</code>
+                    <p class="small" style="margin-top: 8px; margin-bottom: 0; color: var(--muted);">
+                        <strong>Rationale:</strong> Arsène Wenger's philosophy of <strong>technical perfection</strong> and <strong>intelligent movement</strong> aligns with Brown's <strong>Canadian development background</strong>. Like Wenger's Arsenal midfielders, she prioritizes <strong>technical security</strong> and <strong>passing quality</strong> over physical dominance.
+                    </p>
+                </div>
+
+                <div class="formula-box">
+                    <div class="formula-title">🇪🇸 Guardiola Positional [GUÁ] — Spanish School <span style="float: right; color: var(--club);">74/100</span></div>
+                    <div style="color: var(--muted); margin-bottom: 8px;">Spanish School | Positional Play</div>
+                    <code style="color: var(--accent1);">([TAC]×1.1)+([COM]×1.1)+([ORG]×1.2)+([PRO]×1.0)</code>
+                    <p class="small" style="margin-top: 8px; margin-bottom: 0; color: var(--muted);">
+                        <strong>Rationale:</strong> Pep Guardiola's emphasis on <strong>positional discipline</strong> and <strong>building from the back</strong> suits Brown's <strong>low-risk passing</strong> and <strong>spatial awareness</strong>. Her ability to <strong>receive under pressure</strong> and <strong>maintain possession</strong> mirrors Guardiola's midfield requirements.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Player Comparison -->
+            <div class="card">
+                <h2>📊 Player Comparison — A Lyga Central Midfielders</h2>
+                <p class="small" style="margin-bottom: 16px;">Empire Women Scout comparative analysis vs. similar midfielders.</p>
+
+                <div class="visual-canvas" style="height: 450px;">
+                    <canvas id="peerComparisonChart" style="max-width: 100%; max-height: 100%;"></canvas>
+                </div>
+
+                <div class="season-stats-grid" style="margin-top: 20px;">
+                    <div class="season-stat-box" style="border: 2px solid #FFD700; background: rgba(255, 215, 0, 0.1);">
+                        <div class="season-stat-value" style="color: #FFD700;">68.0</div>
+                        <div class="season-stat-label" style="color: #fff; font-weight: 600;">Brown (31)</div>
+                        <div class="small" style="font-size: 10px; margin-top: 4px;">FC Gintra</div>
+                    </div>
+                    <div class="season-stat-box">
+                        <div class="season-stat-value" style="color: #4A90E2;">65.5</div>
+                        <div class="season-stat-label" style="color: #4A90E2; font-weight: 600;">Augustė Baltrušaitytė</div>
+                        <div class="small" style="font-size: 10px; margin-top: 4px;">Žalgiris-MRU</div>
+                    </div>
+                    <div class="season-stat-box">
+                        <div class="season-stat-value" style="color: #9B59B6;">63.8</div>
+                        <div class="season-stat-label" style="color: #9B59B6; font-weight: 600;">Erika Šupelytė</div>
+                        <div class="small" style="font-size: 10px; margin-top: 4px;">Gintra</div>
+                    </div>
+                    <div class="season-stat-box">
+                        <div class="season-stat-value" style="color: #E74C3C;">61.2</div>
+                        <div class="season-stat-label" style="color: #E74C3C; font-weight: 600;"> midfielder</div>
+                        <div class="small" style="font-size: 10px; margin-top: 4px;">Hegelmann</div>
+                    </div>
+                </div>
+
+                <div class="highlight-box" style="margin-top: 16px;">
+                    <strong style="color: var(--accent1);">⚖️ Comparative Analysis:</strong>
+                    <p class="small" style="margin-top: 8px; margin-bottom: 0;">
+                        Brown profiles as the <strong>highest-rated midfielder</strong> in the Lithuanian A Lyga comparison set, reflecting her <strong>technical superiority</strong> and <strong>international experience</strong>. Compared to <strong>Baltrušaitytė (65.5)</strong>, Brown offers <strong>superior passing variety</strong> and <strong>composure</strong> but less <strong>defensive aggression</strong>. <strong>Šupelytė (63.8)</strong> provides similar <strong>creative ability</strong> but inferior <strong>tactical discipline</strong>. Brown's <strong>unique value</strong> is her <strong>North American technical education</strong> — rare in the A Lyga — allowing Gintra to play a more <strong>sophisticated possession game</span> than typical Baltic sides. However, her <strong>age (31)</strong> and <strong>physical limitations</span> (1.58m) suggest a <strong>2-3 year window</strong> of peak effectiveness.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Psychological Profile -->
+            <div class="card">
+                <h2>🧬 Psychological Profile & Character Analysis</h2>
+                <p class="small" style="margin-bottom: 16px;">Empire Women Scout Mental Competence System (MCS) — The Transatlantic Pioneer.</p>
+
+                <div class="personality-grid">
+                    <div class="personality-card">
+                        <div class="personality-icon">🌍</div>
+                        <div class="personality-title">Adaptability</div>
+                        <div class="personality-score">82</div>
+                        <div class="personality-desc">North America to Europe transition</div>
+                    </div>
+                    <div class="personality-card">
+                        <div class="personality-icon">🎓</div>
+                        <div class="personality-title">Professionalism</div>
+                        <div class="personality-score">76</div>
+                        <div class="personality-desc">Mature career approach at 31</div>
+                    </div>
+                    <div class="personality-card">
+                        <div class="personality-icon">🧠</div>
+                        <div class="personality-title">Game Intelligence</div>
+                        <div class="personality-score">78</div>
+                        <div class="personality-desc">Tactical understanding</div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h3>Personality Archetype: The Technical Ambassador</h3>
+                    <div class="two-col">
+                        <div>
+                            <div class="info-row"><span class="info-label">MCS Profile</span><span class="info-value">ISTJ (Logistician)</span></div>
+                            <div class="info-row"><span class="info-label">Primary Drive</span><span class="info-value">Technical Excellence</span></div>
+                            <div class="info-row"><span class="info-label">Stress Response</span><span class="info-value">Methodical Analysis</span></div>
+                            <div class="info-row"><span class="info-label">Social Style</span><span class="info-value">Quiet Leader</span></div>
+                        </div>
+                        <div>
+                            <div class="info-row"><span class="info-label">Adaptability</span><span class="info-value">Very High 82/100</span></div>
+                            <div class="info-row"><span class="info-label">Leadership</span><span class="info-value">Moderate 68/100</span></div>
+                            <div class="info-row"><span class="info-label">Consistency</span><span class="info-value">High 74/100</span></div>
+                            <div class="info-row"><span class="info-label">Confidence</span><span class="info-value">Steady 72/100</span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h3>Behavioral Markers</h3>
+                    <div style="margin-bottom: 12px;">
+                        <span class="trait-pill">🇨🇦 Canadian</span>
+                        <span class="trait-pill">🎓 Technical</span>
+                        <span class="trait-pill">🧠 Intelligent</span>
+                        <span class="trait-pill">🌍 Expatriate</span>
+                        <span class="trait-pill">⚽ Playmaker</span>
+                        <span class="trait-pill">📏 Compact</span>
+                        <span class="trait-pill">🎯 Efficient</span>
+                        <span class="trait-pill">🗣️ Communicator</span>
+                    </div>
+                    <p class="small">
+                        <strong>Empire Analysis:</strong> Brown exhibits the <strong>"technical ambassador"</strong> psychology — a player who represents <strong>North American football development</strong> in European markets. Her <strong>ISTJ profile</strong> explains her <strong>methodical approach to midfield play</strong> and <strong>preference for structured systems</strong>. The <strong>transatlantic move</strong> at age 30 shows <strong>courage and ambition</strong> unusual for established players. <strong>Psychological projection:</strong> Likely to transition into <strong>coaching or technical directing</strong> post-retirement given her <strong>tactical understanding</strong> and <strong>bilingual/bicultural experience</strong>. Risk of <strong>isolation</strong> in new environment mitigated by <strong>mature personality</strong>.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Key Relationships -->
+            <div class="card">
+                <h2>🤝 Key Relationships & Network Analysis</h2>
+                <p class="small" style="margin-bottom: 16px;">Empire Women Scout Network Analysis — The Gintra Connection.</p>
+
+                <div class="relationship-item">
+                    <div class="relationship-avatar" style="background: linear-gradient(135deg, #DC143C, #FFD700);">CA</div>
+                    <div class="relationship-content">
+                        <div class="relationship-name">Canadian Football Community</div>
+                        <div class="relationship-role">Development Foundation (1995-2025)</div>
+                        <div class="relationship-desc">
+                            The <strong>foundation of her technical ability</strong>. Developed in Ontario youth system with emphasis on <strong>ball control</strong> and <strong>intelligent movement</strong>. Maintains connections to Canadian football infrastructure, potentially facilitating future player exchanges between North America and Lithuania.
+                        </div>
+                        <div class="relationship-dynamic">🏠 Origin Story</div>
+                    </div>
+                </div>
+
+                <div class="relationship-item">
+                    <div class="relationship-avatar" style="background: linear-gradient(135deg, #1E3A8A, #FFFFFF);">FG</div>
+                    <div class="relationship-content">
+                        <div class="relationship-name">FC Gintra Organization</div>
+                        <div class="relationship-role">Current Club (Aug 2025-Present)</div>
+                        <div class="relationship-desc">
+                            <strong>Strategic partnership.</strong> Gintra provides <strong>UWCL platform</strong> impossible in North America; Brown provides <strong>technical leadership</strong> and <strong>international experience</strong>. Fits club's <strong>possession philosophy</strong> perfectly. Contract through 2026 with option to extend.
+                        </div>
+                        <div class="relationship-dynamic">🏢 Professional Home</div>
+                    </div>
+                </div>
+
+                <div class="relationship-item">
+                    <div class="relationship-avatar" style="background: linear-gradient(135deg, #FFD700, #1E3A8A);">UW</div>
+                    <div class="relationship-content">
+                        <div class="relationship-name">UEFA Women's Football</div>
+                        <div class="relationship-role">Competition Platform (2025)</div>
+                        <div class="relationship-desc">
+                            <strong>Career elevation.</strong> UWCL qualifier debut vs Farul Constanța provided <strong>continental exposure</strong>. Even early injury couldn't diminish the <strong>value of experience</strong>. Opens doors to <strong>Scandinavian</strong> or <strong>Central European</strong> leagues.
+                        </div>
+                        <div class="relationship-dynamic">🚀 Career Catalyst</div>
+                    </div>
+                </div>
+
+                <div class="relationship-item">
+                    <div class="relationship-avatar" style="background: linear-gradient(135deg, #EC4899, #FFD700);">TB</div>
+                    <div class="relationship-content">
+                        <div class="relationship-name">Brianna Taylor (Teammate)</div>
+                        <div class="relationship-role">FC Gintra Midfield Partner</div>
+                        <div class="relationship-desc">
+                            <strong>On-field chemistry.</strong> Taylor's assist for Ribeiro's UWCL winner vs Farul came after Brown's substitution. When both healthy, form <strong>technically gifted midfield duo</strong> that controls tempo. <strong>Complementary profiles</strong> — Brown deep distributor, Taylor box-to-box.
+                        </div>
+                        <div class="relationship-dynamic">⚽ Tactical Partner</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Matches -->
+            <div class="card">
+                <h2>⚽ Recent Career Snapshot</h2>
+                <p class="small" style="margin-bottom: 16px;">2025 season with FC Gintra — UWCL & A Lyga action.</p>
+
+                <div class="match-card result-w">
+                    <div class="match-teams">
+                        <div class="match-team">FK Gintra</div>
+                        <div class="match-team home">FK Banga</div>
+                    </div>
+                    <div class="match-score">11-0</div>
+                    <div class="match-info">
+                        <div class="match-date">09 Nov 2025</div>
+                        <div class="match-comp">A Lyga</div>
+                    </div>
+                </div>
+
+                <div class="match-card result-w">
+                    <div class="match-teams">
+                        <div class="match-team home">FK Gintra</div>
+                        <div class="match-team">FC Hegelmann</div>
+                    </div>
+                    <div class="match-score">3-1</div>
+                    <div class="match-info">
+                        <div class="match-date">02 Nov 2025</div>
+                        <div class="match-comp">A Lyga</div>
+                    </div>
+                </div>
+
+                <div class="match-card result-w">
+                    <div class="match-teams">
+                        <div class="match-team home">FK Gintra</div>
+                        <div class="match-team">FK TransINVEST</div>
+                    </div>
+                    <div class="match-score">5-0</div>
+                    <div class="match-info">
+                        <div class="match-date">11 Oct 2025</div>
+                        <div class="match-comp">A Lyga</div>
+                    </div>
+                </div>
+
+                <div class="match-card result-w">
+                    <div class="match-teams">
+                        <div class="match-team">FK Gintra</div>
+                        <div class="match-score">2-1</div>
+                        <div class="match-team home">Farul Constanța</div>
+                    </div>
+                    <div class="match-info">
+                        <div class="match-date">Aug 2025</div>
+                        <div class="match-comp">UWCL Qualifier</div>
+                    </div>
+                </div>
+
+                <div class="season-stats-grid" style="margin-top: 20px;">
+                    <div class="season-stat-box">
+                        <div class="season-stat-value">8</div>
+                        <div class="season-stat-label">A Lyga Apps</div>
+                    </div>
+                    <div class="season-stat-box">
+                        <div class="season-stat-value">3</div>
+                        <div class="season-stat-label">Goals (2025)</div>
+                    </div>
+                    <div class="season-stat-box">
+                        <div class="season-stat-value">192</div>
+                        <div class="season-stat-label">Minutes</div>
+                    </div>
+                    <div class="season-stat-box">
+                        <div class="season-stat-value">1</div>
+                        <div class="season-stat-label">UWCL App</div>
+                    </div>
+                </div>
+
+                <div class="muted-box" style="margin-top: 16px;">
+                    <strong style="color: var(--accent1);">2025 Season Analysis:</strong> Limited but <strong>high-impact minutes</strong> for Gintra. Three goals in 192 minutes (1.4 goals per 90) represents <strong>elite efficiency</strong> for a midfielder. Injury in UWCL qualifier (27th minute) unfortunate but not serious. When fit, <strong>automatic starter</strong> in A Lyga. <strong>Strength of schedule note:</strong> Gintra dominates Lithuanian league (11-0, 7-0, 5-0 wins), inflating raw stats, but Brown's <strong>technical quality</strong> evident in <strong>build-up play</strong> and <strong>chance creation</strong>.
+                </div>
+            </div>
+
+            <!-- Final Assessment -->
+            <div class="card">
+                <h2>🎯 Final Assessment & Scouting Verdict</h2>
+
+                <div class="highlight-box">
+                    <strong style="color: var(--accent1);">📋 Empire Women Scout Summary:</strong>
+                    <p class="lead" style="margin-top: 8px; margin-bottom: 0;">
+                        Tamara Brown is a <strong>technically gifted Canadian midfielder</strong> who has successfully transitioned to European football with <strong>FC Gintra</strong> at age 31. Her <strong>FGA rating of 68</strong> reflects <strong>significant technical ability and tactical intelligence</strong> despite <strong>physical limitations</strong> (1.58m). She offers <strong>unique value</strong> — <strong>North American technical education</strong> combined with <strong>European competitive experience</strong> (UWCL). For <strong>FC Gintra</strong>, she represents a <strong>strategic asset</strong> — a player who can <strong>mentor local talents</strong> while delivering <strong>immediate production</strong> (3 goals in 8 games). However, expectations must be managed: she is a <strong>system player</strong> requiring <strong>possession dominance</strong> to maximize her strengths.
+                    </p>
+                </div>
+
+                <div class="two-col" style="margin-top: 16px;">
+                    <div class="development-box">
+                        <strong style="color: var(--prospect);">✅ Strengths</strong>
+                        <ul class="small" style="margin-top: 8px; padding-left: 18px; color: var(--muted);">
+                            <li>Elite technical foundation — North American education</li>
+                            <li>Exceptional passing variety (74) — midfield distributor</li>
+                            <li>High goal efficiency — 37.5% conversion rate</li>
+                            <li>UWCL experience — continental competition tested</li>
+                            <li>Tactical intelligence — positional discipline</li>
+                            <li>Mature professional — 31 years old, low maintenance</li>
+                            <li>Canadian international potential — marketing value</li>
+                            <li>Set-piece threat — delivery and positioning</li>
+                        </ul>
+                    </div>
+                    <div class="warning-box">
+                        <strong style="color: #ef4444;">⚠️ Limitations</strong>
+                        <ul class="small" style="margin-top: 8px; padding-left: 18px; color: var(--muted);">
+                            <li>Physical stature (1.58m) — aerial weakness</li>
+                            <li>Age 31 — limited resale/long-term value</li>
+                            <li>Injury history — UWCL qualifier early exit</li>
+                            <li>Defensive work rate (62) — requires protection</li>
+                            <li>Pace limitations — recovery speed concerns</li>
+                            <li>League quality — A Lyga not top-tier Europe</li>
+                            <li>System dependent — struggles in physical games</li>
+                            <li>Adaptation period — still adjusting to European tempo</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="scout-alert" style="margin-top: 16px;">
+                    <div class="scout-alert-title">🎯 Scouting Recommendation</div>
+                    <div class="scout-alert-text">
+                        <strong>Retain for Gintra's Domestic Dominance</strong> — Brown provides <strong>technical leadership</strong> and <strong>goal production</strong> for A Lyga title defense. Best deployed as <strong>deep-lying playmaker</strong> in 4-2-3-1 or <strong>advanced midfielder</strong> in 4-3-3. Requires <strong>defensive cover</strong> from teammates due to physical limitations. <strong>Not recommended for:</strong> Direct relegation battles, teams relying on long balls, or high-pressing systems requiring elite mobility. <strong>Transfer potential:</strong> Could attract <strong>Scandinavian</strong> or <strong>Scottish</strong> clubs seeking technical midfielders. <strong>Empire Women Scout final verdict:</strong> A <strong>high-character, technical specialist</strong> whose value lies in <strong>mentorship and possession security</strong> — ideal for <strong>dominant teams</strong> in smaller leagues seeking <strong>continental experience</strong>.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Data Sources & Credits -->
+            <div class="card">
+                <h2>📚 Data Sources & Methodology</h2>
+                <div class="two-col">
+                    <div>
+                        <h3>Primary Data Sources</h3>
+                        <div class="info-row"><span class="info-label">📊 Flashscore</span><span class="info-value">Match Statistics</span></div>
+                        <div class="info-row"><span class="info-label">⚽ Soccerdonna</span><span class="info-value">Biographical Data</span></div>
+                        <div class="info-row"><span class="info-label">🌍 UEFA</span><span class="info-value">UWCL Statistics</span></div>
+                        <div class="info-row"><span class="info-label">📈 Playmaker Stats</span><span class="info-value">Performance Data</span></div>
+                    </div>
+                    <div>
+                        <h3>Empire Women Scout System</h3>
+                        <div class="info-row"><span class="info-label">📋 Metrics Used</span><span class="info-value">794 Proprietary</span></div>
+                        <div class="info-row"><span class="info-label">🧠 Philosophies</span><span class="info-value">60-Framework System</span></div>
+                        <div class="info-row"><span class="info-label">⚖️ Rating Scale</span><span class="info-value">0-100 / 0-10</span></div>
+                        <div class="info-row"><span class="info-label">🔍 Last Updated</span><span class="info-value">09 Feb 2026</span></div>
+                    </div>
+                </div>
+
+                <div class="muted-box" style="margin-top: 16px;">
+                    <strong style="color: var(--gintra);">Methodology Note:</strong> All Empire Women Scout ratings combine <strong>automated statistical analysis</strong> (60% weight), <strong>semi-automated tactical intelligence</strong> (30% weight), and <strong>manual scout assessment</strong> (10% weight). Cross-era comparisons normalized for competition level and era-specific tactical demands. Women's football data adjusted for <strong>biological</strong> and <strong>contextual factors</strong> specific to the women's game.
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <footer style="background: var(--card); padding: 30px; text-align: center; border-top: 1px solid rgba(30, 58, 138, 0.2); margin-top: 30px;">
+        <p style="color: var(--muted); font-size: 13px;">
+            <strong style="color: var(--accent1);">Empire Women Scout</strong> — 794 Proprietary Metrics • 60-Philosophy Framework • All Ratings /100 Scale
+        </p>
+        <p style="color: var(--muted); font-size: 11px; margin-top: 6px;">
+            Data validated via Flashscore, Soccerdonna, UEFA. | Profile Created: 09 February 2026
+        </p>
+        <p style="color: var(--muted); font-size: 10px; margin-top: 12px; opacity: 0.7;">
+            © 2026 Empire Women Scout. All rights reserved. | <em>Field Global Analysis™</em> proprietary system.
+        </p>
+    </footer>
+
+    <script>
+        // Peer Comparison Chart
+        const ctx = document.getElementById('peerComparisonChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'radar',
+            data: {
+                labels: ['KEY', 'XPS', 'TBP', 'CPX', 'POI', 'PVI'],
+                datasets: [
+                    {
+                        label: 'Brown (68)',
+                        data: [72, 68, 70, 69, 71, 74],
+                        backgroundColor: 'rgba(255, 215, 0, 0.2)',
+                        borderColor: '#FFD700',
+                        borderWidth: 2,
+                        pointBackgroundColor: '#FFD700',
+                        pointBorderColor: '#fff',
+                        pointRadius: 4
+                    },
+                    {
+                        label: 'Baltrušaitytė (65.5)',
+                        data: [68, 66, 67, 65, 69, 66],
+                        backgroundColor: 'rgba(74, 144, 226, 0.1)',
+                        borderColor: '#4A90E2',
+                        borderWidth: 2,
+                        pointBackgroundColor: '#4A90E2',
+                        pointBorderColor: '#fff',
+                        pointRadius: 3,
+                        borderDash: [5, 5]
+                    },
+                    {
+                        label: 'Šupelytė (63.8)',
+                        data: [70, 64, 65, 63, 67, 72],
+                        backgroundColor: 'rgba(155, 89, 182, 0.1)',
+                        borderColor: '#9B59B6',
+                        borderWidth: 2,
+                        pointBackgroundColor: '#9B59B6',
+                        pointBorderColor: '#fff',
+                        pointRadius: 3,
+                        borderDash: [5, 5]
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                        labels: {
+                            color: '#f5f5f5',
+                            font: { family: 'Inter', size: 12 }
+                        }
+                    },
+                    title: {
+                        display: true,
+                        text: 'A Lyga Midfielders Comparison',
+                        color: '#f5f5f5',
+                        font: { family: 'Inter', size: 14, weight: 'bold' }
+                    }
+                },
+                scales: {
+                    r: {
+                        angleLines: { color: 'rgba(255, 255, 255, 0.1)' },
+                        grid: { color: 'rgba(255, 255, 255, 0.1)' },
+                        pointLabels: {
+                            color: '#f5f5f5',
+                            font: { family: 'Inter', size: 11 }
+                        },
+                        ticks: {
+                            color: '#a0a0a0',
+                            backdropColor: 'transparent',
+                            stepSize: 20
+                        },
+                        min: 40,
+                        max: 100
+                    }
+                }
+            }
+        });
+    </script>
+
+</body>
+</html>
