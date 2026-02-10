@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Client Login - Empire Women Scout</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+        * { font-family: 'Inter', sans-serif; }
+        
+        :root {
+            --brand-pink: #D51A4B;
+            --brand-pink-dim: rgba(213, 26, 75, 0.2);
+            --bg-dark: #0b0e14;
+        }
+
+        body { 
+            background: radial-gradient(900px 500px at 50% 50%, rgba(213, 26, 75, 0.15), transparent 40%),
+                        var(--bg-dark);
+            color: #f0f6fc;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .login-container {
+            background: rgba(21, 25, 33, 0.95);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(213, 26, 75, 0.3);
+            border-radius: 16px;
+            padding: 48px;
+            max-width: 480px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(213, 26, 75, 0.2);
+        }
+
+        .gradient-text {
+            background: linear-gradient(to right, #D51A4B, #ff8fa3);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .input-field {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: white;
+            padding: 14px 20px;
+            border-radius: 8px;
+            width: 100%;
+            transition: all 0.3s;
+        }
+        .input-field:focus {
+            outline: none;
+            border-color: #D51A4B;
+            background: rgba(0, 0, 0, 0.4);
+        }
+
+        .login-button {
+            background: linear-gradient(135deg, #D51A4B, #ff4d7d);
+            color: white;
+            padding: 14px 32px;
+            border-radius: 8px;
+            width: 100%;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .login-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(213, 26, 75, 0.4);
+        }
+        .login-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .error-message {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            color: #fca5a5;
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: none;
+        }
+        .error-message.active {
+            display: block;
+            animation: shake 0.5s;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
+        .success-message {
+            background: rgba(34, 197, 94, 0.1);
+            border: 1px solid rgba(34, 197, 94, 0.3);
+            color: #86efac;
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: none;
+        }
+        .success-message.active {
+            display: block;
+        }
+
+        .back-button {
+            color: #94a3b8;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+        .back-button:hover {
+            color: #D51A4B;
+        }
+
+        .client-badge {
+            background: rgba(213, 26, 75, 0.15);
+            color: #ff8fa3;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <!-- Logo -->
+        <div class="text-center mb-8">
+            <img src="https://media.licdn.com/dms/image/v2/D4E12AQEjuDAF0uOTrw/article-cover_image-shrink_720_1280/B4EZiOwG01GwAI-/0/1754741632806?e=2147483647&v=beta&t=L9ct0jEaWdSp7vfTI0urIqPPig0MspEd-6RtzxaQzzQ" 
+                 class="h-16 w-16 mx-auto object-contain rounded-lg mb-4" 
+                 alt="Empire Women Scout Logo">
+            <h1 class="text-2xl font-bold gradient-text mb-2">CLIENT LOGIN</h1>
+            <p class="text-gray-400 text-sm">Empire Women Scout Intelligence Platform</p>
+        </div>
+
+        <!-- Messages -->
+        <div id="errorMessage" class="error-message">
+            <i class="fas fa-exclamation-circle mr-2"></i>
+            <span id="errorText">Invalid credentials</span>
+        </div>
+        <div id="successMessage" class="success-message">
+            <i class="fas fa-check-circle mr-2"></i>
+            <span>Login successful! Redirecting...</span>
+        </div>
+
+        <!-- Login Form -->
+        <form id="loginForm" onsubmit="handleLogin(event)">
+            <div class="mb-6">
+                <label class="block text-gray-300 text-sm font-semibold mb-2">
+                    <i class="fas fa-user mr-2"></i>Username
+                </label>
+                <input 
+                    type="text" 
+                    id="username" 
+                    class="input-field" 
+                    placeholder="Enter your username"
+                    required
+                    autocomplete="username"
+                >
+            </div>
+
+            <div class="mb-6">
+                <label class="block text-gray-300 text-sm font-semibold mb-2">
+                    <i class="fas fa-lock mr-2"></i>Password
+                </label>
+                <input 
+                    type="password" 
+                    id="password" 
+                    class="input-field" 
+                    placeholder="Enter your password"
+                    required
+                    autocomplete="current-password"
+                >
+            </div>
+
+            <button type="submit" id="loginButton" class="login-button">
+                <i class="fas fa-sign-in-alt mr-2"></i>
+                LOGIN
+            </button>
+        </form>
+
+        <!-- Back to Home -->
+        <div class="text-center mt-6">
+            <a href="index.html" class="back-button">
+                <i class="fas fa-arrow-left mr-2"></i>Back to Home
+            </a>
+        </div>
+
+        <!-- Client Info (for demo purposes) -->
+        <div class="mt-8 pt-6 border-t border-gray-800">
+            <p class="text-gray-400 text-xs text-center mb-3">Demo Clients:</p>
+            <div class="space-y-2">
+                <div class="text-xs bg-gray-900/50 p-3 rounded">
+                    <div class="flex justify-between mb-1">
+                        <span class="text-gray-400">Username:</span>
+                        <span class="text-white font-mono">mantas.radavicius</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-gray-400">Password:</span>
+                        <span class="text-white font-mono">FCGintra2025</span>
+                    </div>
+                    <span class="client-badge mt-2">FC Gintra - Sporting Director</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Client credentials database
+        const clients = {
+            'mantas.radavicius': {
+                password: 'FCGintra2025',
+                name: 'Mantas Radavicius',
+                role: 'Sporting Director',
+                club: 'FC Gintra',
+                dashboard: 'Mantas_Radavicius_A_Lyga_REAL_Dashboard.html'
+            },
+            // Add more clients here in the future
+            'demo': {
+                password: 'demo123',
+                name: 'Demo User',
+                role: 'Demo Account',
+                club: 'Empire FGA',
+                dashboard: 'index.html'
+            }
+        };
+
+        function handleLogin(event) {
+            event.preventDefault();
+            
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value;
+            const errorMsg = document.getElementById('errorMessage');
+            const successMsg = document.getElementById('successMessage');
+            const loginButton = document.getElementById('loginButton');
+            
+            // Hide previous messages
+            errorMsg.classList.remove('active');
+            successMsg.classList.remove('active');
+            
+            // Disable button
+            loginButton.disabled = true;
+            loginButton.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Authenticating...';
+            
+            // Simulate authentication delay
+            setTimeout(() => {
+                const client = clients[username];
+                
+                if (client && client.password === password) {
+                    // Success
+                    successMsg.classList.add('active');
+                    
+                    // Store session (for demonstration)
+                    sessionStorage.setItem('empire_client', JSON.stringify({
+                        username: username,
+                        name: client.name,
+                        role: client.role,
+                        club: client.club
+                    }));
+                    
+                    // Redirect to dashboard
+                    setTimeout(() => {
+                        window.location.href = client.dashboard;
+                    }, 1500);
+                    
+                } else {
+                    // Error
+                    errorMsg.classList.add('active');
+                    document.getElementById('errorText').textContent = 'Invalid username or password';
+                    
+                    // Re-enable button
+                    loginButton.disabled = false;
+                    loginButton.innerHTML = '<i class="fas fa-sign-in-alt mr-2"></i>LOGIN';
+                    
+                    // Clear password field
+                    document.getElementById('password').value = '';
+                }
+            }, 800);
+        }
+
+        // Check if already logged in
+        window.addEventListener('load', () => {
+            const session = sessionStorage.getItem('empire_client');
+            if (session) {
+                const client = JSON.parse(session);
+                document.getElementById('successMessage').classList.add('active');
+                document.getElementById('successMessage').querySelector('span').textContent = 
+                    `Welcome back, ${client.name}! Redirecting...`;
+                
+                // Find the client's dashboard
+                const username = client.username || 'demo';
+                if (clients[username]) {
+                    setTimeout(() => {
+                        window.location.href = clients[username].dashboard;
+                    }, 1000);
+                }
+            }
+        });
+
+        // Auto-fill on demo click
+        document.querySelectorAll('.font-mono').forEach((el, index) => {
+            el.style.cursor = 'pointer';
+            el.title = 'Click to copy';
+            el.addEventListener('click', function() {
+                if (index % 2 === 0) {
+                    document.getElementById('username').value = this.textContent;
+                } else {
+                    document.getElementById('password').value = this.textContent;
+                }
+                this.style.color = '#D51A4B';
+                setTimeout(() => {
+                    this.style.color = '';
+                }, 300);
+            });
+        });
+    </script>
+</body>
+</html>
